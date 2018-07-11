@@ -5,7 +5,8 @@ node_js:
 before_install:
 - openssl aes-256-cbc -K $encrypted_581bdbdcb727_key -iv $encrypted_581bdbdcb727_iv
   -in client-secret.json.enc -out client-secret.json -d
-
+before_deploy:
+  - yarn build
 deploy:
   provider: gae
   keyfile: client-secret.json
