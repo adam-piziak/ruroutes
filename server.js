@@ -99,4 +99,8 @@ server.get('*', isProd ? render : (req, res) => {
   readyPromise.then(() => render(req, res))
 })
 
-server.listen(9000)
+const PORT = process.env.PORT || 8080
+
+server.listen(PORT, () => {
+  console.log(`Server listening on port ${PORT}...`)
+})
