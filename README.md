@@ -4,11 +4,13 @@
 
 A web client for the Rutgers bus system.
 
-API repo: [ruroutes-api](https://github.com/adam-piziak/ruroutes-api)
-
+### Development
 To run in development mode:
 ~~~~
 yarn dev
 ~~~~
 
 Contributions are welcome =)
+
+### API repo:
+ [ruroutes-api](https://github.com/adam-piziak/ruroutes-api)
