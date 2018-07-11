@@ -7,5 +7,6 @@ if (window.__INITIAL_STATE__) {
 }
 
 router.onReady(() => {
+  console.log('deployed version 1.0.0')
   app.$mount('#app')
 })
