@@ -13,6 +13,11 @@ install:
 
 scripts:
 - yarn build
+
+before_deploy:
+- mkdir dist
+- yarn build
+
 deploy:
   provider: gae
   keyfile: client-secret.json
