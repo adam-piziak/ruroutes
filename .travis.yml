@@ -1,13 +1,3 @@
 language: node_js
 node_js:
 - node
-before_install:
-- openssl aes-256-cbc -K $encrypted_581bdbdcb727_key -iv $encrypted_581bdbdcb727_iv
-  -in client-secret.json.enc -out client-secret.json -d
-install: yarn
-script: yarn build
-deploy:
-  skip_cleanup: true
-  provider: gae
-  keyfile: client-secret.json
-  project: ruroutes-209901

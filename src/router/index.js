@@ -1,4 +1,5 @@
 import Vue from 'vue'
+import { createStore } from '@/store'
 import Router from 'vue-router'
 import Meta from 'vue-meta'
 
@@ -8,18 +9,30 @@ const DirectionsPage = () => import('@/pages/DirectionsPage.vue')
 const SchedulePage = () => import('@/pages/SchedulePage.vue')
 
 const ActiveStop = () => import('items/ActiveStop')
+const ActiveRoute = () => import('items/ActiveRoute')
 
 Vue.use(Router)
 Vue.use(Meta)
 
 export function createRouter() {
-  return new Router({
+   const router =  new Router({
     mode: 'history',
     routes: [
       {
         path: '/',
+        redirect: '/routes'
+      },
+      {
+        path: '/routes',
         name: 'routes',
-        component: RoutesPage
+        component: RoutesPage,
+        children: [
+          {
+            path: ':id',
+            name: 'ActiveRoute',
+            component: ActiveRoute
+          }
+        ]
       },
       {
         path: '/stops',
@@ -45,4 +58,6 @@ export function createRouter() {
       },
     ]
   })
+
+  return router
 }

@@ -14,7 +14,8 @@ export function createStore() {
       routes: [],
       stops: {},
       activeStop: {},
-      searchQuery: ''
+      searchQuery: '',
+      resolvingRoute: false
     },
     actions,
     getters,

@@ -1,8 +1,8 @@
 <template lang="pug">
 nav
   div.tab.routes(
-    @click="$router.push('/')"
-    :class="{ 'active': currentPath === '/'}"
+    @click="$router.push('/routes')"
+    :class="{ 'active': currentPath === '/routes'}"
   )
     div.tab_icon
     div.tab_text Routes
@@ -36,9 +36,12 @@ export default {
 </script>
 
 <style lang="sass" scoped>
+@import "styles/colors.sass"
 
 $height: 80px
-$active-color: #e53935
+$active-color: $primary-light
+$hover-color: $primary-light
+
 nav
   display: flex
   justify-content: space-around
@@ -119,7 +122,7 @@ nav
 
     .tab_text
       text-align: center
-      color: #666670
+      color: #222
       letter-spacing: -.02rem
       font-weight: 500
       user-select: none
@@ -148,7 +151,7 @@ nav
       top: 25px
 
     &:hover
-      background: $active-color
+      background: $hover-color
       cursor: pointer
       height: $height
 

@@ -62,17 +62,7 @@ export default {
 </script>
 
 <style lang="sass" scoped>
-@import url('https://fonts.googleapis.com/css?family=Roboto:400,500,700')
-
-@font-face
-	font-family: 'Kollektif-Bold'
-  font-weight: bold
-	src: url('../../fonts/kollektif-bold.woff') format('woff'), url('../../fonts/kollektif-bold.ttf') format('truetype')
-
-@font-face
-	font-family: 'Kollektif'
-  font-weight: normal
-	src: url('../../fonts/kollektif.woff') format('woff'), url('../../fonts/kollektif.ttf') format('truetype')
+@import "styles/colors.sass"
 
 #active_stop
   height: 100vh
@@ -92,9 +82,12 @@ export default {
     background: white
 
 .header
-  padding: 12px 28px
-  color: #444
-  border-bottom: 1px solid #AAA
+  padding: 24px 24px
+  color: white
+  border-bottom: 1px solid #CCC
+  transition: .3s
+  background: #cf2d2d
+  box-shadow: 0 0 4px rgba(#000000, 0.4)
 
   .campus
     font-size: 1.1rem
@@ -105,32 +98,32 @@ export default {
     padding: 8px 0
     font-family: 'Kollektif'
     line-height: 32px
+    font-weight: bold
+
+
 
 .routes
-  background: #EEE
-  border-radius: 4px
   overflow: hidden
   font-family: 'Roboto'
   height: 100vh
+  transition: .3s ease .1s
+
 
 .route
-  padding: 16px 20px
-  border-bottom: 1px solid #EEE
+  padding: 16px 24px
+  border-bottom: 1px solid #CCC
   position: relative
-  border: 1px solid #AAA
-  margin: 12px
-  border-radius: 8px
   background: white
 
-  &:active, &:hover
-    background: #EEE
+  &:hover
+    background: #F2F2F2
+    cursor: pointer
 
 .route-name
-  font-size: 1.2rem
-  color: #444
-  width: calc(100% - 94px)
   line-height: 26px
-  font-family: 'Kollektif'
+  font-weight: 500
+  font-size: 1.1rem
+
 .route-campus
   position: absolute
   top: 23px
@@ -141,10 +134,8 @@ export default {
 
 .route-times
   padding-top: 8px
-  font-weight: 500
 
 .time
-  color: #0D47A1
   display: inline-block
   margin-right: 8px
 
@@ -153,8 +144,15 @@ export default {
   margin-top: 10px
   line-height: 22px
   color: #999
-.slide_active-enter-active, .slide_active-leave-active
+
+.slide_active-enter-active
   transition: .15s ease-out
+
+  .header, .routes
+    opacity: 0
+    transform: translateY(10px)
+.slide_active-leave-active
+  transition: .1s ease-out
 
 .slide_active-enter, .slide_active-leave-to
   transform: translateY(40px)

@@ -1,5 +1,5 @@
 <template lang="pug">
-section.stops(:style="height")
+section.stops(:style="height" :class="{'mobile': mobile}")
   GenericError(v-if="stops.length === 0") No Active Stops Found
   router-view
   Stop(
@@ -26,6 +26,7 @@ export default {
   computed: {
     ...mapGetters([
       'stops',
+      'mobile',
       'activeStop',
       'filteredStops'
     ]),
@@ -46,7 +47,7 @@ export default {
 
 <style lang="sass" scoped>
 .stops
-  height: calc(100vh - 184px)
+  height: 100px
   overflow-y: auto
   background: #F0F0F0
   z-index: 100

@@ -20,17 +20,8 @@ export default {
       required: true,
     }
   },
-  computed: {
-    active() {
-      return this.stop.tag === this.activeStop.tag
-    },
-    ...mapGetters([
-      'activeStop'
-    ]),
-  },
   methods: {
     openStop() {
-      // this.$store.commit('SET_SEARCH_QUERY', '')
       this.$router.push('/stops/' + this.stop.tag)
     },
     ...mapMutations({
@@ -46,7 +37,7 @@ $speed: .3s
 
 .stop
   width: 100%
-  height: 70px
+  height: 60px
   padding: 10px
   background: white
   border-bottom: 1px solid #EEE
@@ -54,7 +45,13 @@ $speed: .3s
 
   &:hover
     cursor: pointer
-    background: #EEE
+    background: #FAFAFA
+
+    .stop-name
+      font-weight: bold
+
+    .stop-campus
+      color: #000
 
 .stop-name
   font-size: 1.1rem
@@ -62,5 +59,6 @@ $speed: .3s
 
 .stop-campus
   color: #575757
+  margin-top: 4px
 
 </style>

@@ -1,11 +1,11 @@
 <template lang="pug">
 section.routes
   GenericError(v-if="routes.length === 0") No Active Routes Found
+  router-view
   Route(
-    v-for="(route, index) in routes"
+    v-for="(route) in routes"
     :key="route.name"
-    :routeInfo="route"
-    :routeIndex="index"
+    :route="route"
     )
 </template>
 

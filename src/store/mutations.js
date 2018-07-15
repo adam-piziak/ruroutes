@@ -21,6 +21,10 @@ export default {
 
   SET_SEARCH_QUERY: (state, query) => {
     state.searchQuery = query
+  },
+
+  RESOLVING_ROUTE: (state, resolving) => {
+    state.resolvingRoute = resolving
   }
 
 }

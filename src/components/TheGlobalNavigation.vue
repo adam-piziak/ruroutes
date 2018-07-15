@@ -25,7 +25,7 @@
   position: absolute
   top: 0
   left: 0
-  background: #ef5350
+  background: #2e3440
   color: #FFF
   z-index: 1000
   padding: 40px

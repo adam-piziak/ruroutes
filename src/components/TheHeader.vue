@@ -1,12 +1,18 @@
 <template lang="pug">
 header
   div#logo(@click="$router.push('/')") ru routes
+  .loading(v-if="resolvingRoute") loading...
   #links(@click.stop="$emit('activeGlobal')")
 </template>
 
 <script>
 export default {
-  name: 'TheHeader'
+  name: 'TheHeader',
+  computed: {
+    resolvingRoute() {
+      return this.$store.state.resolvingRoute
+    }
+  }
 }
 </script>
 
@@ -20,6 +26,13 @@ header
   line-height: $height
   border-bottom: 1px solid #EEE
 
+  &.red
+    background: red
+
+.loading
+  display: inline-block
+  color: red
+  weight: bold
 #links
   height: $height * 2/3
   width: $height *2/3
@@ -61,12 +74,16 @@ header
       text-decoration: underline
 #logo
   display: inline-block
-  color: #e53935
-  font-size: 1.4rem
+  color: #2e3440
+  font-size: 1.2em
   height: $height - 1
   padding: 0 30px
   user-select: none
   font-family: 'Kollektif'
+  font-weight: bold
+
+  &:active
+    background: #EEE
 
   &:hover
     cursor: pointer

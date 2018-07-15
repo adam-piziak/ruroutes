@@ -6,6 +6,9 @@ export default {
   stop: (state) => (id) => {
     return state.stops.find(s => s.tag === id)
   },
+  route: (state) => (id) => {
+    return state.routes.find(s => s.tag === id)
+  },
   keywords: (state) => {
     return state.searchQuery.toLowerCase().trim()
   },
