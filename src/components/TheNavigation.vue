@@ -12,12 +12,14 @@ nav
   )
     div.tab_icon
     div.tab_text Stops
-  div.tab.directions.gray(
+  div.tab.directions(
+    @click="$router.push('/directions')"
     :class="{ 'active': currentPath === '/directions'}"
   )
     div.tab_icon
     div.tab_text Directions
-  div.tab.schedule.gray(
+  div.tab.schedule(
+    @click="$router.push('/schedule')"
     :class="{ 'active': currentPath === '/schedule'}"
   )
     div.tab_icon
@@ -39,8 +41,8 @@ export default {
 @import "styles/colors.sass"
 
 $height: 80px
-$active-color: $primary-light
-$hover-color: $primary-light
+$active-color: $primary
+$hover-color: $primary
 
 nav
   display: flex
@@ -68,31 +70,31 @@ nav
 
     &.routes
       .tab_icon
-        background-image: url(../assets/nav_routes.svg)
+        background-image: url(~icons/nav_routes.svg)
 
       &:hover .tab_icon, &.active .tab_icon, &.active:hover .tab_icon
-        background-image: url(../assets/nav_routes_white.svg)
+        background-image: url(~icons/nav_routes_white.svg)
 
     &.stops
       .tab_icon
-        background-image: url(../assets/nav_stops.svg)
+        background-image: url(~icons/nav_stops.svg)
 
       &:hover .tab_icon, &.active .tab_icon, &.active:hover .tab_icon
-        background-image: url(../assets/nav_stops_white.svg)
+        background-image: url(~icons/nav_stops_white.svg)
 
     &.directions
       .tab_icon
-        background-image: url(../assets/nav_directions.svg)
+        background-image: url(~icons/nav_directions.svg)
 
       &:hover .tab_icon, &.active .tab_icon, &.active:hover .tab_icon
-        background-image: url(../assets/nav_directions_white.svg)
+        background-image: url(~icons/nav_directions_white.svg)
 
     &.schedule
       .tab_icon
-        background-image: url(../assets/nav_schedule.svg)
+        background-image: url(~icons/nav_schedule.svg)
 
       &:hover .tab_icon, &.active .tab_icon, &.active:hover .tab_icon
-        background-image: url(../assets/nav_schedule_white.svg)
+        background-image: url(~icons/nav_schedule_white.svg)
 
     &.active, &.active:hover
       background: $active-color

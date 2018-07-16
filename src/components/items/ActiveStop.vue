@@ -1,8 +1,8 @@
 <template lang="pug">
-transition(name="slide_active")
-  #active_stop(@click="closeStop" :class="{ mobile: $store.state.mobile }")
+transition(name="slide_active" mode="in-out")
+  #active_stop(:class="{ mobile: $store.state.mobile }")
     .content
-      .header
+      .header(@click="closeStop")
         .name {{ activeStop.name }}
         .campus {{ activeStop.campus}} Campus
       .routes
@@ -86,7 +86,7 @@ export default {
   color: white
   border-bottom: 1px solid #CCC
   transition: .3s
-  background: #cf2d2d
+  background: $primary
   box-shadow: 0 0 4px rgba(#000000, 0.4)
 
   .campus
@@ -106,7 +106,7 @@ export default {
   overflow: hidden
   font-family: 'Roboto'
   height: 100vh
-  transition: .3s ease .1s
+  transition: .3s ease
 
 
 .route
@@ -148,7 +148,7 @@ export default {
 .slide_active-enter-active
   transition: .15s ease-out
 
-  .header, .routes
+  .routes
     opacity: 0
     transform: translateY(10px)
 .slide_active-leave-active

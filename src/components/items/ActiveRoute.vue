@@ -1,10 +1,10 @@
 <template lang="pug">
-transition(name="slide_active")
-  #active-route(@click="$router.push('/routes')")
-    .header
+transition(name="slide_active" mode="in-out")
+  #active-route
+    .header(@click="$router.push('/routes')")
       .name {{ activeRoute.name }}
     .stops
-      .stop(v-for="stop in activeRoute.schedule")
+      .stop(v-for="stop in activeRoute.schedule"  @click="$router.push('/stops/' + stop.stop_tag)")
         .stop-name {{ stop.stop_title}}
         .stop-times
           .time(v-for="time in stopTimes(stop)") {{ time }} min
@@ -36,13 +36,14 @@ export default {
 </script>
 
 <style lang="sass" scoped>
+@import "styles/colors.sass"
+
 .header
   padding: 24px 24px
   color: white
   border-bottom: 1px solid #CCC
-  background: #cf2d2d
+  background: $primary
   box-shadow: 0 0 4px rgba(#000000, 0.4)
-  transition: .3s
   height: 100px
 
   .name
@@ -53,7 +54,7 @@ export default {
     font-weight: bold
 
 .stops
-  transition: .3s ease .1s
+  transition: .3s
   height: calc(100vh - 50px)
   overflow-y: auto
 
@@ -70,6 +71,7 @@ export default {
   line-height: 50px
   padding: 0 10px
   border-bottom: 1px solid #DDD
+  padding: 0 20px
 
   .stop-name
     display: inline-block
@@ -98,7 +100,7 @@ export default {
 .slide_active-enter-active
   transition: .15s ease-out
 
-  .header, .stops
+  .stops
     opacity: 0
     transform: translateY(10px)
 .slide_active-leave-active

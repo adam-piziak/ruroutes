@@ -21,13 +21,21 @@ export default {
 </script>
 
 <style lang="sass" scoped>
+@import "styles/colors.sass"
+
 $height: 50px
 .route
   background: white
   padding: 16px
   height: $height
+  border-bottom: 1px solid #EEE
+  user-select: none
 
   &:hover
-    background: #AAA
+    background: $primary
     cursor: pointer
+
+    .name
+      font-weight: bold
+      color: white
 </style>

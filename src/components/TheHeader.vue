@@ -1,7 +1,6 @@
 <template lang="pug">
 header
   div#logo(@click="$router.push('/')") ru routes
-  .loading(v-if="resolvingRoute") loading...
   #links(@click.stop="$emit('activeGlobal')")
 </template>
 
@@ -28,18 +27,34 @@ header
 
   &.red
     background: red
-
-.loading
+.connection
+  position: relative
   display: inline-block
-  color: red
-  weight: bold
+  height: $height
+  flex-grow: 1
+  padding-right: 10px
+
+  .text
+    position: absolute
+    right: 40px
+  .indicator
+    position: absolute
+    top: 50%
+    right: 20px
+    transform: translateY(-50%)
+    height: 10px
+    width: 10px
+    background: #10cc23
+    border-radius: 50%
+    vertical-align: middle
+    float: right
 #links
   height: $height * 2/3
   width: $height *2/3
   margin-top: $height * 1/6
   margin-right: $height * 1/6 + 5px
   background:
-    image: url('../assets/more.svg')
+    image: url('~/icons/more.svg')
     repeat: no-repeat
     position: center center
     size: 90%

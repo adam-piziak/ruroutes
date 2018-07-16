@@ -3,8 +3,8 @@
   .error_icon
   .message
     slot
-  a(href="https://www.ruroutes.com/schedule") see bus schudule
-  a(href="https://www.ruroutes.com/status") check server status
+  router-link(to='/schedule') see bus schudule
+  router-link(to='/status') check server status
 </template>
 
 <style lang="sass" scoped>
@@ -21,7 +21,7 @@
   height: 30px
   width: 30px
   background:
-    image: url('../../assets/error.svg')
+    image: url('/icons/error.svg')
     repeat: no-repeat
     position: center center
 

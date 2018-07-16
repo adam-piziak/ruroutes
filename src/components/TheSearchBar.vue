@@ -46,7 +46,7 @@ $close-margin: 14px
   display: inline-block
   background:
     color: #555
-    image: url(../assets/close.svg)
+    image: url(../assets/icons/close.svg)
     position: center
     repeat: no-repeat
     size: 65%
@@ -75,7 +75,7 @@ $close-margin: 14px
       color: white
 
       .icon
-        background-image: url(../assets/filter_white.svg)
+        background-image: url('/icons/filter_white.svg')
     input::placeholder
       color: white
       font-weight: bold
@@ -115,7 +115,7 @@ input
     opacity: .9
     background:
       color: transparent
-      image: url('../assets/filter.svg')
+      image: url('/icons/filter_white.svg')
       repeat: no-repeat
       position: center center
       size: 50%

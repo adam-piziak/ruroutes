@@ -33,6 +33,8 @@ export default {
 </script>
 
 <style lang="sass" scoped>
+@import "styles/colors.sass"
+
 $speed: .3s
 
 .stop
@@ -45,13 +47,14 @@ $speed: .3s
 
   &:hover
     cursor: pointer
-    background: #FAFAFA
+    background: $primary
 
     .stop-name
+      color: white
       font-weight: bold
 
     .stop-campus
-      color: #000
+      color: #FAFAFA
 
 .stop-name
   font-size: 1.1rem

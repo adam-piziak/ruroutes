@@ -25,12 +25,14 @@ module.exports = {
       '@': resolve('src'),
       'components': resolve('src/components'),
       'styles': resolve('src/assets/styles'),
+      'icons': resolve('src/assets/icons'),
       'assets': resolve('src/assets'),
       'items': resolve('src/components/items'),
       'public': path.resolve(__dirname, '../public')
     }
   },
   module: {
+    noParse: /(mapbox-gl)\.js$/,
     noParse: /es6-promise\.js$/,
     rules: [
       {

@@ -47,7 +47,7 @@
     width: 50px
     background:
       color: transparent
-      image: url(../assets/close.svg)
+      image: url('/assets/icons/close.svg')
       position: center
       repeat: no-repeat
       size: 70%

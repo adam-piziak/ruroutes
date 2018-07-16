@@ -5,7 +5,8 @@ section#main_block
       TheHeader(@activeGlobal="globalNav = true" v-if="!search")
       TheNavigation(v-if="!search")
     TheSearchBar(v-else @closeSearch="closeSearch")
-  TheSearchBar(v-if="!mobile")
+  transition(name="zoom")
+    TheSearchBar(v-if="!mobile && searchNeeded")
 
   transition(name="slide" mode="out-in")
     router-view(:searchActive="search")
@@ -33,7 +34,11 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['mobile'])
+    ...mapGetters(['mobile']),
+    searchNeeded() {
+      const path = this.$store.state.route.path
+      return path.includes('/routes') || path.includes('/stops')
+    }
   },
   methods: {
     closeSearch() {
@@ -56,6 +61,7 @@ export default {
   height: 100vh
   overflow: hidden
   box-shadow: 0 5px 5px rgba(0, 0, 0, 0.2)
+  z-index: 10
 
 @media (max-width: 1024px)
   #main_block
@@ -80,7 +86,7 @@ export default {
   top: 0
 
 .zoom-enter-active, .zoom-leave-active
-  transition: .12s ease-out
+  transition: .15s ease-out
 
 .zoom-enter, .zoom-leave-to
   transform: scale(0)

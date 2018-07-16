@@ -79,9 +79,14 @@ function render (req, res) {
 
   const context = {
     url: req.url,
-    title: "RUROUTES",
+    title: "Rutgers Routes",
     lang: "en",
-    mobile: mobileState
+    mobile: mobileState,
+    mapboxStyles: ''
+  }
+
+  if (!mobileState) {
+    context.mapboxStyles = "<link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.14.2/mapbox-gl.css' rel='stylesheet' />"
   }
   renderer.renderToString(context, (err, html) => {
     if (err) {

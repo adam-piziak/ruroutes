@@ -1,14 +1,21 @@
 <template lang="pug">
 div#app
   Main
+  DesktopMapView(v-if="!mobile")
 </template>
 
 <script>
 import Main from '@/components/Main.vue'
+const DesktopMapView = () => import('components/DesktopMapView')
 
 export default {
   components: {
-    Main
+    Main, DesktopMapView
+  },
+  computed: {
+    mobile() {
+      return this.$store.state.mobile
+    }
   }
 }
 </script>
