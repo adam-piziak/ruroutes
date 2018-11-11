@@ -41,8 +41,8 @@ export default {
 @import "styles/colors.sass"
 
 $height: 80px
-$active-color: $primary
-$hover-color: $primary
+$active-color: #f44848
+$hover-color: #f44848
 
 nav
   display: flex

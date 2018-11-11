@@ -6,10 +6,19 @@ transition(name="slide_active" mode="in-out")
         .name {{ activeStop.name }}
         .campus {{ activeStop.campus}} Campus
       .routes
-        .route(v-for="route in activeStop.schedule")
-          .route-name {{ route.route }}
-          .route-times
-            .time(v-for="time in routeTimes(route)") {{ time }} min
+        transition-group(
+              appear
+              name="staggered-enter"
+              :css="false"
+              @before-enter="beforeEnter"
+              @enter="enter"
+              @leave="leave")
+          .route(v-for="(route, index) in activeStop.schedule"
+                 :data-index="index"
+                 :key="route.route")
+            .route-name {{ route.route }}
+            .route-times
+              .time(v-for="time in routeTimes(route)") {{ time }} min
 </template>
 
 <script>
@@ -56,7 +65,30 @@ export default {
         }
       });
       return timesInMinutes;
-    }
+    },
+    beforeEnter(el) {
+      el.style.transition = '.4s';
+      el.style.opacity = 0;
+      el.style.transform = 'translateY(20px)';
+    },
+    enter(el, _done) {
+      const delay = el.dataset.index * 30 + 50;
+      const stop = el;
+      setTimeout(() => {
+        stop.style.opacity = 1;
+        stop.style.transform = 'translateY(0)';
+      }, delay);
+      setTimeout(function () {
+        stop.style = null
+      }, delay + 400);
+    },
+    leave(el, _done) {
+      const delay = el.dataset.index * 1500;
+      const stop = el;
+      setTimeout(() => {
+        stop.style.opacity = 1;
+      }, delay);
+    },
   }
 }
 </script>
@@ -106,7 +138,6 @@ export default {
   overflow: hidden
   font-family: 'Roboto'
   height: 100vh
-  transition: .3s ease
 
 
 .route
@@ -148,9 +179,6 @@ export default {
 .slide_active-enter-active
   transition: .15s ease-out
 
-  .routes
-    opacity: 0
-    transform: translateY(10px)
 .slide_active-leave-active
   transition: .1s ease-out
 

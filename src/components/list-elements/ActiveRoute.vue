@@ -1,13 +1,26 @@
 <template lang="pug">
 transition(name="slide_active" mode="in-out")
-  #active-route
+  #active-route(:class="{'mobile': mobile}")
     .header(@click="$router.push('/routes')")
       .name {{ activeRoute.name }}
     .stops
-      .stop(v-for="stop in activeRoute.schedule"  @click="$router.push('/stops/' + stop.stop_tag)")
-        .stop-name {{ stop.stop_title}}
-        .stop-times
-          .time(v-for="time in stopTimes(stop)") {{ time }} min
+      transition-group(
+            appear
+            name="staggered-enter"
+            :css="false"
+            @before-enter="beforeEnter"
+            @enter="enter"
+            @leave="leave")
+        .stop(v-for="(stop, index) in activeRoute.schedule"
+              @click="$router.push('/stops/' + stop.stop_tag)"
+              :key="stop.stop_tag"
+              :data-index="index"
+              )
+          .bus-icon
+          .right-container
+            .stop-name {{ stop.stop_title}}
+            .stop-times
+              .time(v-for="time in stopTimes(stop)") {{ time }} min
 </template>
 
 <script>
@@ -16,6 +29,9 @@ export default {
   computed: {
     activeRoute() {
       return this.$store.getters.route(this.$route.params.id)
+    },
+    mobile() {
+      return this.$store.state.mobile
     }
   },
   methods: {
@@ -30,7 +46,30 @@ export default {
         }
       });
       return timesInMinutes;
-    }
+    },
+    beforeEnter(el) {
+      el.style.transition = '.4s';
+      el.style.opacity = 0;
+      el.style.transform = 'translateY(20px)';
+    },
+    enter(el, _done) {
+      const delay = el.dataset.index * 30 + 50;
+      const stop = el;
+      setTimeout(() => {
+        stop.style.opacity = 1;
+        stop.style.transform = 'translateY(0)';
+      }, delay);
+      setTimeout(function () {
+        stop.style = null
+      }, delay + 400);
+    },
+    leave(el, _done) {
+      const delay = el.dataset.index * 1500;
+      const stop = el;
+      setTimeout(() => {
+        stop.style.opacity = 1;
+      }, delay);
+    },
   }
 }
 </script>
@@ -38,10 +77,10 @@ export default {
 <style lang="sass" scoped>
 @import "styles/colors.sass"
 
+$side-padding: 24px
 .header
-  padding: 24px 24px
+  padding: $side-padding
   color: white
-  border-bottom: 1px solid #CCC
   background: $primary
   box-shadow: 0 0 4px rgba(#000000, 0.4)
   height: 100px
@@ -54,7 +93,6 @@ export default {
     font-weight: bold
 
 .stops
-  transition: .3s
   height: calc(100vh - 50px)
   overflow-y: auto
 
@@ -67,26 +105,37 @@ export default {
   &::-webkit-scrollbar-track
     background: #DDD
 .stop
-  height: 50px
-  line-height: 50px
   padding: 0 10px
-  border-bottom: 1px solid #DDD
-  padding: 0 20px
+  border-bottom: 1px solid #EEE
+  padding: 12px $side-padding
 
   .stop-name
+    font-size: 1.1rem
+    font-weight: 500
+    color: #333
+    margin-top: 4px
     display: inline-block
 
   .stop-times
-    display: inline-block
-    float: right
+    margin-top: 8px
+    color: $primary
 
     .time
       display: inline-block
-      padding-left: 10px
+
+      &:not(:last-child)
+        padding-right: 10px
 
   &:hover
     background: #EEE
     cursor: pointer
+
+.bus-icon
+  height: 100%
+  width: 100px
+  background:
+    color: red
+    image: url('../../assets/icons/nav_routes.svg')
 #active-route
   height: 100vh
   width: 100%
@@ -100,9 +149,6 @@ export default {
 .slide_active-enter-active
   transition: .15s ease-out
 
-  .stops
-    opacity: 0
-    transform: translateY(10px)
 .slide_active-leave-active
   transition: .1s ease-out
 

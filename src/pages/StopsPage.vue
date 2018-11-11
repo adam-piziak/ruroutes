@@ -10,7 +10,7 @@ section.stops(:style="height" :class="{'mobile': mobile}")
 </template>
 
 <script>
-import Stop from 'components/items/Stop'
+import Stop from 'components/list-elements/Stop'
 import GenericError from 'components/errors/GenericError'
 import { mapGetters } from 'vuex'
 export default {
@@ -50,8 +50,7 @@ export default {
   height: 100px
   overflow-y: auto
   background: #F0F0F0
-  z-index: 100
-
+  
   &::-webkit-scrollbar
     width: 8px
 

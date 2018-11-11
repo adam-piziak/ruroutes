@@ -7,6 +7,10 @@ export default {
     state.stops = stops;
   },
 
+  SET_ROUTE_LIST: (state, routeList) => {
+    state.routeList = routeList;
+  },
+
   SET_ACTIVE_STOP: (state, stop) => {
     state.activeStop = stop;
   },
@@ -22,9 +26,12 @@ export default {
   SET_SEARCH_QUERY: (state, query) => {
     state.searchQuery = query
   },
-
   RESOLVING_ROUTE: (state, resolving) => {
     state.resolvingRoute = resolving
+  },
+  FLAG_VUE_MOUNTED: (state) => {
+    state.mounted = true
+    console.log("mounted")
   }
 
 }

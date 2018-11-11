@@ -21,5 +21,11 @@ export default {
         reject(err)
       })
     })
+  },
+
+  FETCH_ROUTE_LIST({ commit, state }) {
+    return api.fetchRouteList().then((routes) => {
+      commit('SET_ROUTE_LIST', routes)
+    })
   }
 }

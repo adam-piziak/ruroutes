@@ -54,7 +54,7 @@ header
   margin-top: $height * 1/6
   margin-right: $height * 1/6 + 5px
   background:
-    image: url('~/icons/more.svg')
+    image: url('~icons/more.svg')
     repeat: no-repeat
     position: center center
     size: 90%

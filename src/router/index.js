@@ -8,9 +8,6 @@ const StopsPage = () => import('@/pages/StopsPage.vue')
 const DirectionsPage = () => import('@/pages/DirectionsPage.vue')
 const SchedulePage = () => import('@/pages/SchedulePage.vue')
 
-const ActiveStop = () => import('items/ActiveStop')
-const ActiveRoute = () => import('items/ActiveRoute')
-
 Vue.use(Router)
 Vue.use(Meta)
 
@@ -29,8 +26,7 @@ export function createRouter() {
         children: [
           {
             path: ':id',
-            name: 'ActiveRoute',
-            component: ActiveRoute
+            name: 'ActiveRoute'
           }
         ]
       },
@@ -41,8 +37,7 @@ export function createRouter() {
         children: [
           {
             path: ':id',
-            name: 'ActiveStop',
-            component: ActiveStop
+            name: 'ActiveStop'
           }
         ]
       },

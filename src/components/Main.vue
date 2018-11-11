@@ -7,21 +7,22 @@ section#main_block
     TheSearchBar(v-else @closeSearch="closeSearch")
   transition(name="zoom")
     TheSearchBar(v-if="!mobile && searchNeeded")
-
+  TheActiveElement(v-if="itemOpened")
   transition(name="slide" mode="out-in")
     router-view(:searchActive="search")
   transition(name="slide")
     TheGlobalNavigation(v-if="globalNav" @closeGlobalNav="globalNav = false")
   transition(name="zoom")
-    TheSearchFAB(v-if="!search && mobile" @click.native="search=true")
+    TheSearchFAB(v-if="!search && mobile && searchNeeded" @click.native="search=true")
 </template>
 
 <script>
-import TheHeader from 'components/TheHeader'
-import TheSearchBar from 'components/TheSearchBar'
-import TheNavigation from 'components/TheNavigation'
+import TheHeader           from 'components/TheHeader'
+import TheSearchBar        from 'components/TheSearchBar'
+import TheNavigation       from 'components/TheNavigation'
 import TheGlobalNavigation from 'components/TheGlobalNavigation'
-import TheSearchFAB from 'components/TheSearchFAB'
+import TheActiveElement    from 'components/active-element/TheActiveElement'
+import TheSearchFAB        from 'components/TheSearchFAB'
 
 import { mapGetters } from 'vuex'
 
@@ -38,6 +39,9 @@ export default {
     searchNeeded() {
       const path = this.$store.state.route.path
       return path.includes('/routes') || path.includes('/stops')
+    },
+    itemOpened() {
+      return this.$route.params.id != undefined
     }
   },
   methods: {
@@ -47,7 +51,12 @@ export default {
     }
   },
   components: {
-    TheHeader, TheSearchBar, TheNavigation, TheGlobalNavigation, TheSearchFAB
+    TheHeader,
+    TheSearchBar,
+    TheNavigation,
+    TheActiveElement,
+    TheGlobalNavigation,
+    TheSearchFAB
   }
 }
 </script>
@@ -56,11 +65,13 @@ export default {
 #main_block
   position: relative
   background: white
+  display: flex
+  flex-direction: column
   width: 500px
   min-width: 300px
   height: 100vh
   overflow: hidden
-  box-shadow: 0 5px 5px rgba(0, 0, 0, 0.2)
+  box-shadow: 0 5px 8px rgba(0, 0, 0, 0.2)
   z-index: 10
 
 @media (max-width: 1024px)
@@ -71,7 +82,7 @@ export default {
   transition: .15s
 
 .slide-enter, .slide-leave-to
-  transform: translateY(30px)
+  transform: translateY(20px)
   opacity: .1
 
 .fade-enter-active, .fade-leave-active

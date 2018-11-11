@@ -3,6 +3,7 @@ export default {
   stops: state => state.stops,
   activeStop: state => state.activeStop,
   mobile: state => state.mobile,
+  routeList: state => state.routeList,
   stop: (state) => (id) => {
     return state.stops.find(s => s.tag === id)
   },

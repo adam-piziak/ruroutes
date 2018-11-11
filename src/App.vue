@@ -21,12 +21,9 @@ export default {
 </script>
 
 <style lang="sass">
-@import url('https://fonts.googleapis.com/css?family=Roboto:400,500,700')
-$font_path: './fonts/Kollektif.ttf'
-
 *
   margin: 0
   padding: 0
   box-sizing: border-box
-  font-family: 'roboto'
+  font-family: 'verdana'
 </style>

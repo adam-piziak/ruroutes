@@ -37,7 +37,7 @@ export default {
 
 <style lang="sass" scoped>
 
-$height: 60px
+$height: 50px
 $close-margin: 14px
 
 #close
@@ -60,14 +60,13 @@ $close-margin: 14px
     background-color: #000
 
 #search
-  height: $height
   border-top: 1px solid #dbdbdb
   display: flex
   background: white
   position: relative
   z-index: 1
-  box-shadow: 0 2px 1px rgba(#000000, 0.15)
-
+  border-bottom: 1px solid #DDD
+  flex-shrink: 0
   &.mobile
     background: #ef5350
 

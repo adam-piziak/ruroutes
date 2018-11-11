@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const SERVER_URL = 'https://api.ruroutes.com'
+const SERVER_URL = 'http://127.0.0.1:8243/'
 
 export default {
   fetchRoutes() {
@@ -23,5 +23,16 @@ export default {
         reject(err)
       })
     })
-  }
+  },
+
+  fetchRouteList() {
+    const request = SERVER_URL + "/routes"
+    return new Promise((resolve, reject) => {
+      axios.get(request)
+        .then((res) => {
+          resolve(res.data)
+        })
+        .catch((err) => reject(err))
+    })
+   }
 }

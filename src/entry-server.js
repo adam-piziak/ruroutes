@@ -14,10 +14,13 @@ export default context => {
       }
       store.commit('SET_MOBILE', context.mobile)
 
-      Promise.all([
-        store.dispatch('FETCH_ROUTES'),
-        store.dispatch('FETCH_STOPS')
-      ]).then(() => {
+      Promise.all(matchedComponents.map(Component => {
+        if (Component.asyncData) {
+          return Component.asyncData({
+            store
+          })
+        }
+      })).then(() => {
         context.state = store.state
         resolve(app)
       })

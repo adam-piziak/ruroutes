@@ -38,23 +38,22 @@ export default {
 $speed: .3s
 
 .stop
+  position: relative
   width: 100%
-  height: 60px
-  padding: 10px
+  padding: 16px 20px
   background: white
   border-bottom: 1px solid #EEE
   user-select: none
+  z-index: 5
+  transition: padding .15s, box-shadow .05s
 
   &:hover
     cursor: pointer
-    background: $primary
-
-    .stop-name
-      color: white
-      font-weight: bold
-
-    .stop-campus
-      color: #FAFAFA
+    opacity: .99
+    box-shadow: 0 1px 8px rgba(#000000, 0.2)
+    z-index: 20
+    padding-left: 15px
+    font-weight: 500
 
 .stop-name
   font-size: 1.1rem

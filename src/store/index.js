@@ -12,10 +12,13 @@ export function createStore() {
     state: {
       mobile: false,
       routes: [],
-      stops: {},
+      stops: [],
+      routeList: [],
+      activeStops: [],
       activeStop: {},
       searchQuery: '',
-      resolvingRoute: false
+      resolvingRoute: false,
+      mounted: false
     },
     actions,
     getters,
