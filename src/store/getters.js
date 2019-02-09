@@ -5,10 +5,14 @@ export default {
   mobile: state => state.mobile,
   routeList: state => state.routeList,
   stop: (state) => (id) => {
-    return state.stops.find(s => s.tag === id)
+    return state.stops.find((el) => {
+      return el.id == id
+    })
   },
   route: (state) => (id) => {
-    return state.routes.find(s => s.tag === id)
+    return state.routes.find((el) => {
+      return el.id == id
+    })
   },
   keywords: (state) => {
     return state.searchQuery.toLowerCase().trim()

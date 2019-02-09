@@ -1,9 +1,9 @@
 export default {
-  SET_ROUTES: (state, { routes }) => {
+  SET_ROUTES: (state,  routes ) => {
     state.routes = routes;
   },
 
-  SET_STOPS: (state, { stops }) => {
+  SET_STOPS: (state, stops ) => {
     state.stops = stops;
   },
 

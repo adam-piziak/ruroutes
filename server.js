@@ -86,7 +86,7 @@ function render (req, res) {
   }
 
   if (!mobileState) {
-    context.mapboxStyles = "<link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.14.2/mapbox-gl.css' rel='stylesheet' />"
+    context.mapboxStyles = "<link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.52.0/mapbox-gl.css' rel='stylesheet' />"
   }
   renderer.renderToString(context, (err, html) => {
     if (err) {

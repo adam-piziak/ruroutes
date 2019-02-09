@@ -1,7 +1,7 @@
 <template lang="pug">
 .stop-header
   .stop_title {{ activeStop.name }}
-  .stop_campus {{ activeStop.campus }} Campus
+  .stop_campus {{ activeStop.area }}
 </template>
 
 <script>

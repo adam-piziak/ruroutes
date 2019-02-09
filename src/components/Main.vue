@@ -57,6 +57,15 @@ export default {
     TheActiveElement,
     TheGlobalNavigation,
     TheSearchFAB
+  },
+  mounted() {
+    let store = this.$store
+    store.dispatch('FETCH_ROUTES')
+    store.dispatch('FETCH_STOPS')
+    setInterval(function () {
+       store.dispatch('FETCH_ROUTES')
+       store.dispatch('FETCH_STOPS')
+    }, 10000);
   }
 }
 </script>

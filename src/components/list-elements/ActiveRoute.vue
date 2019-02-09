@@ -13,7 +13,8 @@ transition(name="slide_active" mode="in-out")
             @leave="leave")
         .stop(v-for="(stop, index) in activeRoute.schedule"
               @click="$router.push('/stops/' + stop.stop_tag)"
-              :key="stop.stop_tag"
+              :class="{'inactive': stop.arrivals.length == null }"
+              :key="stop.id"
               :data-index="index"
               )
           .bus-icon
@@ -155,4 +156,7 @@ $side-padding: 24px
 .slide_active-enter, .slide_active-leave-to
   transform: translateY(40px)
   opacity: 0
+
+.inactive
+  background: pink
 </style>

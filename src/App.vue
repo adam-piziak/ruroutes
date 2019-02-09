@@ -6,7 +6,7 @@ div#app
 
 <script>
 import Main from '@/components/Main.vue'
-const DesktopMapView = () => import('components/DesktopMapView')
+import DesktopMapView from 'components/DesktopMapView';
 
 export default {
   components: {

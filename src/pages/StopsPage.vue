@@ -50,7 +50,7 @@ export default {
   height: 100px
   overflow-y: auto
   background: #F0F0F0
-  
+
   &::-webkit-scrollbar
     width: 8px
 

@@ -1,114 +1,138 @@
 <template lang="pug">
   section#map-view
-    .loading(:class="{'loaded': loaded}")
-      .box
-        .map-label Loading Map
-        .dots
-          .dot
-          .dot
-          .dot
     #map
 </template>
 
 <script>
 import EventBus from '@/event-bus.js';
 import axios from 'axios';
+
 export default {
   data() {
     return {
       map: null,
+      counter: 0,
       currentMarker: null,
       buses: [],
+      layers: [],
+      markers: [],
       locationInterval: null,
       loaded: false
     }
   },
   mounted() {
     this.initialize()
-/*
-    EventBus.$on('GO_TO_STOP', (tag) => {
-      const stop = this.getStop(tag)
-      this.buses.forEach((marker) => {
-        marker.remove()
-      })
-      let ctx = this
-      setTimeout(function () {
-        ctx.map.flyTo({
-          center: stop.location,
-          zoom: 16
-        });
-      }, 400);
+    const mapboxgl = require('mapbox-gl')
+    EventBus.$on('GO_TO_STOP', (id) => {
 
-      if (this.currentMarker != null) this.currentMarker.remove()
+      const stop = this.getStop(id)
+      this.map.flyTo({
+        center: stop.location,
+        zoom: 15.5
+      });
+
+      this.markers.forEach((m) => {
+        m.remove()
+      })
+      if (this.currentMarker != null) {
+        this.currentMarker.remove()
+        this.currentMarker = null
+      }
       this.currentMarker = new mapboxgl.Marker({ color: "red" }).setLngLat(stop.location)
       this.currentMarker.addTo(this.map);
+      if (this.map.getLayer("route-outline")) {
+        this.map.removeLayer("route-outline");
+        this.map.removeSource("route-outline");
+      }
     })
 
+    EventBus.$on('GO_TO_ROUTE', (id) => {
+      let ctx = this;
+      const route = this.getRoute(id)
+      if (this.currentMarker != null) {
+        this.currentMarker.remove()
+        this.currentMarker = null
+      }
+      let bounds = new mapboxgl.LngLatBounds();
+      route.segments.forEach((segment) => {
+        let s = segment.map(x => [x[1], x[0]])
+        s.forEach((seg) => bounds.extend(seg))
+      })
+      this.map.fitBounds(bounds, { padding: 100, linear: true });
 
-    EventBus.$on('GO_TO_ROUTE', (tag) => {
-      this.currentMarker.remove()
-      axios.get(`http://localhost:8243/paths/${tag}`).then((res) => {
-        let counter = 0;
-        res.data.path.forEach((path) => {
-          let coords = []
-          path.point.forEach((point) => {
-            coords.push([point.lon, point.lat])
-          })
-          this.map.addLayer({
-            "id": `route${counter}`,
-            "type": "line",
-            "source": {
-              "type": "geojson",
-              "data": {
-                  "type": "Feature",
-                  "properties": {},
-                  "geometry": {
-                      "type": "LineString",
-                      "coordinates": coords
-                  }
-              }
-            },
-            "layout": {
-                "line-join": "round",
-                "line-cap": "round"
-            },
-            "paint": {
-                "line-color": "blue",
-                "line-width": 2,
-                "line-dasharray": [.05, 2]
-            }
-          })
-          counter++;
-        })
+      ctx.markers.length = 0;
+      route.stops.forEach((stop) => {
+        if (stop.arrivals) {
+          let marker = new mapboxgl.Marker({ color: "red" }).setLngLat(stop.location)
+          ctx.markers.push(marker);
+          marker.addTo(ctx.map);
+        } else {
+          let marker = new mapboxgl.Marker({ color: "gray" }).setLngLat(stop.location)
+          ctx.markers.push(marker);
+          marker.addTo(ctx.map);
+        }
+
       })
 
-      let ctx = this;
-      this.locationInterval = setInterval(() => {
-        axios.get(`http://webservices.nextbus.com/service/publicJSONFeed?command=vehicleLocations&a=rutgers&t=0&r=${tag}`)
-          .then((res) => {
-            let buses = []
-            console.log("-----------------------------")
-            res.data.vehicle.forEach((bus) => {
-              console.log([bus.lon, bus.lat]);
-              var el = document.createElement('div');
-              var child = document.createElement('div');
-              var child2 = document.createElement('div');
-              el.className = 'parent';
-              child.className = 'marker';
-              child2.className = 'marker2';
-              el.appendChild(child)
-              el.appendChild(child2)
-              let marker = new mapboxgl.Marker(el).setLngLat([bus.lon, bus.lat]).addTo(ctx.map)
-              buses.push(marker)
-            })
-            ctx.buses.forEach((marker) => {
-              marker.remove()
-            })
-            ctx.buses = buses
-          })
-      }, 6000);
+      setTimeout(function () {
+        let geojson = {};
+        geojson.id = "route-outline";
+        geojson.type = "line";
+        geojson.source = {};
+        geojson.source.type = "geojson";
+        geojson.source.data = {};
+        geojson.source.data.type = "FeatureCollection";
+        geojson.source.data.features = [];
+        geojson.paint = {};
+        geojson.paint["line-color"] = "#FF0000";
+        geojson.paint["line-width"] = 2;
 
+        route.segments.forEach((segment) => {
+          let coordinates = segment.map(x => [x[1], x[0]])
+          let feature = {};
+          feature.type = "Feature";
+          feature.properties = {};
+          feature.geometry = {};
+          feature.geometry.type = "LineString";
+          feature.geometry.coordinates = coordinates;
+
+
+          geojson.source.data.features.push(feature);
+        })
+
+        if (ctx.map.getLayer("route-outline")) {
+          ctx.map.removeLayer("route-outline");
+        }
+
+        if (ctx.map.getSource('route-outline')) {
+          ctx.map.removeSource("route-outline");
+        }
+        ctx.map.addLayer(geojson);
+/*
+        ctx.map.addLayer({
+          "id": `id${ctx.counter}`,
+          "type": "line",
+          "source": {
+          "type": "geojson",
+            "data": {
+              "type": "Feature",
+              "properties": {},
+              "geometry": {
+                "type": "LineString",
+                "coordinates": s
+              }
+            }
+          },
+          "paint": {
+            "line-color": "#FF0000",
+            "line-width": 2,
+          }
+        });
+        */
+
+      }, 800);
     })
+
 
 
     this.map.on('load', () => {
@@ -123,11 +147,13 @@ export default {
         }
       }
     })
-    */
   },
   methods: {
-    getStop(tag) {
-      return this.$store.getters.stop(tag)
+    getStop(id) {
+      return this.$store.getters.stop(id)
+    },
+    getRoute(id) {
+      return this.$store.getters.route(id)
     },
     initialize() {
       const mapboxgl = require('mapbox-gl')
@@ -135,6 +161,7 @@ export default {
       const mapview = new mapboxgl.Map({
         container: 'map',
         //style: 'mapbox://styles/adam-piziak/cjhqcs8sx1rfa2rpe0gw3pyjh',
+        //style: 'mapbox://styles/mapbox/streets-v11',
         style: 'https://maps.tilehosting.com/styles/basic/style.json?key=K7rAuvC67gIS7xy6bcOa',
         center: this.stop ? this.stop.location : [-74.447672, 40.502281],
         zoom: 16,

@@ -37,8 +37,6 @@ export default {
   &.elevate
     box-shadow: 0 2px 6px rgba(#000000, 0.18)
 
-
-
   .route_title
     color: #202020
     font-size: 2rem

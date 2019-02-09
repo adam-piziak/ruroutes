@@ -102,13 +102,12 @@ nav
 
       .tab_text
         color: white
-        font-weight: bold
 
       .tab_icon
         opacity: 1
 
       &:not(:last-child)::after
-        display: none
+        background: rgba(#ffffff, 0.01)
 
 
     &:not(:last-child)::after
@@ -155,14 +154,12 @@ nav
     &:hover
       background: $hover-color
       cursor: pointer
-      height: $height
 
       &:not(:last-child)::after
-        display: none
+        background: rgba(#000000, 0.01)
 
       .tab_text
         color: #FFF
-        font-weight: bold
 
       .tab_icon
         opacity: 1

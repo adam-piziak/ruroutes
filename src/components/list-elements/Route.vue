@@ -1,10 +1,11 @@
 <template lang="pug">
 .route(@click="openRoute")
   .name {{ route.name }}
-  .route_campus(v-for="campus in route.campuses") {{ campus }}
 </template>
 
 <script>
+import EventBus from '@/event-bus.js';
+
 export default {
   name: 'Route',
   props: {
@@ -15,7 +16,8 @@ export default {
   },
   methods: {
     openRoute() {
-      this.$router.push('/routes/' + this.route.tag)
+      this.$router.push('/routes/' + this.route.id)
+      EventBus.$emit('GO_TO_ROUTE', this.route.id);
     }
   }
 };

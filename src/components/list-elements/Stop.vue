@@ -1,10 +1,11 @@
 <template lang="pug">
 .stop(@click="openStop")
   .stop-name {{ stop.name }}
-  .stop-campus {{ stop.campus}}
+  .stop-campus {{ stop.area }}
 </template>
 
 <script>
+import EventBus from '@/event-bus.js';
 import { mapGetters, mapMutations } from 'vuex';
 
 export default {
@@ -22,7 +23,8 @@ export default {
   },
   methods: {
     openStop() {
-      this.$router.push('/stops/' + this.stop.tag)
+      this.$router.push('/stops/' + this.stop.id)
+      EventBus.$emit('GO_TO_STOP', this.stop.id)
     },
     ...mapMutations({
       setActiveStop: 'SET_ACTIVE_STOP'

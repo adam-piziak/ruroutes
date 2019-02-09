@@ -1,10 +1,10 @@
 <template lang="pug">
 section.routes
-  GenericError(v-if="routeList.length === 0") No Active Routes Found
+  GenericError(v-if="routes.length === 0") No Active Routes Found
   router-view
   Route(
-    v-for="(route) in routeList"
-    :key="route.tag"
+    v-for="route in routes"
+    :key="route.id"
     :route="route"
     )
 </template>
@@ -12,10 +12,11 @@ section.routes
 <script>
 import Route from 'components/list-elements/Route'
 import GenericError from 'components/errors/GenericError'
+import api from "@/api"
 import { mapGetters } from 'vuex'
 export default {
   asyncData ({ store, route }) {
-    return store.dispatch('FETCH_ROUTE_LIST')
+    return store.dispatch('FETCH_ROUTES')
   },
   name: 'RoutesPage',
   components: {
@@ -23,7 +24,7 @@ export default {
   },
   computed: {
     ...mapGetters([
-      'routeList'
+      'routes'
     ]),
   }
 }

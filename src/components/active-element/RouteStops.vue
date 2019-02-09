@@ -1,11 +1,13 @@
 <template lang="pug">
-#route_stops()
-  .stop(v-for="stop in activeRoute.schedule" @click="goToStop(stop.stop_tag)")
+#route_stops
+  .stop(v-for="stop in activeRoute.stops"
+        :class="{'inactive': !stop.arrivals}"
+        @click="goToStop(stop.id)")
     .icon
     .main
-      .name {{ stop.stop_title }}
+      .name {{ stop.name }}
       .campus {{ stop.campus }}
-      .times
+      .times(v-if="stop.arrivals")
         .label Arriving in
         .time(v-for="time in stopTimes(stop)" :class="{'green': time < 5, 'red': time <= 1}") {{ time }} min
 </template>
@@ -33,7 +35,7 @@ export default {
     stopTimes(stop) {
       const timesInMinutes = [];
       const currentEpochTime = Date.now();
-      stop.times.forEach((el) => {
+      stop.arrivals.forEach((el) => {
         if (timesInMinutes.length >= 3) return;
         const difference = el - currentEpochTime;
         if (difference > 0) {
@@ -128,4 +130,8 @@ export default {
     size: 120%
     repeat: no-repeat
     position: center
+
+.inactive
+  opacity: 0.5
+  padding-bottom: 12px
 </style>
