@@ -1,5 +1,5 @@
 import { shallowMount } from '@vue/test-utils'
-import Stop from '@/components/items/Stop.vue'
+import Stop from '@/components/list-elements/Stop.vue'
 
 describe('Stop', () => {
   it('renders a div', () => {
