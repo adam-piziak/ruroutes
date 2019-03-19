@@ -2,7 +2,7 @@
   <img src="/src/assets/icons/logo.svg" alt="Your image title" width="140"/>
 </p>
 
-<h3 align="center">ScarletBus Web Client</h3>
+<big><h3 align="center">ScarletBus Web Client</h3></big>
 <p align="center" style="margin-top: -5px; margin-bottom: 20px;">
 <img src="https://travis-ci.org/adam-piziak/scarletbus-web.svg?branch=master">
 <img src="https://img.shields.io/badge/License-MIT-blue.svg">
