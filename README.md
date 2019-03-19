@@ -5,9 +5,8 @@
 </h1>
 <p align="center">
 <img src="https://img.shields.io/website/https/www.scarletbus.com.svg?label=status">
-[![MIT license](https://img.shields.io/badge/License-MIT-blue.svg)](https://github.com/adam-piziak/ruroutes/blob/master/LICENSE)
-[![Build Status](https://travis-ci.org/adam-piziak/scarletbus-web.svg?branch=master)](https://travis-ci.org/adam-piziak/scarletbus-web)
-</p>
+<img src="https://img.shields.io/badge/License-MIT-blue.svg">
+<img src="https://travis-ci.org/adam-piziak/scarletbus-web.svg?branch=master">
 <hr/>
 
 Welcome to the live repository for the ScarletBus web client. This is a student created open source client for the Rutgers University transportation system.
