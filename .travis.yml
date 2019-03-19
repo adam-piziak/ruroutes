@@ -5,7 +5,7 @@ addons:
   ssh_known_hosts: scarletbus.com
 cache: yarn
 before_install:
-- openssl aes-256-cbc -K $encrypted_70ba39ff6889_key -iv $encrypted_70ba39ff6889_iv
+- openssl aes-256-cbc -K $encrypted_3ea5f71d02fc_key -iv $encrypted_3ea5f71d02fc_iv
   -in travis_rsa.enc -out travis_rsa -d
 - chmod 600 travis_rsa
 - mv travis_rsa ~/.ssh/id_rsa
