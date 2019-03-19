@@ -43,6 +43,7 @@ nav
   //box-shadow: 0 2px 1px rgba(#000000, 0.15)
   padding-bottom: 20px
   border-bottom: 1px solid #eee
+  user-select: none
 
   .tab
     //height: $height
@@ -61,6 +62,7 @@ nav
     padding-top: 3px
     padding-bottom: 3px
     margin-right: 20px
+
 
     &.gray .tab_text
       color: #AAA

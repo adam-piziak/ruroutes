@@ -3,7 +3,8 @@
   .stop(v-for="stop in activeRoute.stops"
         :class="{'inactive': !stop.arrivals}"
         @click="goToStop(stop.id)")
-    .icon
+    .icon-block
+      .icon
     .main
       .name {{ stop.name }}
       .campus {{ stop.campus }}
@@ -56,6 +57,8 @@ export default {
 
 
 .stop
+  display: flex
+  position: relative
   background: white
   padding: 18px 30px
   border-bottom: 1px solid #E0E0E0
@@ -73,17 +76,8 @@ export default {
 .main
   flex-grow: 1
   display: inline-block
-  margin-left: 16px
-.icon
-  display: inline-block
-  height: 22px
-  width: 20px
-  opacity: .7
-  transition: margin .15s
-  float: left
-  vertical-align: text-bottom
-  background:
-    image: url(~icons/nav_routes.svg)
+  margin-left: 30px
+  top: 0
 
 .name
   transition: margin .15s
@@ -118,6 +112,8 @@ export default {
   &.green.red
     color: #e64848
 
+.icon-block
+  display: inline-block
 .icon
   display: inline-block
   height: 22px

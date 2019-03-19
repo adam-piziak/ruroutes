@@ -79,7 +79,7 @@ function render (req, res) {
 
   const context = {
     url: req.url,
-    title: "Rutgers Routes",
+    title: "Scarlet Bus",
     lang: "en",
     mobile: mobileState,
     mapboxStyles: ''
