@@ -10,8 +10,8 @@
 </p>
 Welcome to the live repository for the ScarletBus web client. This is a student created open source client for the Rutgers University transportation system.
 
-<br>
 Changes to the master branch are automatically deployed to the live site. Contributions welcome =)
+
 ### Development
 To run in development mode:
 ~~~~
