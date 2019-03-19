@@ -11,6 +11,3 @@ To run in development mode:
 ~~~~
 yarn dev
 ~~~~
-
-### API repo:
- [ruroutes-api](https://github.com/adam-piziak/ruroutes-api)
