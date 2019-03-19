@@ -2,7 +2,7 @@
 header
   #logo(@click="$router.push('/')")
   .text RU
-    span ROUTES
+    span ROUTESGG
   //#links(@click.stop="$emit('activeGlobal')")
 </template>
 
