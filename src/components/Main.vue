@@ -5,14 +5,14 @@ section#main_block
       TheHeader(@activeGlobal="globalNav = true" v-if="!search")
       TheNavigation(v-if="!search")
     TheSearchBar(v-else @closeSearch="closeSearch")
-  transition(name="zoom")
+  //transition(name="zoom")
     TheSearchBar(v-if="!mobile && searchNeeded")
   TheActiveElement(v-if="itemOpened")
   transition(name="slide" mode="out-in")
     router-view(:searchActive="search")
   transition(name="slide")
     TheGlobalNavigation(v-if="globalNav" @closeGlobalNav="globalNav = false")
-  transition(name="zoom")
+  //transition(name="zoom")
     TheSearchFAB(v-if="!search && mobile && searchNeeded" @click.native="search=true")
 </template>
 

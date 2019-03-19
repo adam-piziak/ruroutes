@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const SERVER_URL = 'http://127.0.0.1:8000'
+const SERVER_URL = 'https://api.scarletbus.com'
 
 export default {
   fetchRoutes() {
@@ -16,6 +16,7 @@ export default {
                 id
                 name
                 segments
+                areas
                 stops {
                   id
                   location

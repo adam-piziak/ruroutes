@@ -24,6 +24,13 @@ export default {
     this.initialize()
     const mapboxgl = require('mapbox-gl')
     EventBus.$on('GO_TO_STOP', (id) => {
+      if (this.map.getLayer("route-outline")) {
+        this.map.removeLayer("route-outline");
+      }
+
+      if (this.map.getSource('route-outline')) {
+        this.map.removeSource("route-outline");
+      }
 
       const stop = this.getStop(id)
       this.map.flyTo({
@@ -38,17 +45,20 @@ export default {
         this.currentMarker.remove()
         this.currentMarker = null
       }
-      this.currentMarker = new mapboxgl.Marker({ color: "red" }).setLngLat(stop.location)
+      let el = document.createElement('div');
+      el.className = 'stop-marker';
+      el.style.cursor = "pointer";
+      this.currentMarker = new mapboxgl.Marker(el).setLngLat(stop.location)
       this.currentMarker.addTo(this.map);
-      if (this.map.getLayer("route-outline")) {
-        this.map.removeLayer("route-outline");
-        this.map.removeSource("route-outline");
-      }
+
     })
 
     EventBus.$on('GO_TO_ROUTE', (id) => {
       let ctx = this;
       const route = this.getRoute(id)
+      setInterval(function () {
+
+      }, 2000);
       if (this.currentMarker != null) {
         this.currentMarker.remove()
         this.currentMarker = null
@@ -60,19 +70,30 @@ export default {
       })
       this.map.fitBounds(bounds, { padding: 100, linear: true });
 
-      ctx.markers.length = 0;
-      route.stops.forEach((stop) => {
-        if (stop.arrivals) {
-          let marker = new mapboxgl.Marker({ color: "red" }).setLngLat(stop.location)
-          ctx.markers.push(marker);
-          marker.addTo(ctx.map);
-        } else {
-          let marker = new mapboxgl.Marker({ color: "gray" }).setLngLat(stop.location)
-          ctx.markers.push(marker);
-          marker.addTo(ctx.map);
-        }
-
+      this.markers.forEach((m) => {
+        m.remove()
       })
+      ctx.markers.length = 0;
+      setTimeout(() => {
+        route.stops.forEach((stop) => {
+          if (stop.arrivals) {
+            let el = document.createElement('div');
+            el.className = 'stop-marker';
+            el.style.cursor = "pointer";
+            el.addEventListener('click', e => {
+              e.stopPropagation();
+              ctx.$router.push(`/stops/${stop.id}`)
+              EventBus.$emit('GO_TO_STOP', stop.id);
+            }, true);
+            let marker = new mapboxgl.Marker(el).setLngLat(stop.location).addTo(ctx.map);
+            ctx.markers.push(marker);
+          } else {
+            let marker = new mapboxgl.Marker({ color: "gray" }).setLngLat(stop.location)
+            ctx.markers.push(marker);
+            marker.addTo(ctx.map);
+          }
+        })
+      }, 200);
 
       setTimeout(function () {
         let geojson = {};
@@ -84,7 +105,7 @@ export default {
         geojson.source.data.type = "FeatureCollection";
         geojson.source.data.features = [];
         geojson.paint = {};
-        geojson.paint["line-color"] = "#FF0000";
+        geojson.paint["line-color"] = "#EE0000";
         geojson.paint["line-width"] = 2;
 
         route.segments.forEach((segment) => {
@@ -107,30 +128,9 @@ export default {
         if (ctx.map.getSource('route-outline')) {
           ctx.map.removeSource("route-outline");
         }
-        ctx.map.addLayer(geojson);
-/*
-        ctx.map.addLayer({
-          "id": `id${ctx.counter}`,
-          "type": "line",
-          "source": {
-          "type": "geojson",
-            "data": {
-              "type": "Feature",
-              "properties": {},
-              "geometry": {
-                "type": "LineString",
-                "coordinates": s
-              }
-            }
-          },
-          "paint": {
-            "line-color": "#FF0000",
-            "line-width": 2,
-          }
-        });
-        */
 
-      }, 800);
+        ctx.map.addLayer(geojson);
+      }, 100);
     })
 
 
@@ -167,6 +167,7 @@ export default {
         zoom: 16,
       });
       this.map = mapview
+      this.map.getCanvas().style.cursor ='default';
       this.map.on('load', () => {
           this.loaded = true
       })
@@ -205,13 +206,22 @@ export default {
   height: 100vh
   z-index: 0
 
-  &:hover
-    cursor: pointer !important
 
 #map
   height: 100vh
   position: relative
   z-index: 10
+
+.stop-marker
+  height: 40px
+  width: 40px
+  background: url(~assets/icons/stop.svg) no-repeat
+  background-position: top right
+  background-size: 100%
+
+  &:hover
+    transform: translateY(-5px)
+
 .marker
   position: absolute
   background: blue

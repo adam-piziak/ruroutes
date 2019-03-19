@@ -1,6 +1,8 @@
 <template lang="pug">
 .route(@click="openRoute")
   .name {{ route.name }}
+  .areas
+    .area(v-for="area in route.areas") {{ area }}
 </template>
 
 <script>
@@ -32,7 +34,7 @@ $height: 50px
   padding: 16px 20px
   border-bottom: 1px solid #EEE
   user-select: none
-  transition: padding .3s
+  transition: padding .05s
 
   &:hover
     cursor: pointer
@@ -46,11 +48,9 @@ $height: 50px
   margin-bottom: 4px
   font-weight: 500
 
-.route_campus
+.area
   display: inline-block
-  color: #222
-  font-weight: 300
-  text-transform: capitalize
+  color: #666
 
   &:not(:last-child)::after
     content: "·"

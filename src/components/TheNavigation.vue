@@ -12,18 +12,6 @@ nav
   )
     div.tab_icon
     div.tab_text Stops
-  div.tab.directions(
-    @click="$router.push('/directions')"
-    :class="{ 'active': currentPath === '/directions'}"
-  )
-    div.tab_icon
-    div.tab_text Directions
-  div.tab.schedule(
-    @click="$router.push('/schedule')"
-    :class="{ 'active': currentPath === '/schedule'}"
-  )
-    div.tab_icon
-    div.tab_text Schedule
 </template>
 
 <script>
@@ -46,24 +34,33 @@ $hover-color: #f44848
 
 nav
   display: flex
-  justify-content: space-around
+
   position: relative
   background: white
-  height: $height
+  padding: 0px 24px
+  //height: $height + 20px
   z-index: 1
-  box-shadow: 0 2px 1px rgba(#000000, 0.15)
+  //box-shadow: 0 2px 1px rgba(#000000, 0.15)
+  padding-bottom: 20px
+  border-bottom: 1px solid #eee
 
   .tab
-    height: $height
-    min-width: 50px
+    //height: $height
+    //min-width: 50px
     display: inline-block
-    flex: auto
-    flex-basis: auto
+    max-width: 150px
     font-size: 1rem
-    padding: 10px 0
+    //padding: 10px 0
     position: relative
     background: white
     overflow: hidden
+    border: 1px solid lightgray
+    border-radius: 100px
+    padding-left: 14px
+    padding-right: 18px
+    padding-top: 3px
+    padding-bottom: 3px
+    margin-right: 20px
 
     &.gray .tab_text
       color: #AAA
@@ -98,7 +95,9 @@ nav
 
     &.active, &.active:hover
       background: $active-color
-      height: $height
+      border: 1px solid white
+
+      //height: $height
 
       .tab_text
         color: white
@@ -127,8 +126,16 @@ nav
       letter-spacing: -.02rem
       font-weight: 500
       user-select: none
+      display: inline-block
+      line-height: 24px
+      vertical-align: super
+      margin-left: 2px
+
 
     .tab_icon
+      vertical-align: text-bottom
+
+      display: inline-block
       margin: auto
       height: 24px
       width: 24px

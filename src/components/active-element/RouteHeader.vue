@@ -1,7 +1,7 @@
 <template lang="pug">
 .route-header(:class="{'elevate': scrolled }")
   .route_title {{ activeRoute.name }}
-  .route_campus(v-for="campus in activeRoute.campuses") {{ campus }}
+  .route_campus(v-for="campus in activeRoute.areas") {{ campus }}
 </template>
 
 <script>
@@ -27,7 +27,7 @@ export default {
 .route-header
   position: relative
   background: white
-  padding: 28px 30px
+  padding: 24px 30px
   color: #222
   transition: .2s
 
@@ -42,20 +42,20 @@ export default {
     font-size: 2rem
     font-weight: bold
 
-  .route_campus
-    display: inline-block
-    font-weight: 400
-    text-transform: capitalize
-    font-size: 1.3rem
-    color: #444
-    border-radius: 20px
-    font-weight: 500
-    margin-top: 8px
+.route_campus
+  display: inline-block
+  font-weight: 400
+  text-transform: capitalize
+  font-size: 1.2rem
+  color: #777
+  border-radius: 20px
+  font-weight: 500
+  margin-top: 12px
 
-    &:not(:last-child)::after
-      content: "·"
-      margin: 0 8px
-      font-weight: 900
+  &:not(:last-child)::after
+    content: "·"
+    margin: 0 8px
+    font-weight: 900
 
 .campuses
   color: #555

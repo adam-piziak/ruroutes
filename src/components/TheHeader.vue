@@ -1,7 +1,9 @@
 <template lang="pug">
 header
-  div#logo(@click="$router.push('/')") ru routes
-  #links(@click.stop="$emit('activeGlobal')")
+  #logo(@click="$router.push('/')")
+  .text RU
+    span ROUTES
+  //#links(@click.stop="$emit('activeGlobal')")
 </template>
 
 <script>
@@ -21,9 +23,8 @@ $height: 50px
 header
   position: relative
   background: white
-  height: $height
   line-height: $height
-  border-bottom: 1px solid #EEE
+  //border-bottom: 1px solid #EEE
 
   &.red
     background: red
@@ -88,18 +89,31 @@ header
       color: black
       text-decoration: underline
 #logo
+  background:
+    image: url(~assets/icons/logo.svg)
+    position: center center
+    size: 90%
+    repeat: no-repeat
+  margin: 10px
+  margin-left: 26px
+  height: $height
+  width: $height
   display: inline-block
-  color: #2e3440
-  font-size: 1.2em
-  height: $height - 1
-  padding: 0 30px
-  user-select: none
-  font-family: 'Kollektif'
-  font-weight: bold
-
-  &:active
-    background: #EEE
 
   &:hover
     cursor: pointer
+
+.text
+  display: inline-block
+  vertical-align: top
+  font-weight: 700
+  font-size: 1.3rem
+  line-height: $height + 20px
+  color: #f03b3b
+
+  &:hover
+    cursor: pointer
+
+  span
+    color: #444
 </style>
