@@ -213,6 +213,7 @@ export default {
   z-index: 10
 
 .stop-marker
+  position: absolute
   height: 40px
   width: 40px
   background: url(~assets/icons/stop.svg) no-repeat
