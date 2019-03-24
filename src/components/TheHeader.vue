@@ -1,8 +1,8 @@
 <template lang="pug">
 header
   #logo(@click="$router.push('/')")
-  .text RU
-    span ROUTES
+  .text SCARLET
+    span BUS
   //#links(@click.stop="$emit('activeGlobal')")
 </template>
 
