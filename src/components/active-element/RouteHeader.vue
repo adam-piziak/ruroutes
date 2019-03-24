@@ -30,6 +30,7 @@ export default {
   padding: 24px 30px
   color: #222
   transition: .2s
+  z-index: 100
 
   &:hover
     cursor: default
@@ -46,11 +47,12 @@ export default {
   display: inline-block
   font-weight: 400
   text-transform: capitalize
-  font-size: 1.2rem
+  font-size: 1.1rem
   color: #777
   border-radius: 20px
   font-weight: 500
   margin-top: 12px
+
 
   &:not(:last-child)::after
     content: "·"

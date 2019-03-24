@@ -69,7 +69,7 @@ export default {
   box-shadow: 0 0 8px rgba(#000000, 0.4)
 .return
   position: relative
-  z-index: 100
+  z-index: 120
   background: white
   border-bottom: 1px solid #EEE
   padding: 10px 30px
@@ -101,6 +101,8 @@ export default {
     box-shadow: 0 2px 8px rgba(#000000, 0.16)
 
 #return
+  position: relative
+  z-index: 110
   background: white
   box-shadow: 0 2px 6px rgba(#000000, 0.2)
   color: #e63e3e
@@ -116,6 +118,7 @@ export default {
 
   &:hover
     cursor: pointer
+    z-index: 200
     box-shadow: 0 2px 8px rgba(#000000, 0.3)
 
   &:active
