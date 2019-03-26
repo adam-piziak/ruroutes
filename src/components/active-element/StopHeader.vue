@@ -22,6 +22,8 @@ export default {
 .stop-header
   padding: 28px 30px
   color: #222
+  border-bottom: 1px solid #EEE
+  
 
   &:hover
     cursor: default

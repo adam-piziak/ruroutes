@@ -129,7 +129,6 @@ export default {
 .element-header
   min-height: 80px
   color: #FAFAFA
-  border-bottom: 1px solid #EEE
   flex-grow: 0
   flex-shrink: 0
 

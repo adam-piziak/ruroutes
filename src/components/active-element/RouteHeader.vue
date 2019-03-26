@@ -29,14 +29,18 @@ export default {
   background: white
   padding: 24px 30px
   color: #222
-  transition: .2s
+  transition: box-shadow .2s
   z-index: 100
+  border-bottom: 1px solid #EEE
+
 
   &:hover
     cursor: default
 
   &.elevate
     box-shadow: 0 2px 6px rgba(#000000, 0.18)
+    border-bottom: 0
+
 
   .route_title
     color: #202020
