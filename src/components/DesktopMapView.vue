@@ -56,8 +56,33 @@ export default {
     EventBus.$on('GO_TO_ROUTE', (id) => {
       let ctx = this;
       const route = this.getRoute(id)
-      setInterval(function () {
-
+      clearInterval(this.interval);
+      this.buses.forEach((marker) => marker.remove());
+      this.interval = setInterval(function () {
+        axios({
+          url: 'https://api.scarletbus.com/graphql',
+          method: 'post',
+          timeout: 5000,
+          data: {
+            query: `
+              {
+                vehicles(id: ${id}) {
+                  location
+                }
+              }
+            `
+          }
+        }).then((res) => {
+          let buses = res.data.data.vehicles;
+          ctx.buses.forEach((marker) => marker.remove());
+          buses.forEach((bus) => {
+            let el = document.createElement('div');
+            el.className = 'bus-marker';
+            el.style.cursor = "pointer";
+            let marker = new mapboxgl.Marker(el).setLngLat(bus.location).addTo(ctx.map);
+            ctx.buses.push(marker);
+          })
+        });
       }, 2000);
       if (this.currentMarker != null) {
         this.currentMarker.remove()
@@ -69,6 +94,9 @@ export default {
         s.forEach((seg) => bounds.extend(seg))
       })
       this.map.fitBounds(bounds, { padding: 100, linear: true });
+      this.locationInterval = setInterval(function () {
+        axios.get("https")
+      }, 5000);
 
       this.markers.forEach((m) => {
         m.remove()
@@ -222,6 +250,14 @@ export default {
 
   &:hover
     transform: translateY(-5px)
+
+.bus-marker
+  position: absolute
+  height: 40px
+  width: 40px
+  background: url(~assets/icons/bus_marker.svg) no-repeat
+  background-position: top right
+  background-size: 100%
 
 .marker
   position: absolute
