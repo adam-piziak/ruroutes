@@ -35,9 +35,6 @@ export default {
           byNameKeywords.push(stop)
           return
         }
-        if (stop.campus.toLowerCase().indexOf(keyword) > -1) {
-          byCampus.push(stop)
-        }
       })
 
     })

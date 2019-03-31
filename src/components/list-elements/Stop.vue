@@ -44,10 +44,12 @@ $speed: .3s
   width: 100%
   padding: 16px 20px
   background: white
-  border-bottom: 1px solid #EEE
   user-select: none
   z-index: 5
   transition: padding .15s, box-shadow .05s
+
+  &:not(:last-child)
+    border-bottom: 1px solid #EEE
 
   &:hover
     cursor: pointer

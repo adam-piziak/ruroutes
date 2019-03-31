@@ -1,19 +1,15 @@
 <template lang="pug">
 section#main_block
-  transition(name="zoom" mode="out-in")
-    #head(v-if="!search")
-      TheHeader(@activeGlobal="globalNav = true" v-if="!search")
-      TheNavigation(v-if="!search")
-    TheSearchBar(v-else @closeSearch="closeSearch")
-  //transition(name="zoom")
-    TheSearchBar(v-if="!mobile && searchNeeded")
+  header
+    TheSearchBar(@search-input="searchInput = $event" @toggle-menu="globalNav = !globalNav" :query="searchInput")
+    TheNavigation(@click.native="searchInput = ''")
   TheActiveElement(v-if="itemOpened")
-  transition(name="slide" mode="out-in")
-    router-view(:searchActive="search")
-  transition(name="slide")
+  TheSearchPage(v-if="searchInput.length > 0" :query="searchInput")
+  template(v-else)
+    transition(name="slide" mode="out-in")
+      router-view(:searchActive="searchInput.length > 0")
+  transition(name="swipe" mode="out-in")
     TheGlobalNavigation(v-if="globalNav" @closeGlobalNav="globalNav = false")
-  //transition(name="zoom")
-    TheSearchFAB(v-if="!search && mobile && searchNeeded" @click.native="search=true")
 </template>
 
 <script>
@@ -23,6 +19,7 @@ import TheNavigation       from 'components/TheNavigation'
 import TheGlobalNavigation from 'components/TheGlobalNavigation'
 import TheActiveElement    from 'components/active-element/TheActiveElement'
 import TheSearchFAB        from 'components/TheSearchFAB'
+import TheSearchPage       from '@/pages/SearchPage.vue'
 
 import { mapGetters } from 'vuex'
 
@@ -30,7 +27,7 @@ export default {
   name: 'Main',
   data() {
     return {
-      search: false,
+      searchInput: "",
       globalNav: false,
     }
   },
@@ -56,7 +53,8 @@ export default {
     TheNavigation,
     TheActiveElement,
     TheGlobalNavigation,
-    TheSearchFAB
+    TheSearchFAB,
+    TheSearchPage
   },
   mounted() {
     let store = this.$store
@@ -76,13 +74,16 @@ export default {
   background: white
   display: flex
   flex-direction: column
-  width: 500px
+  width: 460px
   min-width: 300px
   height: 100vh
   overflow: hidden
   box-shadow: 0 5px 8px rgba(0, 0, 0, 0.2)
   z-index: 10
 
+header
+  background: white
+  z-index: 10
 @media (max-width: 1024px)
   #main_block
     width: 100vw
@@ -93,6 +94,12 @@ export default {
 .slide-enter, .slide-leave-to
   transform: translateY(20px)
   opacity: .1
+
+.swipe-enter-active, .swipe-leave-active
+  transition: .25s
+
+.swipe-enter, .swipe-leave-to
+  transform: translateX(-100%)
 
 .fade-enter-active, .fade-leave-active
   transition: .2s

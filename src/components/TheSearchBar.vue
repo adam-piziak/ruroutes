@@ -1,8 +1,10 @@
 <template lang="pug">
 section#search
+  .menu-button(@click="$emit('toggle-menu')")
   input(type="text"
         ref="search_input"
-        placeholder="Search by route, stop or campus"
+        v-model="query"
+        placeholder="Search rutgers buses by route, stop or campus"
         @input="updateSearchQuery"
         aria-label="search input")
   #close(@click="$emit('closeSearch')" v-if="mobile")
@@ -18,12 +20,15 @@ export default {
       focusSearch: false
     }
   },
+  props: {
+    query: String
+  },
   computed: {
     ...mapGetters(['mobile'])
   },
   methods: {
     updateSearchQuery (e) {
-      this.$store.commit('SET_SEARCH_QUERY', e.target.value)
+      this.$emit('search-input', e.target.value)
     }
   },
   mounted() {
@@ -60,13 +65,15 @@ $close-margin: 14px
     background-color: #000
 
 #search
-  border-top: 1px solid #dbdbdb
   display: flex
   background: white
   position: relative
   z-index: 1
-  border-bottom: 1px solid #DDD
   flex-shrink: 0
+  margin: 12px
+  border-radius: 5px
+  overflow: hidden
+  box-shadow: 0 1px 5px rgba(#000000, 0.3)
   &.mobile
     background: #ef5350
 
@@ -81,22 +88,50 @@ $close-margin: 14px
 input
   border: 0
   outline: none
-  height: $height - 2
+  line-height: $height - 2
   width: 240px
   flex-grow: 1
   font-size: 1rem
-  padding-left: 30px
-  font-weight: bold
   font-size: 1.05rem
-  text-transform: uppercase
 
   &::placeholder
     opacity: 1
     font-size: 1rem
     font-weight: normal
-    color: #AAA
-    text-transform: lowercase
+    color: #888
 
+.menu-button
+  height: $height
+  width: $height
+  background:
+    image: url('~icons/logo.svg')
+    repeat: no-repeat
+    position: center
+    size: 50%
+  opacity: 0.8
+  transition: opacity 5s
+
+  &:hover
+    cursor: pointer
+
+  &:active
+    transition: opacity 0
+    opacity: 0.1
+
+.logo
+  height: $height
+  width: $height
+  position: absolute
+  right: 0
+  background:
+    color: transparent
+    image: url('~icons/logo.svg')
+    repeat: no-repeat
+    position: center
+    size: 40%
+  opacity: 0.8
+  transform: rotate(90deg)
+  transition: opacity 5s
 #filter
   display: flex
   justify-content: space-around

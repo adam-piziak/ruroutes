@@ -227,10 +227,10 @@ export default {
 <style lang="sass">
 #map-view
   position: absolute
-  left: 500px
+  left: 460px
   overflow: hidden
   top: 0
-  width: calc(100vw - 500px)
+  width: calc(100vw - 460px)
   height: 100vh
   z-index: 0
 

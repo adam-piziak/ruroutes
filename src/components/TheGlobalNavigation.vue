@@ -2,9 +2,8 @@
 #global
   .close_button(@click="$emit('closeGlobalNav')")
     .close_icon
-  .link ruroutes API
-  .link source code
-  .link server status
+  a(href="https://api.scarletbus.com/graphql").link ruroutes API
+  a(href="https://github.com/adam-piziak/scarletbus-web").link source code
 </template>
 
 <style lang="sass" scoped>
@@ -13,9 +12,10 @@
   padding: 20px
   font-weight: bold
   font-size: 1.2rem
-  color: #EEE
+  color: #444
+  display: block
   &:hover
-    color: white
+    color: #666
     cursor: pointer
     text-decoration: underline
 
@@ -25,7 +25,7 @@
   position: absolute
   top: 0
   left: 0
-  background: #2e3440
+  background: white
   color: #FFF
   z-index: 1000
   padding: 40px
@@ -34,6 +34,9 @@
 .close_button
   float: right
   display: inline-block
+
+  &:hover
+    cursor: pointer
 
   .close_text
     float: left
@@ -47,7 +50,7 @@
     width: 50px
     background:
       color: transparent
-      image: url('/assets/icons/close.svg')
+      image: url('~icons/close.svg')
       position: center
       repeat: no-repeat
       size: 70%

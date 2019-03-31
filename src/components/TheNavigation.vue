@@ -29,39 +29,58 @@ export default {
 @import "styles/colors.sass"
 
 $height: 80px
-$active-color: #f44848
+$active-color: #ed5454
 $hover-color: #f44848
 
 nav
   display: flex
-
   position: relative
-  background: white
-  padding: 0px 24px
   //height: $height + 20px
-  z-index: 1
   //box-shadow: 0 2px 1px rgba(#000000, 0.15)
   padding-bottom: 20px
+  margin-top: 8px
   border-bottom: 1px solid #eee
   user-select: none
 
   .tab
     //height: $height
-    //min-width: 50px
+    min-width: 80px
     display: inline-block
     max-width: 150px
     font-size: 1rem
+    margin: 0 10px
     //padding: 10px 0
     position: relative
     background: white
     overflow: hidden
     border: 1px solid lightgray
-    border-radius: 100px
-    padding-left: 14px
-    padding-right: 18px
-    padding-top: 3px
-    padding-bottom: 3px
-    margin-right: 20px
+    border-radius: 8px
+    padding: 5px
+    box-shadow: 0 0 1px rgba(#000000, 0.2)
+
+    .tab_text
+      text-align: center
+      color: #555
+      letter-spacing: -.02rem
+      font-weight: 500
+      user-select: none
+      display: block
+      line-height: 24px
+      vertical-align: super
+      margin-left: 2px
+
+
+    .tab_icon
+      margin: auto
+      height: 24px
+      width: 24px
+      margin: 5px auto
+      opacity: .6
+      background:
+        color: transparent
+        position: center center
+        repeat: no-repeat
+        size: 100%
 
 
     &.gray .tab_text
@@ -97,7 +116,7 @@ nav
 
     &.active, &.active:hover
       background: $active-color
-      border: 1px solid white
+      box-shadow: 0 1px 4px rgba(#000000, 0.25)
 
       //height: $height
 
@@ -122,32 +141,6 @@ nav
       width: 1px
       background: #EEE
 
-    .tab_text
-      text-align: center
-      color: #222
-      letter-spacing: -.02rem
-      font-weight: 500
-      user-select: none
-      display: inline-block
-      line-height: 24px
-      vertical-align: super
-      margin-left: 2px
-
-
-    .tab_icon
-      vertical-align: text-bottom
-
-      display: inline-block
-      margin: auto
-      height: 24px
-      width: 24px
-      margin: 5px auto
-      opacity: .7
-      background:
-        color: transparent
-        position: center center
-        repeat: no-repeat
-        size: 100%
 
 
     .vertical_line
@@ -172,5 +165,10 @@ nav
 
       .tab_icon
         opacity: 1
+
+    &:active
+      cursor: grabbing
+      box-shadow: 0 1px 4px rgba(#000000, 0.25)
+
 
 </style>

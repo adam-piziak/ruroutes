@@ -32,9 +32,11 @@ $height: 50px
 .route
   background: white
   padding: 16px 20px
-  border-bottom: 1px solid #EEE
   user-select: none
   transition: padding .05s
+
+  &:not(:last-child)
+    border-bottom: 1px solid #EEE
 
   &:hover
     cursor: pointer
