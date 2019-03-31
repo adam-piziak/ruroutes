@@ -7,7 +7,6 @@ section#search
         placeholder="Search rutgers buses by route, stop or campus"
         @input="updateSearchQuery"
         aria-label="search input")
-  #close(@click="$emit('closeSearch')" v-if="mobile")
 </template>
 
 <script>
