@@ -4,7 +4,7 @@ section#search
   input(type="text"
         ref="search_input"
         v-model="query"
-        placeholder="Search rutgers buses by route, stop or campus"
+        placeholder="Search rutgers buses by route or stop"
         @input="updateSearchQuery"
         aria-label="search input")
 </template>
