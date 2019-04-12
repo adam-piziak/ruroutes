@@ -1,5 +1,5 @@
 <template lang="pug">
-#route_stops
+#route_stops(v-if="activeRoute.loading != true")
   .stop(v-for="stop in activeRoute.stops"
         :class="{'inactive': !stop.arrivals}"
         @click="goToStop(stop.id)")
@@ -18,7 +18,15 @@ import EventBus from '@/event-bus.js';
 export default {
   computed: {
     activeRoute() {
-      return this.$store.getters.route(this.$route.params.id)
+      let route = this.$store.getters.route(this.$route.params.id)
+      if (route == undefined) {
+        this.$store.dispatch('FETCH_ROUTES')
+        this.$store.dispatch('FETCH_STOPS')
+        return {
+          loading: true
+        }
+      }
+      return route
     },
     stops() {
       return this.activeRoute.schedule.sort((a, b) => {

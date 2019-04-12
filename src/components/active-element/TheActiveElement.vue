@@ -4,11 +4,11 @@ transition(name="slide")
     .return(@click="returnHome")
       .icon
       .label Go back to {{ basePath }}
-    .element-header
+    .element-header(v-if="!loading")
       RouteHeader(v-if="basePath === 'routes'" :scroll="scroll")
       StopHeader(v-else)
     transition(name="list" appear mode="out-in")
-      .list(@scroll.passive="onScroll" ref="list")
+      .list(@scroll.passive="onScroll" ref="list" v-if="!loading")
         transition(name="slide"  mode="out-in")
           RouteStops(v-if="basePath === 'routes'")
           StopRoutes(v-else)
@@ -24,7 +24,8 @@ const RouteStops = () => import('components/active-element/RouteStops.vue')
 export default {
   data() {
     return {
-      scroll: 0
+      scroll: 0,
+      loading: true
     }
   },
   components: {
@@ -51,6 +52,10 @@ export default {
     onScroll(e) {
       this.scroll = this.$refs.list.scrollTop
     }
+  },
+  mounted() {
+    let requests = [this.$store.dispatch('FETCH_ROUTES'), this.$store.dispatch('FETCH_STOPS')]
+    Promise.all(requests).then(() => this.loading = false)
   }
 }
 </script>

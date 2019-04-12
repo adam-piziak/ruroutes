@@ -1,14 +1,23 @@
 <template lang="pug">
-.route-header(:class="{'elevate': scrolled }")
+.route-header(:class="{'elevate': scrolled }" v-if="activeRoute.loading != true")
   .route_title {{ activeRoute.name }}
   .route_campus(v-for="campus in activeRoute.areas") {{ campus }}
+.loading-header(v-else)
 </template>
 
 <script>
 export default {
   computed: {
     activeRoute() {
-      return this.$store.getters.route(this.$route.params.id)
+      let route = this.$store.getters.route(this.$route.params.id)
+      if (route == undefined) {
+        this.$store.dispatch('FETCH_ROUTES')
+        this.$store.dispatch('FETCH_STOPS')
+        return {
+          loading: true
+        }
+      }
+      return route
     },
     scrolled() {
       return this.scroll > 15
@@ -65,4 +74,8 @@ export default {
 
 .campuses
   color: #555
+
+.loading-header
+  padding: 24px 30px
+  background: red
   </style>

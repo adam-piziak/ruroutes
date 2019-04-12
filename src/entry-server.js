@@ -13,7 +13,8 @@ export default context => {
         return reject({ code: 404 })
       }
       store.commit('SET_MOBILE', context.mobile)
-
+      resolve(app)
+      
       Promise.all(matchedComponents.map(Component => {
         if (Component.asyncData) {
           return Component.asyncData({
