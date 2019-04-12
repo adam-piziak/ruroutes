@@ -54,7 +54,7 @@ $speed: .3s
   &:hover
     cursor: pointer
     opacity: .99
-    box-shadow: 0 1px 8px rgba(#000000, 0.2)
+    box-shadow: 0 0px 5px rgba(#000000, 0.2)
     z-index: 20
     padding-left: 15px
     font-weight: 500
