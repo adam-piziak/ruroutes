@@ -6,6 +6,9 @@
 <script>
 import EventBus from '@/event-bus.js';
 import axios from 'axios';
+import Vue from 'vue';
+import BusMarker from 'components/BusMarker'
+import StopMarker from 'components/StopMarker'
 
 export default {
   data() {
@@ -20,10 +23,14 @@ export default {
       loaded: false
     }
   },
+  components: { BusMarker, StopMarker },
   mounted() {
     this.initialize()
     const mapboxgl = require('mapbox-gl')
     EventBus.$on('GO_TO_STOP', (id) => {
+      clearInterval(this.locationInterval)
+      let StopMarkerClass = Vue.extend(StopMarker)
+
       if (this.map.getLayer("route-outline")) {
         this.map.removeLayer("route-outline");
       }
@@ -45,24 +52,49 @@ export default {
         this.currentMarker.remove()
         this.currentMarker = null
       }
-      let el = document.createElement('div');
-      el.className = 'stop-marker';
-      el.style.cursor = "pointer";
-      this.currentMarker = new mapboxgl.Marker(el).setLngLat(stop.location)
+      let el = new StopMarkerClass({
+        propsData: { name: stop.name, id: stop.id }
+      })
+      el.$mount()
+      this.currentMarker = new mapboxgl.Marker(el.$el).setLngLat(stop.location)
       this.currentMarker.addTo(this.map);
 
     })
 
     EventBus.$on('GO_TO_ROUTE', (id) => {
       let ctx = this;
+      let StopMarkerClass = Vue.extend(StopMarker)
       const route = this.getRoute(id)
       clearInterval(this.interval);
       this.buses.forEach((marker) => marker.remove());
+      axios({
+        url: 'https://api.scarletbus.com/graphql',
+        method: 'post',
+        timeout: 3000,
+        data: {
+          query: `
+            {
+              vehicles(id: ${id}) {
+                location
+              }
+            }
+          `
+        }
+      }).then((res) => {
+        let buses = res.data.data.vehicles;
+        ctx.buses.forEach((marker) => marker.remove());
+        let BusMarkerClass = Vue.extend(BusMarker)
+        buses.forEach((bus) => {
+          let icon = new BusMarkerClass;
+          icon.$mount();
+          let marker = new mapboxgl.Marker(icon.$el).setLngLat(bus.location).addTo(ctx.map);
+          ctx.buses.push(marker);
+        })});
       this.interval = setInterval(function () {
         axios({
           url: 'https://api.scarletbus.com/graphql',
           method: 'post',
-          timeout: 5000,
+          timeout: 3000,
           data: {
             query: `
               {
@@ -75,15 +107,15 @@ export default {
         }).then((res) => {
           let buses = res.data.data.vehicles;
           ctx.buses.forEach((marker) => marker.remove());
+          let BusMarkerClass = Vue.extend(BusMarker)
           buses.forEach((bus) => {
-            let el = document.createElement('div');
-            el.className = 'bus-marker';
-            el.style.cursor = "pointer";
-            let marker = new mapboxgl.Marker(el).setLngLat(bus.location).addTo(ctx.map);
+            let icon = new BusMarkerClass();
+            icon.$mount();
+            let marker = new mapboxgl.Marker(icon.$el).setLngLat(bus.location).addTo(ctx.map);
             ctx.buses.push(marker);
           })
         });
-      }, 2000);
+      }, 5000);
       if (this.currentMarker != null) {
         this.currentMarker.remove()
         this.currentMarker = null
@@ -105,6 +137,7 @@ export default {
       setTimeout(() => {
         route.stops.forEach((stop) => {
           if (stop.arrivals) {
+
             let el = document.createElement('div');
             el.className = 'stop-marker';
             el.style.cursor = "pointer";
@@ -113,7 +146,14 @@ export default {
               ctx.$router.push(`/stops/${stop.id}`)
               EventBus.$emit('GO_TO_STOP', stop.id);
             }, true);
-            let marker = new mapboxgl.Marker(el).setLngLat(stop.location).addTo(ctx.map);
+            let icon = new StopMarkerClass({
+              parent: ctx,
+              propsData: { name: stop.name, id: stop.id }
+            });
+            icon.$mount();
+
+
+            let marker = new mapboxgl.Marker(icon.$el).setLngLat(stop.location).addTo(ctx.map);
             ctx.markers.push(marker);
           } else {
             let marker = new mapboxgl.Marker({ color: "gray" }).setLngLat(stop.location)
@@ -133,7 +173,7 @@ export default {
         geojson.source.data.type = "FeatureCollection";
         geojson.source.data.features = [];
         geojson.paint = {};
-        geojson.paint["line-color"] = "#EE0000";
+        geojson.paint["line-color"] = "#dd511e";
         geojson.paint["line-width"] = 2;
 
         route.segments.forEach((segment) => {
@@ -239,25 +279,6 @@ export default {
   height: 100vh
   position: relative
   z-index: 10
-
-.stop-marker
-  position: absolute
-  height: 40px
-  width: 40px
-  background: url(~assets/icons/stop.svg) no-repeat
-  background-position: top right
-  background-size: 100%
-
-  &:hover
-    transform: translateY(-5px)
-
-.bus-marker
-  position: absolute
-  height: 40px
-  width: 40px
-  background: url(~assets/icons/bus_marker.svg) no-repeat
-  background-position: top right
-  background-size: 100%
 
 .marker
   position: absolute
