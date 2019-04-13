@@ -1,45 +1,50 @@
 <template lang="pug">
-#route_stops(v-if="activeRoute.loading != true")
-  .stop(v-for="stop in activeRoute.stops"
-        :class="{'inactive': !stop.arrivals}"
-        @click="goToStop(stop.id)")
-    .icon-block
-      .icon
-    .main
-      .name {{ stop.name }}
-      .campus {{ stop.campus }}
-      .times(v-if="stop.arrivals")
-        .label Arriving in
-        .time(v-for="time in stopTimes(stop)" :class="{'green': time < 5, 'red': time <= 1}") {{ time }} min
+#route_stops
+  template(v-if="route.stops.length > 0")
+    .stop(
+          v-for="stop in route.stops"
+          :class="{'inactive': !stop.arrivals}"
+          @click="goToStop(stop.id)")
+      .icon-block
+        .icon
+      .main
+        .name {{ stop.name }}
+        .campus {{ stop.campus }}
+        .times(v-if="stop.arrivals")
+          .label Arriving in
+          .time(v-for="time in stopTimes(stop)" :class="{'green': time < 5, 'red': time <= 1}") {{ time }} min
+  template(v-else)
+    .loading-bar
+    .loading-text loading...
 </template>
 
 <script>
 import EventBus from '@/event-bus.js';
 export default {
   computed: {
-    activeRoute() {
+    route() {
       let route = this.$store.getters.route(this.$route.params.id)
       if (route == undefined) {
-        this.$store.dispatch('FETCH_ROUTES')
-        this.$store.dispatch('FETCH_STOPS')
         return {
-          loading: true
+          'name': "",
+          'areas': [],
+          'stops': []
         }
       }
+
+      if (route.stops == undefined || route.stops == null) {
+        return {
+          ...route,
+          stops: []
+        }
+      }
+
       return route
     },
-    stops() {
-      return this.activeRoute.schedule.sort((a, b) => {
-        if (a.name < b.name) return -1;
-        if (a.name > b.name) return  1;
-        return 0
-      })
-    }
   },
   methods: {
     goToStop(tag) {
       this.$router.push(`/stops/${tag}`)
-    //  EventBus.$emit('GO_TO_STOP', tag);
     },
     stopTimes(stop) {
       const timesInMinutes = [];
@@ -54,9 +59,6 @@ export default {
       });
       return timesInMinutes;
     },
-    onScroll() {
-      console.log("hello")
-    }
   }
 }
 </script>
@@ -68,23 +70,23 @@ export default {
   display: flex
   position: relative
   background: white
-  padding: 18px 30px
+  padding: 18px 20px
   border-bottom: 1px solid #E0E0E0
   z-index: 5
-  transition: padding .2s, margin .2s
+  transition: padding .1s, margin .2s
 
   &:hover
     cursor: pointer
     opacity: .99
-    box-shadow: 0 0px 8px rgba(#000000, 0.2)
+    box-shadow: 0 0px 3px rgba(#000000, 0.2)
     z-index: 20
-    padding-left: 35px
+    padding-left: 25px
     margin-right: -5px
 
 .main
   flex-grow: 1
   display: inline-block
-  margin-left: 30px
+  margin-left: 20px
   top: 0
 
 .name
@@ -98,6 +100,27 @@ export default {
   color: #777
   margin-top: 6px
 
+.loading-text
+  padding: 20px
+  color: #888
+.loading-bar
+  background: red
+  height: 3px
+  width: 40%
+  opacity: .5
+  animation: slide 1.4s ease-in-out infinite
+
+@keyframes slide
+  0%
+    margin-left: -40%
+    background: blue
+    width: 20%
+  30%
+    background: green
+  60%, 100%
+    width: 60%
+    margin-left: 100%
+    background: red
 
 .label
   display: inline-block

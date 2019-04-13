@@ -3,7 +3,8 @@ section#main_block
   header
     TheSearchBar(@search-input="searchInput = $event" @toggle-menu="globalNav = !globalNav" :query="searchInput")
     TheNavigation(@click.native="searchInput = ''")
-  TheActiveElement(v-if="itemOpened")
+  transition(name="slide")
+    TheActiveElement(v-if="itemOpened")
   TheSearchPage(v-if="searchInput.length > 0" :query="searchInput")
   template(v-else)
     transition(name="slide" mode="out-in")
@@ -18,7 +19,6 @@ import TheSearchBar        from 'components/TheSearchBar'
 import TheNavigation       from 'components/TheNavigation'
 import TheGlobalNavigation from 'components/TheGlobalNavigation'
 import TheActiveElement    from 'components/active-element/TheActiveElement'
-import TheSearchFAB        from 'components/TheSearchFAB'
 import TheSearchPage       from '@/pages/SearchPage.vue'
 
 import { mapGetters } from 'vuex'
@@ -29,6 +29,7 @@ export default {
     return {
       searchInput: "",
       globalNav: false,
+      scheduler: null,
     }
   },
   computed: {
@@ -53,17 +54,19 @@ export default {
     TheNavigation,
     TheActiveElement,
     TheGlobalNavigation,
-    TheSearchFAB,
     TheSearchPage
   },
   mounted() {
-    let store = this.$store
-    store.dispatch('FETCH_ROUTES')
-    store.dispatch('FETCH_STOPS')
-    setInterval(function () {
-       store.dispatch('FETCH_ROUTES')
-       store.dispatch('FETCH_STOPS')
-    }, 10000);
+    let ctx = this
+    this.$store.dispatch('UPDATE_ROUTE_LIST')
+    this.$store.dispatch('UPDATE_STOP_LIST')
+    this.scheduler = setInterval(() => {
+      ctx.$store.dispatch('UPDATE_ROUTE_LIST')
+      ctx.$store.dispatch('UPDATE_STOP_LIST')
+    }, 30000)
+  },
+  beforeDestroy() {
+    clearInterval(this.scheduler)
   }
 }
 </script>

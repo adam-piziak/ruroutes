@@ -1,7 +1,7 @@
 <template lang="pug">
 div#app
   Main
-  DesktopMapView(v-if="!mobile")
+  DesktopMapView(v-if="!meta.mobile")
 </template>
 
 <script>
@@ -13,8 +13,8 @@ export default {
     Main, DesktopMapView
   },
   computed: {
-    mobile() {
-      return this.$store.state.mobile
+    meta() {
+      return this.$store.getters.meta
     }
   }
 }

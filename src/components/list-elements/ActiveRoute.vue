@@ -1,6 +1,6 @@
 <template lang="pug">
 transition(name="slide_active" mode="in-out")
-  #active-route(:class="{'mobile': mobile}")
+  #active-route(:class="{'mobile': mobile.meta}")
     .header(@click="$router.push('/routes')")
       .name {{ activeRoute.name }}
     .stops
@@ -31,8 +31,8 @@ export default {
     activeRoute() {
       return this.$store.getters.route(this.$route.params.id)
     },
-    mobile() {
-      return this.$store.state.mobile
+    meta() {
+      return this.$store.getters.meta
     }
   },
   methods: {

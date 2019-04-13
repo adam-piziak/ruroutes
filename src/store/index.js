@@ -10,15 +10,11 @@ Vue.use(Vuex)
 export function createStore() {
   return new Vuex.Store({
     state: {
-      mobile: false,
-      routes: [],
+      meta: {
+        mobile: false,
+      },
+      routes: [{'id': 13232, 'name': 'hey'}],
       stops: [],
-      routeList: [],
-      activeStops: [],
-      activeStop: {},
-      searchQuery: '',
-      resolvingRoute: false,
-      mounted: false
     },
     actions,
     getters,

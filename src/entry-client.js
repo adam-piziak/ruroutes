@@ -1,3 +1,4 @@
+import EventBus from '@/event-bus.js';
 import { createApp } from './app'
 
 const { app, router, store } = createApp()
@@ -7,17 +8,31 @@ if (window.__INITIAL_STATE__) {
 }
 
 router.onReady(() => {
-  console.log('deployed version 1.0.0')
   app.$mount('#app')
 })
 
-router.beforeResolve((to, from, next) => {
-  if (to.name) {
-    store.commit('RESOLVING_ROUTE', true)
-  }
-  next()
-})
-
 router.afterEach((to, from) => {
-  store.commit('RESOLVING_ROUTE', false)
+  if (to.name == 'ActiveStop') {
+    if (!store.getters.stop(to.params.id).location) {
+      store.dispatch('RETRIEVE_STOP', to.params.id).then(() => {
+        EventBus.$emit('GO_TO_STOP', to.params.id)
+      })
+    } else  {
+      store.dispatch('RETRIEVE_STOP', to.params.id)
+      EventBus.$emit('GO_TO_STOP', to.params.id)
+    }
+  }
+
+
+  if (to.name == 'ActiveRoute') {
+    if (!store.getters.route(to.params.id).segments) {
+      store.dispatch('RETRIEVE_ROUTE', to.params.id).then(() => {
+        EventBus.$emit('GO_TO_ROUTE', to.params.id)
+      })
+    } else {
+      store.dispatch('RETRIEVE_ROUTE', to.params.id)
+      EventBus.$emit('GO_TO_ROUTE', to.params.id)
+    }
+
+  }
 })

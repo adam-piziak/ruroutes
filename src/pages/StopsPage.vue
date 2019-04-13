@@ -1,9 +1,9 @@
 <template lang="pug">
-section.stops(:style="height" :class="{'mobile': mobile}")
+section.stops(:style="height" :class="{'mobile': meta.mobile}")
   GenericError(v-if="stops.length === 0") No Active Stops Found
   router-view
   Stop(
-    v-for = "stop in filteredStops"
+    v-for = "stop in stops"
     :stop = "stop"
     :key = "stop.tag"
     )
@@ -23,12 +23,13 @@ export default {
       required: true
     }
   },
+  serverPrefetch () {
+    return this.$store.dispatch('UPDATE_STOP_LIST')
+  },
   computed: {
     ...mapGetters([
       'stops',
-      'mobile',
-      'activeStop',
-      'filteredStops'
+      'meta',
     ]),
     height() {
       if (this.searchActive) {

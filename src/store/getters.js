@@ -1,44 +1,21 @@
 export default {
+  // Return all the active routes
   routes: state => state.routes,
-  stops: state => state.stops,
-  activeStop: state => state.activeStop,
-  mobile: state => state.mobile,
-  routeList: state => state.routeList,
+
+  // Return all the stops in alphabetically order
+  stops: state => state.stops.sort((a, b) => a.name.localeCompare(b.name)),
+
+  // Returns the app metadata (i.e. mobile status)
+  meta: state => state.meta,
+
+  // Get a stop by its id
   stop: (state) => (id) => {
-    return state.stops.find((el) => {
-      return el.id == id
-    })
+    return state.stops.find(s => s.id == id)
   },
-  route: (state) => (id) => {
-    return state.routes.find((el) => {
-      return el.id == id
-    })
-  },
-  keywords: (state) => {
-    return state.searchQuery.toLowerCase().trim()
-  },
-  filteredStops: (state) => {
-    const query = state.searchQuery.toLowerCase().trim()
-    if (query === "") {
-      return state.stops
-    }
-    const keywords = query.split(' ')
-    const byNameKeywords = []
-    const byCampus = []
 
-    const byWholeName = state.stops.filter((stop) => {
-      stop.name.toLowerCase().indexOf(query) > -1
-    })
-    state.stops.forEach((stop) => {
-      keywords.forEach((keyword) => {
-        if (stop.name.toLowerCase().indexOf(keyword) > -1) {
-          byNameKeywords.push(stop)
-          return
-        }
-      })
+  // Get a route by its id
+  route: (state) => (id) => state.routes.find((r) => r.id == id),
 
-    })
-
-    return byWholeName
-  }
+  activeRoutes: (state) => state.routes.filter((route) => route.active),
+  inactiveRoutes: (state) => state.routes.filter((route) => !route.active)
 }

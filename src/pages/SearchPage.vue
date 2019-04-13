@@ -28,13 +28,13 @@ export default {
   },
   computed: {
     filteredStops() {
-      const keyword = this.query.toLowerCase()
+      let keyword = this.query.toLowerCase()
       return this.stops.filter((stop) => {
         return stop.name.toLowerCase().indexOf(keyword) > -1
       })
     },
     filteredRoutes() {
-      const keyword = this.query.toLowerCase()
+      let keyword = this.query.toLowerCase()
       return this.routes.filter((route) => {
         return route.name.toLowerCase().indexOf(keyword) > -1
       })

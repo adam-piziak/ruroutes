@@ -1,6 +1,7 @@
 <template lang="pug">
-.route(@click="openRoute")
+.route(@click="openRoute" :class="{'inactive': !route.active}")
   .name {{ route.name }}
+    span.inactive-text(v-if="!route.active") inactive
   .areas
     .area(v-for="area in route.areas") {{ area }}
 </template>
@@ -19,7 +20,7 @@ export default {
   methods: {
     openRoute() {
       this.$router.push('/routes/' + this.route.id)
-      EventBus.$emit('GO_TO_ROUTE', this.route.id);
+      //EventBus.$emit('GO_TO_ROUTE', this.route.id);
     }
   }
 };
@@ -35,17 +36,24 @@ $height: 50px
   padding: 16px 20px
   user-select: none
   transition: padding .05s
+  border-bottom: 1px solid #EEE
 
-  &:not(:last-child)
-    border-bottom: 1px solid #EEE
 
   &:hover
     cursor: pointer
     opacity: .99
-    box-shadow: 0 0px 5px rgba(#000000, 0.2)
+    //box-shadow: 0 0px 5px rgba(#000000, 0.2)
     z-index: 20
     padding-left: 25px
+    padding-right: 15px
     font-weight: 500
+
+  &.inactive
+    opacity: 0.8
+
+.inactive-text
+  color: #ed4040
+  float: right
 
 .name
   margin-bottom: 4px
@@ -54,7 +62,7 @@ $height: 50px
 .area
   display: inline-block
   color: #666
-
+  padding-top: 5px
   &:not(:last-child)::after
     content: "·"
     margin: 0 6px

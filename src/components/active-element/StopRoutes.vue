@@ -1,34 +1,46 @@
 <template lang="pug">
 #stop_routes
-  .route(v-for="route in activeStop.routes" @click="goToRoute(route.id)")
-    .icon
-    .name {{ route.name }}
-    .campuses
-      .campus(v-for="campus in route.campuses") {{ campus }}
-    .times(v-if="route.arrivals")
-      .label Arriving in
-      .time(v-for="time in routeTimes(route)" :class="{'green': time < 5, 'red': time <= 1}") {{ time }} min
+  template(v-if="stop.routes.length > 0")
+    .route(v-for="route in stop.routes" @click="goToRoute(route.id)")
+      .icon
+      .name {{ route.name }}
+      .campuses
+        .campus(v-for="campus in route.campuses") {{ campus }}
+      .times(v-if="route.arrivals")
+        .label Arriving in
+        .time(v-for="time in routeTimes(route)" :class="{'green': time < 5, 'red': time <= 1}") {{ time }} min
+  template(v-else)
+    .loading-bar
+    .loading-text loading...
 </template>
 
 <script>
 import EventBus from '@/event-bus.js';
 export default {
   computed: {
-    activeStop() {
-      return this.$store.getters.stop(this.$route.params.id)
-    },
-    routes() {
-      return this.activeStop.schedule.sort((a, b) => {
-        if (a.name < b.name) return -1;
-        if (a.name > b.name) return  1;
-        return 0
-      })
+    stop() {
+      let stop = this.$store.getters.stop(this.$route.params.id)
+      if (stop == undefined) {
+        return {
+          'name': "",
+          'areas': [],
+          'stops': []
+        }
+      }
+
+      if (stop.routes == undefined || stop.routes == null) {
+        return {
+          ...stop,
+          routes: []
+        }
+      }
+
+      return stop
     }
   },
   methods: {
     goToRoute(tag) {
       this.$router.push(`/routes/${tag}`)
-      EventBus.$emit('GO_TO_ROUTE', tag);
     },
     routeTimes(route) {
       const timesInMinutes = [];
@@ -43,7 +55,10 @@ export default {
       });
       return timesInMinutes;
     }
-  }
+  },
+  serverPrefetch () {
+    return this.$store.dispatch('UPDATE_STOP_LIST')
+  },
 }
 </script>
 
@@ -70,6 +85,28 @@ export default {
   vertical-align: text-bottom
   background:
     image: url(~icons/nav_routes.svg)
+
+.loading-text
+  padding: 20px
+  color: #888
+.loading-bar
+  background: red
+  height: 3px
+  width: 40%
+  opacity: .5
+  animation: slide 1.4s ease-in-out infinite
+
+@keyframes slide
+  0%
+    margin-left: -40%
+    background: blue
+    width: 20%
+  30%
+    background: green
+  60%, 100%
+    width: 60%
+    margin-left: 100%
+    background: red
 
 .name
   display: inline-block

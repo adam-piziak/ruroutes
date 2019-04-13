@@ -1,32 +1,31 @@
 import api from '@/api'
 
 export default {
-  FETCH_ROUTES({ commit, state }) {
-    return new Promise((resolve, reject) => {
-      api.fetchRoutes().then((res) => {
-        commit('SET_ROUTES', res.data.routes)
-        resolve()
+  // Update route list. Fetches bare minimum(list of routes containing id, name, and areas served)
+  UPDATE_ROUTE_LIST({ commit }) {
+      return api.fetchRoutes().then((res) => {
+        commit('UPDATE_ROUTE_LIST', res.data.data.routes)
       }).catch((err) => {
-        resolve()
-        reject(err)
+        commit('UPDATE_ROUTE_LIST', [])
       })
-    })
   },
 
-  FETCH_STOPS({ commit, state }) {
-    return new Promise((resolve, reject) => {
-      api.fetchStops().then((res) => {
-        commit('SET_STOPS', res.data.stops)
-        resolve()
+  // Update stop list. Fetches bare minimum(list of stop containing id, name, and area served)
+  UPDATE_STOP_LIST({ commit }) {
+      return api.fetchStops().then((res) => {
+        commit('UPDATE_STOP_LIST', res.data.data.stops)
       }).catch((err) => {
-        reject(err)
+        commit('UPDATE_STOP_LIST', [])
       })
-    })
   },
 
-  FETCH_ROUTE_LIST({ commit, state }) {
-    return api.fetchRouteList().then((routes) => {
-      commit('SET_ROUTE_LIST', routes)
-    })
+  // Get all data on route. (i.e. served stops, arrival times, etc)
+  RETRIEVE_ROUTE({ commit }, id) {
+    return api.fetchRoute(id).then(res => commit('UPDATE_ROUTE', res.data.data.route))
+  },
+
+  // Get all data on route. (i.e. served stops, arrival times, etc)
+  RETRIEVE_STOP({ commit }, id) {
+    return api.fetchStop(id).then(res => commit('UPDATE_STOP', res.data.data.stop))
   }
 }

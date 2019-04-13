@@ -8,23 +8,19 @@ export default context => {
     router.push(context.url)
     context.meta = app.$meta()
     router.onReady(() => {
+      context.rendered = () => {
+        context.state = store.state
+      }
       const matchedComponents = router.getMatchedComponents()
       if (!matchedComponents.length) {
         return reject({ code: 404 })
       }
       store.commit('SET_MOBILE', context.mobile)
-      resolve(app)
-      
-      Promise.all(matchedComponents.map(Component => {
-        if (Component.asyncData) {
-          return Component.asyncData({
-            store
-          })
-        }
-      })).then(() => {
+
+      context.rendered = () => {
         context.state = store.state
-        resolve(app)
-      })
+      }
+      resolve(app)
     }, reject)
   })
 }

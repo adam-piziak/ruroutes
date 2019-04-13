@@ -24,7 +24,7 @@ export default {
   methods: {
     openStop() {
       this.$router.push('/stops/' + this.stop.id)
-      EventBus.$emit('GO_TO_STOP', this.stop.id)
+      //EventBus.$emit('GO_TO_STOP', this.stop.id)
     },
     ...mapMutations({
       setActiveStop: 'SET_ACTIVE_STOP'

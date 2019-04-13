@@ -21,7 +21,7 @@
   height: 30px
   width: 30px
   background:
-    image: url('/icons/error.svg')
+    image: url('../../assets/icons/error.svg')
     repeat: no-repeat
     position: center center
 

@@ -1,6 +1,5 @@
 <template lang="pug">
 section.routes
-  GenericError(v-if="routes.length === 0") No Active Routes Found
   router-view
   Route(
     v-for="route in routes"
@@ -12,20 +11,24 @@ section.routes
 <script>
 import Route from 'components/list-elements/Route'
 import GenericError from 'components/errors/GenericError'
+import axios from 'axios'
 import api from "@/api"
 import { mapGetters } from 'vuex'
 export default {
-  asyncData ({ store, route }) {
-    return store.dispatch('FETCH_ROUTES')
-  },
   name: 'RoutesPage',
   components: {
     Route, GenericError
   },
   computed: {
-    ...mapGetters([
-      'routes'
-    ]),
+    routes() {
+      return this.$store.getters.activeRoutes
+    },
+    inactiveRoutes() {
+      return this.$store.getters.inactiveRoutes
+    }
+  },
+  serverPrefetch () {
+    return this.$store.dispatch('UPDATE_ROUTE_LIST')
   }
 }
 </script>
@@ -45,4 +48,6 @@ export default {
   &::-webkit-scrollbar-track
     background: #DDD
 
+.inactive-title
+  padding: 10px 20px
 </style>

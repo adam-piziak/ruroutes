@@ -58,7 +58,6 @@ export default {
       el.$mount()
       this.currentMarker = new mapboxgl.Marker(el.$el).setLngLat(stop.location)
       this.currentMarker.addTo(this.map);
-
     })
 
     EventBus.$on('GO_TO_ROUTE', (id) => {
