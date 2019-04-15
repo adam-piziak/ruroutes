@@ -1,6 +1,6 @@
 export default {
   // Return all the active routes
-  routes: state => state.routes,
+  routes: state => state.routes.sort((a, b) => a.name.localeCompare(b.name)),
 
   // Return all the stops in alphabetically order
   stops: state => state.stops.sort((a, b) => a.name.localeCompare(b.name)),
@@ -16,6 +16,9 @@ export default {
   // Get a route by its id
   route: (state) => (id) => state.routes.find((r) => r.id == id),
 
-  activeRoutes: (state) => state.routes.filter((route) => route.active),
+  activeRoutes: (state) => {
+    return state.routes.filter((route) => route.active)
+                       .sort((a, b) => a.name.localeCompare(b.name))
+  },
   inactiveRoutes: (state) => state.routes.filter((route) => !route.active)
 }

@@ -1,7 +1,8 @@
 <template lang="pug">
 #DirectionsPage
-  input.origin(placeholder="Origin" autofocus)
-  input.destination(placeholder="Destination")
+  p This page is under development. Check out progress on our 
+    a(href="https://www.github.com/adam-piziak/scarletbus-web") github page
+    | .
 </template>
 
 <script>
@@ -12,17 +13,12 @@
   padding: 20px
   background: white
 
-$input-height: 30px
-input
-  height: $input-height
-  line-height: $input-height
-  text-indent: 10px
-  margin: 5px 0
-  display: block
-  outline: 0
-  border: 0
-  background: #EEE
+p
+  line-height: 30px
 
-  &:focus
-    background: #DDD
+a
+  text-decoration: none
+  color: #69944e
+  font-weight: 500
+
 </style>

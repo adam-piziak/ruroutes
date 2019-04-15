@@ -12,6 +12,18 @@ nav
   )
     div.tab_icon
     div.tab_text Stops
+  div.tab.directions(
+    @click="$router.push('/directions')"
+    :class="{ 'active': currentPath === '/directions'}"
+  )
+    div.tab_icon
+    div.tab_text Directions
+  div.tab.schedule(
+    @click="$router.push('/schedule')"
+    :class="{ 'active': currentPath === '/schedule'}"
+  )
+    div.tab_icon
+    div.tab_text Schedule
 </template>
 
 <script>
@@ -37,26 +49,27 @@ nav
   position: relative
   //height: $height + 20px
   //box-shadow: 0 2px 1px rgba(#000000, 0.15)
-  padding-bottom: 20px
   margin-top: 8px
-  border-bottom: 1px solid #eee
   user-select: none
+  justify-content: space-between
+  margin: 12px
+
 
   .tab
-    //height: $height
-    min-width: 80px
+    min-width: $height
+    height: $height - 5px
     display: inline-block
     max-width: 150px
     font-size: 1rem
-    margin: 0 10px
-    //padding: 10px 0
     position: relative
     background: white
     overflow: hidden
-    border: 1px solid lightgray
     border-radius: 8px
-    padding: 5px
-    box-shadow: 0 0 1px rgba(#000000, 0.2)
+    padding: 5px 10px
+
+
+    &:not(.active)
+      //border: 1px solid #EEE
 
     .tab_text
       text-align: center
@@ -75,7 +88,7 @@ nav
       height: 24px
       width: 24px
       margin: 5px auto
-      opacity: .6
+      opacity: .7
       background:
         color: transparent
         position: center center
@@ -88,87 +101,41 @@ nav
 
     &.routes
       .tab_icon
-        background-image: url(~icons/nav_routes.svg)
+        background-image: url(~icons/bus_outline.svg)
 
-      &:hover .tab_icon, &.active .tab_icon, &.active:hover .tab_icon
-        background-image: url(~icons/nav_routes_white.svg)
+      &.active .tab_icon, &.active:hover .tab_icon
+        background-image: url(~icons/nav_routes.svg)
 
     &.stops
       .tab_icon
-        background-image: url(~icons/nav_stops.svg)
+        background-image: url(~icons/place_outline.svg)
 
-      &:hover .tab_icon, &.active .tab_icon, &.active:hover .tab_icon
-        background-image: url(~icons/nav_stops_white.svg)
+      &.active .tab_icon, &.active:hover .tab_icon
+        background-image: url(~icons/nav_stops.svg)
 
     &.directions
       .tab_icon
+        background-image: url(~icons/nav_outline.svg)
+
+      &.active .tab_icon, &.active:hover .tab_icon
         background-image: url(~icons/nav_directions.svg)
-
-      &:hover .tab_icon, &.active .tab_icon, &.active:hover .tab_icon
-        background-image: url(~icons/nav_directions_white.svg)
-
     &.schedule
       .tab_icon
         background-image: url(~icons/nav_schedule.svg)
 
       &:hover .tab_icon, &.active .tab_icon, &.active:hover .tab_icon
-        background-image: url(~icons/nav_schedule_white.svg)
+        background-image: url(~icons/nav_schedule.svg)
 
     &.active, &.active:hover
-      background: $active-color
-      box-shadow: 0 1px 4px rgba(#000000, 0.25)
-
-      //height: $height
-
-      .tab_text
-        color: white
-
-      .tab_icon
-        opacity: 1
-
-      &:not(:last-child)::after
-        background: rgba(#ffffff, 0.01)
-
-
-    &:not(:last-child)::after
-      content: ''
-      position: absolute
-      display: inline-block
-      top: 0
-      right: 0
-      height: $height * 3/5
-      margin-top: $height * 1/5
-      width: 1px
       background: #EEE
 
-
-
-    .vertical_line
-      display: inline-block
-      height: 40px
-      width: 1px
-      transition: .2s
-      background: #E7E7E7
-      position: absolute
-      right: 0
-      top: 25px
+      .tab_text
+        //color: white
 
     &:hover
-      background: $hover-color
+      background: #F5F5F5
       cursor: pointer
 
-      &:not(:last-child)::after
-        background: rgba(#000000, 0.01)
-
-      .tab_text
-        color: #FFF
-
-      .tab_icon
-        opacity: 1
-
-    &:active
-      cursor: grabbing
-      box-shadow: 0 1px 4px rgba(#000000, 0.25)
 
 
 </style>

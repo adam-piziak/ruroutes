@@ -3,10 +3,12 @@ section#search
   .menu-button(@click="$emit('toggle-menu')")
   input(type="text"
         ref="search_input"
-        v-model="query"
+        :value="query"
         placeholder="Search rutgers buses by route or stop"
         @input="updateSearchQuery"
         aria-label="search input")
+  transition(name="appear")
+    .clear-button(v-if="query.length > 0" @click.prevent="clearQuery")
 </template>
 
 <script>
@@ -22,12 +24,12 @@ export default {
   props: {
     query: String
   },
-  computed: {
-    ...mapGetters(['mobile'])
-  },
   methods: {
     updateSearchQuery (e) {
       this.$emit('search-input', e.target.value)
+    },
+    clearQuery() {
+      this.$emit('search-input', '')
     }
   },
   mounted() {
@@ -72,7 +74,7 @@ $close-margin: 14px
   margin: 12px
   border-radius: 5px
   overflow: hidden
-  box-shadow: 0 1px 5px rgba(#000000, 0.3)
+  border: 1px solid #DDD
   &.mobile
     background: #ef5350
 
@@ -124,7 +126,7 @@ input
   right: 0
   background:
     color: transparent
-    image: url('~icons/logo.svg')
+    image: url('~icons/logo.png')
     repeat: no-repeat
     position: center
     size: 40%
@@ -158,13 +160,32 @@ input
     text-align: center
     opacity: .7
 
-
-.divider
-  width: 1px
-  height: $height / 2
+.clear-button
+  height: 30px
+  width: 30px
+  background:
+    image: url(~icons/close.svg)
+    position: center
   position: absolute
-  top: 10px
-  left: 0
-  background: #dbdbdb
-  transition: .2s
+  top: 50%
+  right: 10px
+  transform: translateY(-50%)
+  opacity: 0.8
+  transition: transform .15s
+
+  &:hover
+    transform: translateY(-50%) scale(1.25)
+    cursor: pointer
+
+  &:hover::before
+    height: 20px
+    width: 20px
+    background: pink
+
+.appear-enter-active, .appear-leave-active
+  transition: all .15s
+
+
+.appear-enter, .appear-leave-to
+  transform: translateY(-50%) scale(0)
 </style>

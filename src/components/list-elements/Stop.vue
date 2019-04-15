@@ -47,14 +47,12 @@ $speed: .3s
   user-select: none
   z-index: 5
   transition: padding .15s, box-shadow .05s
-
-  &:not(:last-child)
-    border-bottom: 1px solid #EEE
+  border-bottom: 1px solid #EEE
 
   &:hover
     cursor: pointer
     opacity: .99
-    box-shadow: 0 0px 5px rgba(#000000, 0.2)
+    box-shadow: 0 0px 3px rgba(#000000, 0.2)
     z-index: 20
     padding-left: 15px
     font-weight: 500

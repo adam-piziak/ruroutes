@@ -1,8 +1,14 @@
 <template lang="pug">
 #active_component
-  .element-header
+  .element-header(:class="{'navigate_present': pages_navigated > 0}")
     .close-divider
-    .close(@click="returnHome")
+    transition(name="fade" appear)
+      .back-button(v-show="pages_navigated > 0" @click="goBack")
+        .icon
+        .background
+    .close-button
+      .icon(@click="returnHome")
+      .background
     template(v-if="basePath == 'routes'")
       .name {{ route.name }}
       .campuses
@@ -12,8 +18,8 @@
       .campuses
         .campus {{ stop.area }}
   .list(@scroll.passive="onScroll" ref="list")
-    RouteStops(v-if="basePath === 'routes'")
-    StopRoutes(v-else)
+    RouteStops(v-if="basePath === 'routes'" @navigate="pages_navigated++")
+    StopRoutes(v-else @navigate="pages_navigated++")
 </template>
 
 <script>
@@ -27,7 +33,8 @@ const ROUTES = "routes"
 export default {
   data() {
     return {
-      scroll: 0
+      scroll: 0,
+      pages_navigated: 0
     }
   },
   components: {
@@ -70,6 +77,10 @@ export default {
   methods: {
     returnHome() {
       this.$router.push('/' + this.basePath)
+    },
+    goBack() {
+      this.pages_navigated--
+      this.$router.go(-1)
     },
     onScroll(e) {
       this.scroll = this.$refs.list.scrollTop
@@ -128,6 +139,14 @@ export default {
   flex-shrink: 0
   box-shadow: 0 1px 3px rgba(#000000, 0.2)
 
+  &.navigate_present
+
+    .name
+      width: calc(100% - 150px)
+
+    .close-divider
+      right: 120px
+
   &:hover
     cursor: default
 
@@ -141,24 +160,74 @@ export default {
     &:hover
       cursor: text
 
-.close
+
+
+
+.background
   height: 40px
   width: 40px
-  background:
-    image: url(~icons/close.svg)
-    size: 90%
-    position: center
+  z-index: 99
   position: absolute
-  right: 20px
-  top: 20px
+  top: 0
   border-radius: 10px
+  transform: scale(0.1)
+  transition: .15s ease
+
+.back-button
+  height: 40px
+  width: 40px
+  position: absolute
+  right: 70px
+  top: 20px
 
   &:hover
     cursor: pointer
-    background-color: #EEE
 
     &:active
-      background-color: #AAA
+      transform: scale(1.1)
+
+  &:hover .background
+    background: #EEE
+    transform: scale(1)
+
+  .icon
+    position: relative
+    z-index: 100
+    height: 40px
+    width: 40px
+    opacity: .9
+    background:
+      image: url(~icons/back.svg)
+      size: 85%
+      position: center
+
+.close-button
+  height: 40px
+  width: 40px
+  position: absolute
+  right: 20px
+  top: 20px
+
+  .icon
+    position: relative
+    z-index: 100
+    height: 40px
+    width: 40px
+    background:
+      image: url(~icons/close.svg)
+      size: 90%
+      position: center
+
+
+  &:hover
+    cursor: pointer
+
+    &:active
+      transform: scale(1.1)
+
+  &:hover .background
+    background: #EEE
+    transform: scale(1)
 
 .close-divider
   position: absolute
@@ -168,9 +237,11 @@ export default {
   right: 70px
   top: 16px
   opacity: 0.3
+  transition: right .15s
 
 .campuses
-  margin: 20px 20px
+  margin: 0 20px
+  margin-bottom: 12px
 
   &:hover
     cursor: text
@@ -178,7 +249,12 @@ export default {
 .campus
   display: inline-block
   font-size: 1rem
-  color: #888
+  color: #777
+  background: #EEE
+  padding: 4px 8px
+  border-radius: 8px
+  margin: 5px 0px
+
 
 
 
@@ -193,6 +269,7 @@ export default {
   overflow-y: auto
   overflow-x: hidden
   flex-grow: 1
+  background: #F5F5F5
   &::-webkit-scrollbar
     width: 8px
 
@@ -232,8 +309,14 @@ export default {
     weight: 500
     size: 1.6rem
   min-height: 32px
-.campus
-  font-size: 1.2rem
+
+
+.fade-enter-active, .fade-leave-active
+  transition: .15s ease-out
+  transform: scale(1)
+
+.fade-enter, .fade-leave-to
+  transform: scale(0)
 
 .slide-enter-active, .slide-leave-active
   transition: .15s ease-out

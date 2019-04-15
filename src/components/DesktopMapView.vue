@@ -4,7 +4,7 @@
 </template>
 
 <script>
-import EventBus from '@/event-bus.js';
+import EventManager from '@/event-bus.js';
 import axios from 'axios';
 import Vue from 'vue';
 import BusMarker from 'components/BusMarker'
@@ -15,7 +15,7 @@ export default {
     return {
       map: null,
       counter: 0,
-      currentMarker: null,
+      stopMarker: null,
       buses: [],
       layers: [],
       markers: [],
@@ -25,6 +25,15 @@ export default {
   },
   components: { BusMarker, StopMarker },
   mounted() {
+    // Initalize keys and load map
+    this.initialize()
+
+    // Once map loads, resume the current view
+    this.map.on('style.load', () => this.resumeCurrentView())
+
+    // If stop view is request, sync the current view with the stop
+    EventManager.$on('GO_TO_STOP', id => this.syncViewWithStop(id))
+    /*
     this.initialize()
     const mapboxgl = require('mapbox-gl')
     EventBus.$on('GO_TO_STOP', (id) => {
@@ -202,20 +211,71 @@ export default {
 
 
 
-    this.map.on('load', () => {
+
+    */
+  },
+  methods: {
+    resumeCurrentView() {
+      const mapboxgl = require('mapbox-gl')
       if (this.$route.params.id != null) {
         if (this.basePath == "stops") {
           const stop = this.stop;
-          this.currentMarker = new mapboxgl.Marker({ color: "red" }).setLngLat(stop.location)
-          this.currentMarker.addTo(this.map);
+          this.currentMarker = new mapboxgl.Marker({ color: "red" }).setLngLat(stop.location[1], stop.location[0])
+          this.currentMarker.addTo(this.map)
           this.map.flyTo({
             center: stop.location
-          });
+          })
         }
       }
-    })
-  },
-  methods: {
+    },
+    syncViewWithStop(id) {
+      // import library
+      const mapboxgl = require('mapbox-gl')
+
+      // Remove current view (markers, segments, etc)
+      this.removeCurrentView()
+
+      // Get current stop data
+      const stop = this.getStop(id)
+
+      // Add stop marker
+      let marker = this.createStopMarker(stop)
+      this.stopMarker = new mapboxgl.Marker(marker).setLngLat(stop.location)
+      this.stopMarker.addTo(this.map)
+
+      // Move map into position
+      this.map.flyTo({
+        center: stop.location,
+        zoom: 15.5
+      })
+    },
+    createStopMarker(stop) {
+      let StopMarkerClass = Vue.extend(StopMarker)
+
+      let marker = new StopMarkerClass({
+        propsData: { name: stop.name, id: stop.id }
+      })
+      marker.$mount()
+      return marker.$el
+    },
+    removeCurrentView() {
+      if (this.map.getLayer("route-outline")) {
+        this.map.removeLayer("route-outline");
+      }
+
+      if (this.map.getSource('route-outline')) {
+        this.map.removeSource("route-outline");
+      }
+
+      if (this.stopMarker != null) {
+        this.stopMarker.remove()
+        this.stopMarker = null
+      }
+
+      this.markers.forEach((m) => {
+        m.remove()
+      })
+    },
     getStop(id) {
       return this.$store.getters.stop(id)
     },
@@ -224,20 +284,17 @@ export default {
     },
     initialize() {
       const mapboxgl = require('mapbox-gl')
-      mapboxgl.accessToken = 'pk.eyJ1IjoiYWRhbS1waXppYWsiLCJhIjoiY2poa3gxeGw2Mnl2YTNibjNpdmkwM2t6cCJ9.oST8MV_wyXjmfOY4IPH1JA';
-      const mapview = new mapboxgl.Map({
+      mapboxgl.accessToken = 'pk.eyJ1IjoiYWRhbS1waXppYWsiLCJhIjoiY2poa3gxeGw2Mnl2YTNibjNpdmkwM2t6cCJ9.oST8MV_wyXjmfOY4IPH1JA'
+      const map = new mapboxgl.Map({
         container: 'map',
         //style: 'mapbox://styles/adam-piziak/cjhqcs8sx1rfa2rpe0gw3pyjh',
         //style: 'mapbox://styles/mapbox/streets-v11',
         style: 'https://maps.tilehosting.com/styles/basic/style.json?key=K7rAuvC67gIS7xy6bcOa',
         center: this.stop ? this.stop.location : [-74.447672, 40.502281],
         zoom: 16,
-      });
-      this.map = mapview
-      this.map.getCanvas().style.cursor ='default';
-      this.map.on('load', () => {
-          this.loaded = true
       })
+      this.map = map
+      this.map.getCanvas().style.cursor ='default'
     }
   },
   computed: {

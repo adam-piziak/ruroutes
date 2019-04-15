@@ -1,14 +1,17 @@
 <template lang="pug">
 #stop_routes
-  template(v-if="stop.routes.length > 0")
-    .route(v-for="route in stop.routes" @click="goToRoute(route.id)")
-      .icon
-      .name {{ route.name }}
-      .campuses
-        .campus(v-for="campus in route.campuses") {{ campus }}
-      .times(v-if="route.arrivals")
-        .label Arriving in
-        .time(v-for="time in routeTimes(route)" :class="{'green': time < 5, 'red': time <= 1}") {{ time }} min
+  .routes(v-if="stop.routes.length > 0")
+    transition-group(name="appear" appear)
+      .route(v-for="route in stop.routes"
+             :key="route.id"
+             @click="goToRoute(route.id)")
+        .icon
+        .name {{ route.name }}
+        .campuses
+          .campus(v-for="campus in route.campuses") {{ campus }}
+        .times(v-if="route.arrivals")
+          .label Arriving in
+          .time(v-for="time in routeTimes(route)" :class="{'green': time < 5, 'red': time <= 1}") {{ time }} min
   template(v-else)
     .loading-bar
     .loading-text loading...
@@ -17,6 +20,11 @@
 <script>
 import EventBus from '@/event-bus.js';
 export default {
+  data() {
+    return {
+      scheduler: null,
+    }
+  },
   computed: {
     stop() {
       let stop = this.$store.getters.stop(this.$route.params.id)
@@ -40,6 +48,7 @@ export default {
   },
   methods: {
     goToRoute(tag) {
+      this.$emit('navigate')
       this.$router.push(`/routes/${tag}`)
     },
     routeTimes(route) {
@@ -59,21 +68,33 @@ export default {
   serverPrefetch () {
     return this.$store.dispatch('UPDATE_STOP_LIST')
   },
+  mounted() {
+    let ctx = this
+    this.scheduler = setInterval(() => {
+      ctx.$store.dispatch('RETRIEVE_ROUTE', this.$route.params.id)
+    }, 20000);
+  },
+  beforeDestroy() {
+    clearInterval(this.scheduler)
+  }
 }
 </script>
 
 <style lang="sass" scoped>
+.routes
+  background: #F5F5F5
+
 .route
   display: relative
   background: white
   padding: 20px 30px
-  border-bottom: 1px solid #EEE
+  border-bottom: 1px solid #DADADA
   z-index: 5
   transition: box-shadow .2s, padding .2s
   &:hover
     cursor: pointer
     opacity: .99
-    box-shadow: 0 0px 12px rgba(#000000, 0.2)
+    box-shadow: 0 0px 3px rgba(#000000, 0.2)
     z-index: 20
     padding-left: 35px
 .icon
@@ -82,7 +103,7 @@ export default {
   width: 20px
   opacity: .7
   transition: margin .15s
-  vertical-align: text-bottom
+  vertical-align: text-top
   background:
     image: url(~icons/nav_routes.svg)
 
@@ -111,7 +132,7 @@ export default {
 .name
   display: inline-block
   margin-left: 20px
-  font-size: 1.2rem
+  font-size: 1.1rem
   font-weight: 600
   letter-spacing: 0.02rem
   color: #444
@@ -149,4 +170,11 @@ export default {
 
   &.green.red
     color: #e64848
+
+.appear-enter-active, .appear-leave-active
+  transition: all .3s
+
+.appear-enter, .appear-leave-to
+  opacity: 0
+
 </style>

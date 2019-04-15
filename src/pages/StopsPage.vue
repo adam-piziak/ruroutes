@@ -2,11 +2,12 @@
 section.stops(:style="height" :class="{'mobile': meta.mobile}")
   GenericError(v-if="stops.length === 0") No Active Stops Found
   router-view
-  Stop(
-    v-for = "stop in stops"
-    :stop = "stop"
-    :key = "stop.tag"
-    )
+  template(v-if="$route.path.length < 7")
+    Stop(
+      v-for = "stop in stops"
+      :stop = "stop"
+      :key = "stop.tag"
+      )
 </template>
 
 <script>
@@ -41,7 +42,7 @@ export default {
           height: 'calc(100vh - 130px)'
         }
       }
-    }
+    },
   },
 }
 </script>
@@ -51,6 +52,8 @@ export default {
   height: 100px
   overflow-y: auto
   background: #F0F0F0
+  position: relative
+  z-index: 1
 
   &::-webkit-scrollbar
     width: 8px

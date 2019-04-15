@@ -85,8 +85,12 @@ export default {
   z-index: 10
 
 header
+  position: relative
+  z-index: 100
   background: white
   z-index: 10
+  box-shadow: 0 1px 3px rgba(#000000, 0.2)
+
 @media (max-width: 1024px)
   #main_block
     width: 100vw

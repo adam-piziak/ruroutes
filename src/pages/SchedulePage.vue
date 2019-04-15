@@ -1,15 +1,22 @@
 <template lang="pug">
 #SchedulePage
-  p Schedule Page
+  p This page is under development. Check out progress on our 
+    a(href="https://www.github.com/adam-piziak/scarletbus-web") github page
+    | .
 </template>
 
 <style lang="sass">
 #SchedulePage
-  background: #F0F0F0
-  height: 100vh
-  p
-    padding: 20px
-    background: white
-    border-bottom: 1px solid #dbdbdb
-    
+  background: white
+  padding: 20px
+
+
+p
+  line-height: 30px
+
+a
+  text-decoration: none
+  color: #69944e
+  font-weight: 500
+
 </style>

@@ -35,18 +35,15 @@ $height: 50px
   background: white
   padding: 16px 20px
   user-select: none
-  transition: padding .05s
-  border-bottom: 1px solid #EEE
+  transition: .05s
+  border-bottom: 1px solid #DDD
 
 
   &:hover
     cursor: pointer
-    opacity: .99
-    //box-shadow: 0 0px 5px rgba(#000000, 0.2)
+    box-shadow: 0 0px 3px rgba(#000000, 0.2)
     z-index: 20
-    padding-left: 25px
-    padding-right: 15px
-    font-weight: 500
+    transform: translateX(5px)
 
   &.inactive
     opacity: 0.8
@@ -61,10 +58,14 @@ $height: 50px
 
 .area
   display: inline-block
-  color: #666
-  padding-top: 5px
-  &:not(:last-child)::after
-    content: "·"
-    margin: 0 6px
-    font-weight: 900
+  font-size: 1rem
+  color: #888
+  background: #F5F5F5
+  padding: 4px 8px
+  border-radius: 8px
+  margin: 5px 0px
+
+  &:not(:last-child)
+    margin-right: 10px
+
 </style>

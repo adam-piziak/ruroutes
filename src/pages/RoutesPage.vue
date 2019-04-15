@@ -1,5 +1,6 @@
 <template lang="pug">
 section.routes
+  GenericError(v-if="routes.length === 0") No Active Routes Found
   router-view
   Route(
     v-for="route in routes"
@@ -35,9 +36,12 @@ export default {
 
 <style lang="sass" scoped>
 .routes
-  background: #F0F0F0
+  background: #F5F5F5
   overflow-y: auto
   flex-grow: 0
+  position: relative
+  z-index: 1
+  min-height: calc(100vh - 170px)
 
   &::-webkit-scrollbar
     width: 8px
