@@ -21,9 +21,11 @@ export default {
 </script>
 
 <style lang="sass">
+@import url('https://fonts.googleapis.com/css?family=Roboto:400,500,700')
 *
   margin: 0
   padding: 0
   box-sizing: border-box
-  font-family: 'verdana'
+  font-family: 'Roboto', sans-serif
+
 </style>

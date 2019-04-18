@@ -55,6 +55,7 @@ $height: 50px
 .name
   margin-bottom: 4px
   font-weight: 500
+  color: #444
 
 .area
   display: inline-block

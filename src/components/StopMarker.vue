@@ -15,7 +15,8 @@ export default {
   },
   methods: {
     goToStop() {
-      this.$router.push(`/stops/${this.id}`)
+      console.log(this);
+      this.$parent.$router.push(`/stops/${this.id}`)
       EventBus.$emit('GO_TO_STOP', this.id);
     }
   },
@@ -38,6 +39,10 @@ $size: 30px
   &:hover
     cursor: pointer
 
+  &.inactive .base
+    background: #EEE
+    border: 2px solid gray
+    color: darkgray
 
 .ref
   position: relative

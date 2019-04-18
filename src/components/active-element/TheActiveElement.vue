@@ -155,13 +155,10 @@ export default {
     width: calc(100% - 90px)
     margin: 20px
     font-size: 1.5rem
-    font-weight: 600
+    font-weight: 500
 
     &:hover
       cursor: text
-
-
-
 
 .background
   height: 40px

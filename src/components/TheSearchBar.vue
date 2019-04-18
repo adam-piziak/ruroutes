@@ -72,7 +72,7 @@ $close-margin: 14px
   z-index: 1
   flex-shrink: 0
   margin: 12px
-  border-radius: 5px
+  border-radius: 10px
   overflow: hidden
   border: 1px solid #DDD
   &.mobile
@@ -105,7 +105,7 @@ input
   height: $height
   width: $height
   background:
-    image: url('~icons/logo.svg')
+    image: url('~icons/logo.png')
     repeat: no-repeat
     position: center
     size: 50%
@@ -119,20 +119,6 @@ input
     transition: opacity 0
     opacity: 0.1
 
-.logo
-  height: $height
-  width: $height
-  position: absolute
-  right: 0
-  background:
-    color: transparent
-    image: url('~icons/logo.png')
-    repeat: no-repeat
-    position: center
-    size: 40%
-  opacity: 0.8
-  transform: rotate(90deg)
-  transition: opacity 5s
 #filter
   display: flex
   justify-content: space-around
@@ -174,7 +160,6 @@ input
   transition: transform .15s
 
   &:hover
-    transform: translateY(-50%) scale(1.25)
     cursor: pointer
 
   &:hover::before
@@ -183,9 +168,9 @@ input
     background: pink
 
 .appear-enter-active, .appear-leave-active
-  transition: all .15s
+  transition: transform .15s
 
 
-.appear-enter, .appear-leave-to
+.appear-enter
   transform: translateY(-50%) scale(0)
 </style>

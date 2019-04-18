@@ -9,6 +9,7 @@ import axios from 'axios';
 import Vue from 'vue';
 import BusMarker from 'components/BusMarker'
 import StopMarker from 'components/StopMarker'
+let mapboxgl
 
 export default {
   data() {
@@ -18,21 +19,28 @@ export default {
       stopMarker: null,
       buses: [],
       layers: [],
-      markers: [],
+      routeStopMarkers: [],
       locationInterval: null,
       loaded: false
     }
   },
   components: { BusMarker, StopMarker },
   mounted() {
+    mapboxgl = require('mapbox-gl')
     // Initalize keys and load map
     this.initialize()
 
     // Once map loads, resume the current view
-    this.map.on('style.load', () => this.resumeCurrentView())
+    this.map.on('style.load', () => this.resumeView())
 
-    // If stop view is request, sync the current view with the stop
+    // If stop view is requested, sync the current view with the stop
     EventManager.$on('GO_TO_STOP', id => this.syncViewWithStop(id))
+
+    // On route request, display route
+    EventManager.$on('GO_TO_ROUTE', (id) => this.displayRoute(id))
+
+    //
+    EventManager.$on('CLEAR_MAP', () => this.clearView())
     /*
     this.initialize()
     const mapboxgl = require('mapbox-gl')
@@ -172,17 +180,7 @@ export default {
       }, 200);
 
       setTimeout(function () {
-        let geojson = {};
-        geojson.id = "route-outline";
-        geojson.type = "line";
-        geojson.source = {};
-        geojson.source.type = "geojson";
-        geojson.source.data = {};
-        geojson.source.data.type = "FeatureCollection";
-        geojson.source.data.features = [];
-        geojson.paint = {};
-        geojson.paint["line-color"] = "#dd511e";
-        geojson.paint["line-width"] = 2;
+
 
         route.segments.forEach((segment) => {
           let coordinates = segment.map(x => [x[1], x[0]])
@@ -215,8 +213,7 @@ export default {
     */
   },
   methods: {
-    resumeCurrentView() {
-      const mapboxgl = require('mapbox-gl')
+    resumeView() {
       if (this.$route.params.id != null) {
         if (this.basePath == "stops") {
           const stop = this.stop;
@@ -228,12 +225,56 @@ export default {
         }
       }
     },
-    syncViewWithStop(id) {
-      // import library
-      const mapboxgl = require('mapbox-gl')
+    displayRoute(id) {
+      this.clearView()
 
+      // Get current route data
+      const route = this.getRoute(id)
+
+      // Display route segments
+      let geojson = this.createGeoJSON()
+      route.segments.forEach((segment) => {
+        let coordinates = segment.map(x => [x[1], x[0]])
+        geojson.source.data.features.push(this.createSegment(coordinates));
+      })
+
+      this.map.addLayer(geojson);
+
+      // Display stops
+      let n = 0
+      this.routeStopMarkers = []
+      route.stops.forEach((stop) => {
+        // Add stop marker
+        let marker = this.createStopMarker(stop)
+        this.routeStopMarkers[n] = new mapboxgl.Marker(marker).setLngLat(stop.location)
+        this.routeStopMarkers[n].addTo(this.map)
+        n++
+      })
+
+
+      // fit map to route segment
+      let bounds = new mapboxgl.LngLatBounds();
+      route.segments.forEach((segment) => {
+        segment.map(x => [x[1], x[0]]).forEach((seg) => bounds.extend(seg))
+      })
+      this.map.fitBounds(bounds, { padding: 100, linear: true });
+
+
+
+    },
+
+    createSegment(coordinates) {
+      let feature = {};
+      feature.type = "Feature";
+      feature.properties = {};
+      feature.geometry = {};
+      feature.geometry.type = "LineString";
+      feature.geometry.coordinates = coordinates;
+      return feature
+    },
+    syncViewWithStop(id) {
       // Remove current view (markers, segments, etc)
-      this.removeCurrentView()
+      this.clearView()
 
       // Get current stop data
       const stop = this.getStop(id)
@@ -253,12 +294,13 @@ export default {
       let StopMarkerClass = Vue.extend(StopMarker)
 
       let marker = new StopMarkerClass({
-        propsData: { name: stop.name, id: stop.id }
+        parent: this,
+        propsData: { name: stop.name, id: stop.id}
       })
       marker.$mount()
       return marker.$el
     },
-    removeCurrentView() {
+    clearView() {
       if (this.map.getLayer("route-outline")) {
         this.map.removeLayer("route-outline");
       }
@@ -272,7 +314,7 @@ export default {
         this.stopMarker = null
       }
 
-      this.markers.forEach((m) => {
+      this.routeStopMarkers.forEach((m) => {
         m.remove()
       })
     },
@@ -283,7 +325,6 @@ export default {
       return this.$store.getters.route(id)
     },
     initialize() {
-      const mapboxgl = require('mapbox-gl')
       mapboxgl.accessToken = 'pk.eyJ1IjoiYWRhbS1waXppYWsiLCJhIjoiY2poa3gxeGw2Mnl2YTNibjNpdmkwM2t6cCJ9.oST8MV_wyXjmfOY4IPH1JA'
       const map = new mapboxgl.Map({
         container: 'map',
@@ -295,6 +336,20 @@ export default {
       })
       this.map = map
       this.map.getCanvas().style.cursor ='default'
+    },
+    createGeoJSON() {
+      let geojson = {}
+      geojson.id = "route-outline"
+      geojson.type = "line"
+      geojson.source = {}
+      geojson.source.type = "geojson"
+      geojson.source.data = {}
+      geojson.source.data.type = "FeatureCollection"
+      geojson.source.data.features = []
+      geojson.paint = {}
+      geojson.paint["line-color"] = "#dd511e"
+      geojson.paint["line-width"] = 2
+      return geojson
     }
   },
   computed: {

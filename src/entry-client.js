@@ -12,27 +12,32 @@ router.onReady(() => {
 })
 
 router.afterEach((to, from) => {
-  if (to.name == 'ActiveStop') {
-    if (!store.getters.stop(to.params.id).location) {
-      store.dispatch('RETRIEVE_STOP', to.params.id).then(() => {
+  switch(to.name) {
+    case 'ActiveStop':
+      if (!store.getters.stop(to.params.id).location) {
+        store.dispatch('RETRIEVE_STOP', to.params.id).then(() => {
+          EventBus.$emit('GO_TO_STOP', to.params.id)
+        })
+      } else  {
+        store.dispatch('RETRIEVE_STOP', to.params.id)
         EventBus.$emit('GO_TO_STOP', to.params.id)
-      })
-    } else  {
-      store.dispatch('RETRIEVE_STOP', to.params.id)
-      EventBus.$emit('GO_TO_STOP', to.params.id)
-    }
-  }
+      }
+      break;
 
+    case 'ActiveRoute':
+      if (to.name == 'ActiveRoute') {
+        if (!store.getters.route(to.params.id).segments) {
+          store.dispatch('RETRIEVE_ROUTE', to.params.id).then(() => {
+            EventBus.$emit('GO_TO_ROUTE', to.params.id)
+          })
+        } else {
+          store.dispatch('RETRIEVE_ROUTE', to.params.id)
+          EventBus.$emit('GO_TO_ROUTE', to.params.id)
+        }
 
-  if (to.name == 'ActiveRoute') {
-    if (!store.getters.route(to.params.id).segments) {
-      store.dispatch('RETRIEVE_ROUTE', to.params.id).then(() => {
-        EventBus.$emit('GO_TO_ROUTE', to.params.id)
-      })
-    } else {
-      store.dispatch('RETRIEVE_ROUTE', to.params.id)
-      EventBus.$emit('GO_TO_ROUTE', to.params.id)
-    }
-
+      }
+      break;
+    default:
+      EventBus.$emit('CLEAR_MAP')
   }
 })
