@@ -330,7 +330,8 @@ export default {
         container: 'map',
         //style: 'mapbox://styles/adam-piziak/cjhqcs8sx1rfa2rpe0gw3pyjh',
         //style: 'mapbox://styles/mapbox/streets-v11',
-        style: 'https://maps.tilehosting.com/styles/basic/style.json?key=K7rAuvC67gIS7xy6bcOa',
+        //style: 'https://maps.tilehosting.com/styles/basic/style.json?key=K7rAuvC67gIS7xy6bcOa',
+        style: 'https://api.maptiler.com/maps/streets/style.json?key=K7rAuvC67gIS7xy6bcOa',
         center: this.stop ? this.stop.location : [-74.447672, 40.502281],
         zoom: 16,
       })
