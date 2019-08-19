@@ -74,7 +74,6 @@ nav
     .tab_text
       text-align: center
       color: #555
-      letter-spacing: -.02rem
       font-weight: 500
       user-select: none
       display: block

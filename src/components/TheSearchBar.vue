@@ -71,10 +71,9 @@ $close-margin: 14px
   position: relative
   z-index: 1
   flex-shrink: 0
-  margin: 12px
-  border-radius: 10px
+  padding: 5px 10px
   overflow: hidden
-  border: 1px solid #DDD
+  border-bottom: 1px solid #DDD
   &.mobile
     background: #ef5350
 
@@ -82,7 +81,7 @@ $close-margin: 14px
       color: white
 
       .icon
-        background-image: url('/icons/filter_white.svg')
+        background-image: url('/icons/menu.svg')
     input::placeholder
       color: white
       font-weight: bold
@@ -105,11 +104,11 @@ input
   height: $height
   width: $height
   background:
-    image: url('~icons/logo.png')
+    image: url('~icons/menu.svg')
     repeat: no-repeat
     position: center
     size: 50%
-  opacity: 0.8
+  opacity: 0.7
   transition: opacity 5s
 
   &:hover
