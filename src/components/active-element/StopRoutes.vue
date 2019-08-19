@@ -105,7 +105,7 @@ export default {
   transition: margin .15s
   vertical-align: text-top
   background:
-    image: url(~icons/nav_routes.svg)
+    image: url(~icons/routes.svg)
 
 .loading-text
   padding: 20px

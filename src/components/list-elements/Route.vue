@@ -33,7 +33,7 @@ $height: 50px
 .route
   position: relative
   background: white
-  padding: 16px 20px
+  padding: 20px 20px
   user-select: none
   transition: .05s
   border-bottom: 1px solid #DDD
@@ -61,12 +61,12 @@ $height: 50px
   display: inline-block
   font-size: 1rem
   color: #888
-  background: #F5F5F5
-  padding: 4px 8px
   border-radius: 8px
   margin: 5px 0px
 
   &:not(:last-child)
-    margin-right: 10px
+    &::after
+      content: "·"
+      margin: 0 10px
 
 </style>

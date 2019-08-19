@@ -3,8 +3,8 @@ section#main_block
   header
     TheSearchBar(@search-input="searchInput = $event" @toggle-menu="globalNav = !globalNav" :query="searchInput")
     TheNavigation(@click.native="searchInput = ''")
-  transition(name="slide")
-    TheActiveElement(v-if="itemOpened")
+  transition(name="element")
+    TheActiveElement(v-show="itemOpened")
   TheSearchPage(v-if="searchInput.length > 0" :query="searchInput")
   template(v-else)
     transition(name="slide" mode="out-in")
@@ -96,10 +96,10 @@ header
     width: 100vw
 
 .slide-enter-active, .slide-leave-active
-  transition: .15s
+  transition: .1s
 
 .slide-enter, .slide-leave-to
-  transform: translateY(20px)
+  transform: translateY(8px)
   opacity: .1
 
 .swipe-enter-active, .swipe-leave-active
@@ -108,13 +108,13 @@ header
 .swipe-enter, .swipe-leave-to
   transform: translateX(-100%)
 
-.fade-enter-active, .fade-leave-active
-  transition: .2s
+.element-enter-active, .element-leave-active
+  transition: .1s ease-out
   position: absolute
   top: 0
 
-.fade-enter, .fade-leave-to
-  transform: translateY(-16px)
+.element-enter, .element-leave-to
+  transform: translateY(10px)
   opacity: 0
   position: absolute
   top: 0

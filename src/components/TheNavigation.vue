@@ -52,7 +52,7 @@ nav
   margin-top: 8px
   user-select: none
   justify-content: space-between
-  margin: 12px
+  margin: 8px 12px
 
 
   .tab
@@ -66,6 +66,8 @@ nav
     overflow: hidden
     border-radius: 8px
     padding: 5px 10px
+    border: 1px solid transparent
+
 
 
     &:not(.active)
@@ -103,6 +105,7 @@ nav
         background-image: url(~icons/bus_outline.svg)
 
       &.active .tab_icon, &.active:hover .tab_icon
+        opacity: .9
         background-image: url(~icons/nav_routes.svg)
 
     &.stops
@@ -110,6 +113,7 @@ nav
         background-image: url(~icons/place_outline.svg)
 
       &.active .tab_icon, &.active:hover .tab_icon
+        opacity: .9
         background-image: url(~icons/nav_stops.svg)
 
     &.directions
@@ -126,13 +130,12 @@ nav
         background-image: url(~icons/nav_schedule.svg)
 
     &.active, &.active:hover
-      background: #EEE
-
+      background: #F8F8F8
       .tab_text
-        //color: white
+        color: $active-color
 
     &:hover
-      background: #F5F5F5
+      background: #F8F8F8
       cursor: pointer
 
 

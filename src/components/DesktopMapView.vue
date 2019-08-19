@@ -349,7 +349,7 @@ export default {
       geojson.source.data.features = []
       geojson.paint = {}
       geojson.paint["line-color"] = "#dd511e"
-      geojson.paint["line-width"] = 2
+      geojson.paint["line-width"] = 3
       return geojson
     }
   },

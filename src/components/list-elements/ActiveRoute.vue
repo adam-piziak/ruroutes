@@ -136,7 +136,7 @@ $side-padding: 24px
   width: 100px
   background:
     color: red
-    image: url('../../assets/icons/nav_routes.svg')
+    image: url('../../assets/icons/routes.svg')
 #active-route
   height: 100vh
   width: 100%

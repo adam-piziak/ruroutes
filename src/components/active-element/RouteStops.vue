@@ -165,7 +165,7 @@ export default {
   transition: margin .15s
   vertical-align: text-bottom
   background:
-    image: url(~icons/nav_stops.svg)
+    image: url(~icons/stops.svg)
     size: 120%
     repeat: no-repeat
     position: center

@@ -42,7 +42,7 @@ $speed: .3s
 .stop
   position: relative
   width: 100%
-  padding: 16px 20px
+  padding: 18px 20px
   background: white
   user-select: none
   z-index: 5
