@@ -18,8 +18,8 @@
       .campuses
         .campus {{ stop.area }}
   .list(@scroll.passive="onScroll" ref="list")
-    RouteStops(v-show="basePath === 'routes'" @navigate="pages_navigated++")
-    StopRoutes(v-show="basePath === 'stops'" @navigate="pages_navigated++")
+    RouteStops(v-if="basePath === 'routes'" @navigate="pages_navigated++")
+    StopRoutes(v-else="basePath === 'stops'" @navigate="pages_navigated++")
 </template>
 
 <script>
