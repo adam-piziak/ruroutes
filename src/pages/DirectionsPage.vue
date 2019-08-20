@@ -12,13 +12,14 @@
 #DirectionsPage
   padding: 20px
   background: white
+  border-bottom: 1px solid #DDD
 
 p
   line-height: 30px
 
 a
   text-decoration: none
-  color: #69944e
+  color: #4168dd
   font-weight: 500
 
 </style>

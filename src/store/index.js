@@ -13,8 +13,8 @@ export function createStore() {
       meta: {
         mobile: false,
       },
-      routes: [{'id': 13232, 'name': 'hey'}],
-      stops: [],
+      routes: [],
+      stops: []
     },
     actions,
     getters,

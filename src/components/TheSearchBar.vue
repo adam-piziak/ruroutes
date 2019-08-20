@@ -7,8 +7,8 @@ section#search
         placeholder="Search rutgers buses by route or stop"
         @input="updateSearchQuery"
         aria-label="search input")
-  transition(name="appear")
-    .clear-button(v-if="query.length > 0" @click.prevent="clearQuery")
+  transition(name="clear")
+    .clear-button(v-show="query.length > 0" @click.prevent="clearQuery")
 </template>
 
 <script>
@@ -90,6 +90,7 @@ input
   outline: none
   line-height: $height - 2
   width: 240px
+  text-indent: 10px
   flex-grow: 1
   font-size: 1rem
   font-size: 1.05rem
@@ -109,14 +110,14 @@ input
     position: center
     size: 50%
   opacity: 0.7
-  transition: opacity 5s
+  transition: transform .0s
 
   &:hover
     cursor: pointer
 
   &:active
-    transition: opacity 0
-    opacity: 0.1
+    transform: scale(1.2)
+
 
 #filter
   display: flex
@@ -156,20 +157,25 @@ input
   right: 10px
   transform: translateY(-50%)
   opacity: 0.8
-  transition: transform .15s
+  border-radius: 50%
+  transition: transform .15s, background .15s ease-out
 
   &:hover
     cursor: pointer
+    background-color: #EEE
+
+  &:active
+    transform: translateY(-50%) scale(1.2)
 
   &:hover::before
     height: 20px
     width: 20px
     background: pink
 
-.appear-enter-active, .appear-leave-active
-  transition: transform .15s
+.clear-enter-active, .clear-leave-active
+  transition: .1s ease-out
+  transform: translateY(-50%) scale(1)
 
-
-.appear-enter
+.clear-enter, .clear-leave-to
   transform: translateY(-50%) scale(0)
 </style>

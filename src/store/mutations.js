@@ -17,6 +17,8 @@ export default {
   // Updates stope list. Doesn't override existing stop
   // (except if they don't exist in lastest_stops)
   UPDATE_STOP_LIST: (state, lastest_stops) => {
+    if (lastest_stops.length === 0) return
+
     // Delete routes in state that aren't in lastest_routes
     let stops = state.stops.filter(stop => lastest_stops.some(s => stop.id == s.id))
 

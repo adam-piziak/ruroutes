@@ -156,6 +156,7 @@ export default {
     margin: 20px
     font-size: 1.5rem
     font-weight: 500
+    color: #555
 
     &:hover
       cursor: text
@@ -204,6 +205,7 @@ export default {
   position: absolute
   right: 20px
   top: 20px
+  opacity: 0.7
 
   .icon
     position: relative
@@ -228,6 +230,7 @@ export default {
 
 .close-divider
   position: absolute
+  display: none
   height: 44px
   width: 1px
   background: gray
@@ -237,8 +240,12 @@ export default {
   transition: right .15s
 
 .campuses
-  margin: 0 20px
+  margin: 0 10px
   margin-bottom: 12px
+  border: 1px solid #EEE
+  border-radius: 10px
+  padding: 10px
+  background: #FAFAFA
 
   &:hover
     cursor: text
@@ -246,12 +253,11 @@ export default {
 .campus
   display: inline-block
   font-size: 1rem
-  color: #777
-  background: #EEE
-  padding: 4px 8px
+  color: #555
+  font-weight: 500
+  line-height: 30px
+  height: 30px
   border-radius: 8px
-  margin: 5px 0px
-
 
 
 

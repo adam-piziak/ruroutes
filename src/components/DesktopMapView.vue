@@ -287,7 +287,7 @@ export default {
       // Move map into position
       this.map.flyTo({
         center: stop.location,
-        zoom: 15.5
+        zoom: 18
       })
     },
     createStopMarker(stop) {

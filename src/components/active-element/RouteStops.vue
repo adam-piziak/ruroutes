@@ -6,6 +6,8 @@
             v-for="stop in route.stops"
             :key="stop.id"
             :class="{'inactive': !stop.arrivals}"
+            @mouseover="indicateStopOnMap(stop.id)"
+            @mouseleave="indicateStopOnMap(-1)"
             @click="goToStop(stop.id)")
         .icon-block
           .icon
@@ -45,6 +47,9 @@ export default {
     },
   },
   methods: {
+    indicateStopOnMap(id) {
+      EventBus.$emit('INDICATE_STOP', id)
+    },
     goToStop(tag) {
       this.$emit('navigate')
       this.$router.push(`/stops/${tag}`)
@@ -165,7 +170,7 @@ export default {
   transition: margin .15s
   vertical-align: text-bottom
   background:
-    image: url(~icons/stops.svg)
+    image: url(~icons/place_outline.svg)
     size: 120%
     repeat: no-repeat
     position: center

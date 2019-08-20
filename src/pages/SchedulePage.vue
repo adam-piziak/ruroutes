@@ -9,6 +9,8 @@
 #SchedulePage
   background: white
   padding: 20px
+  border-bottom: 1px solid #DDD
+
 
 
 p
@@ -16,7 +18,7 @@ p
 
 a
   text-decoration: none
-  color: #69944e
+  color: #4168dd
   font-weight: 500
 
 </style>

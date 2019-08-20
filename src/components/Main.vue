@@ -10,7 +10,7 @@ section#main_block
     transition(name="slide" mode="out-in")
       router-view(:searchActive="searchInput.length > 0")
   transition(name="swipe" mode="out-in")
-    TheGlobalNavigation(v-if="globalNav" @closeGlobalNav="globalNav = false")
+    TheGlobalNavigation(v-show="globalNav" @closeGlobalNav="globalNav = false")
 </template>
 
 <script>
@@ -74,7 +74,7 @@ export default {
 <style lang="sass">
 #main_block
   position: relative
-  background: white
+  background: #EEE
   display: flex
   flex-direction: column
   width: 460px
@@ -103,7 +103,7 @@ header
   opacity: .1
 
 .swipe-enter-active, .swipe-leave-active
-  transition: .25s
+  transition: .2s
 
 .swipe-enter, .swipe-leave-to
   transform: translateX(-100%)

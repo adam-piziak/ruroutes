@@ -68,6 +68,9 @@ nav
     padding: 5px 10px
     border: 1px solid transparent
 
+    &:active
+      transform: scale(1.07)
+
 
 
     &:not(.active)
@@ -121,13 +124,14 @@ nav
         background-image: url(~icons/nav_outline.svg)
 
       &.active .tab_icon, &.active:hover .tab_icon
+        opacity: .9
         background-image: url(~icons/nav_directions.svg)
     &.schedule
       .tab_icon
         background-image: url(~icons/nav_schedule.svg)
 
       &:hover .tab_icon, &.active .tab_icon, &.active:hover .tab_icon
-        background-image: url(~icons/nav_schedule.svg)
+        background-image: url(~icons/nav_schedule_active.svg)
 
     &.active, &.active:hover
       background: #F8F8F8

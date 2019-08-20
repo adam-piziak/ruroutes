@@ -32,7 +32,7 @@ export default {
         return {
           'name': "",
           'areas': [],
-          'stops': []
+          'routes': []
         }
       }
 
@@ -101,11 +101,11 @@ export default {
   display: inline-block
   height: 22px
   width: 20px
-  opacity: .7
+  opacity: .6
   transition: margin .15s
   vertical-align: text-top
   background:
-    image: url(~icons/routes.svg)
+    image: url(~icons/bus_outline.svg)
 
 .loading-text
   padding: 20px
@@ -133,7 +133,7 @@ export default {
   display: inline-block
   margin-left: 20px
   font-size: 1.1rem
-  font-weight: 600
+  font-weight: 500
   letter-spacing: 0.02rem
   color: #444
 

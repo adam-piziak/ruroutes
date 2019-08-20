@@ -38,10 +38,11 @@ export default {
 .routes
   background: #F5F5F5
   overflow-y: auto
+  overflow-x: hidden
   flex-grow: 0
   position: relative
   z-index: 1
-  min-height: calc(100vh - 170px)
+  height: calc(100vh - 152px)
 
   &::-webkit-scrollbar
     width: 8px
