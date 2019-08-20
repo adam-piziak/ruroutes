@@ -111,6 +111,7 @@ a.link
 #global
   width: 100%
   height: 100vh
+  overflow: auto
   position: absolute
   top: 0
   left: 0
