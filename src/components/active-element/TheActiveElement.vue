@@ -100,7 +100,8 @@ export default {
   height: 100vh
   width: 100%
   background: white
-  box-shadow: 0 0 8px rgba(#000000, 0.4)
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1)
+
 
   .label
     display: inline-block
@@ -128,16 +129,31 @@ export default {
   font-size: 1rem
   transition: transform .15s, box-shadow .15s, background .08s, color .08s
 
+.stop-icon
+  height: 180px
+  width: 200px
+  position: absolute
+  background:
+    image: url(~icons/place_outline.svg)
+    repeat: no-repeat
+    position: center
+    size: 95%
+  opacity: 0.04
+  z-index: 0
+  bottom: -10px
+  right: -20px
+
 .head
   padding: 12px 24px
 .element-header
   position: relative
   z-index: 100
   min-height: 80px
-  background: white
+  background: #FCFCFC
   flex-grow: 0
   flex-shrink: 0
   box-shadow: 0 1px 3px rgba(#000000, 0.2)
+  overflow: hidden
 
   &.navigate_present
 
@@ -151,12 +167,14 @@ export default {
     cursor: default
 
   .name
+    position: relative
+    z-index: 100
     line-height: 35px
     width: calc(100% - 90px)
     margin: 20px
-    font-size: 1.5rem
-    font-weight: 500
-    color: #555
+    font-size: 1.7rem
+    font-weight: 300
+    color: #666
 
     &:hover
       cursor: text
@@ -240,12 +258,11 @@ export default {
   transition: right .15s
 
 .campuses
+  position: relative
+  z-index: 100
   margin: 0 10px
   margin-bottom: 12px
-  border: 1px solid #EEE
-  border-radius: 10px
   padding: 10px
-  background: #FAFAFA
 
   &:hover
     cursor: text
@@ -253,11 +270,14 @@ export default {
 .campus
   display: inline-block
   font-size: 1rem
-  color: #555
+  color: #ef5350
+  background: #FFF
+  border: 1px solid #EAEAEA
   font-weight: 500
   line-height: 30px
-  height: 30px
   border-radius: 8px
+  padding: 3px 10px
+  margin-bottom: 10px
 
 
 

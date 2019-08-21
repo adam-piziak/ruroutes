@@ -1,8 +1,9 @@
 <template lang="pug">
-.stop-marker(@click="goToStop" :class="{indicated: indicated }")
+.stop-marker(@click="goToStop" @mouseover="hover=true" @mouseleave="hover=false" :class="{indicated: showText  }")
   .ref
     .base
-      .text {{ name }}
+      .text(v-if="!showText") {{ order }}
+      .text(v-else) {{ name }}
 </template>
 
 <script>
@@ -11,24 +12,29 @@ import EventBus from '@/event-bus.js';
 export default {
   data() {
     return {
-        indicated: false
+        indicated: false,
+        hover: false
     }
   },
   props: {
     id: Number,
+    order: Number,
     name: String
   },
   methods: {
     goToStop() {
-      console.log(this);
       this.$parent.$router.push(`/stops/${this.id}`)
       EventBus.$emit('GO_TO_STOP', this.id);
+    }
+  },
+  computed: {
+    showText() {
+      return (this.indicated || this.order === -1 || this.hover)
     }
   },
   mounted() {
     EventBus.$on('INDICATE_STOP', (id) => {
       if (id == this.id) {
-        console.log('client' + id)
         this.indicated = true
       } else {
         this.indicated = false
@@ -39,7 +45,7 @@ export default {
 </script>
 
 <style lang="sass" scoped>
-$size: 30px
+$size: 28px
 $dot-size: 7px
 $offset: 5px
 @mixin centered
@@ -53,14 +59,15 @@ $offset: 5px
   height: $size
   min-width: $size
 
+
   &.indicated
     z-index: 1000
 
     .base
       box-shadow: 0 1px 5px rgba(#000000, 0.3)
       transition: transform 0.05s
-      transform: scale(1.3) translateX(-45%)
-      color: #ed5454
+      transform: scale(1.1) translateX(-45%)
+      padding: 0 16px
 
   &:hover
     cursor: pointer
@@ -79,33 +86,27 @@ $offset: 5px
 .base
   height: $size
   position: absolute
-  background: white
+  background: #FFF
   transform: translateX(-50%)
-  border-radius: 5px
-  box-shadow: 0 1px 8px rgba(#000000, 0.3)
-  transition: top .2s, width .2s
-  text-align: center
-  font-weight: 600
-  font-size: .9rem
-  color: #666
-  overflow: hidden
-  transition: transform 0.1s
+  box-shadow: 0 1px 5px rgba(#000000, 0.2)
+  border-radius: 50px
 
   &:hover
     box-shadow: 0 1px 5px rgba(#000000, 0.3)
     transition: transform 0.05s
     transform: scale(1.3) translateX(-45%)
-    color: #ed5454
 
 
 .text
-  display: block
+  color: #ed5454
+  display: inline-block
+  text-align: center
   height: $size
+  min-width: $size
   opacity: 0.85
-  -webkit-clip-path: polygon(20% 0%, 80% 0%, 100% 20%, 100% 80%, 80% 100%, 20% 100%, 0% 80%, 0% 20%)
-  clip-path: polygon(20% 0%, 80% 0%, 100% 20%, 100% 80%, 80% 100%, 20% 100%, 0% 80%, 0% 20%)
+  font-weight: 500
   white-space: nowrap
-  line-height: $size + 1
-  padding: 0 10px
+  line-height: $size
+
 
 </style>

@@ -243,9 +243,9 @@ export default {
       // Display stops
       let n = 0
       this.routeStopMarkers = []
-      route.stops.forEach((stop) => {
+      route.stops.forEach((stop, i) => {
         // Add stop marker
-        let marker = this.createStopMarker(stop)
+        let marker = this.createStopMarker(stop, i+1)
         this.routeStopMarkers[n] = new mapboxgl.Marker(marker).setLngLat(stop.location)
         this.routeStopMarkers[n].addTo(this.map)
         n++
@@ -280,7 +280,7 @@ export default {
       const stop = this.getStop(id)
 
       // Add stop marker
-      let marker = this.createStopMarker(stop)
+      let marker = this.createStopMarker(stop, -1)
       this.stopMarker = new mapboxgl.Marker(marker).setLngLat(stop.location)
       this.stopMarker.addTo(this.map)
 
@@ -290,12 +290,12 @@ export default {
         zoom: 18
       })
     },
-    createStopMarker(stop) {
+    createStopMarker(stop, i) {
       let StopMarkerClass = Vue.extend(StopMarker)
 
       let marker = new StopMarkerClass({
         parent: this,
-        propsData: { name: stop.name, id: stop.id}
+        propsData: { name: stop.name, order: i, id: stop.id}
       })
       marker.$mount()
       return marker.$el
@@ -348,8 +348,8 @@ export default {
       geojson.source.data.type = "FeatureCollection"
       geojson.source.data.features = []
       geojson.paint = {}
-      geojson.paint["line-color"] = "#dd511e"
-      geojson.paint["line-width"] = 3
+      geojson.paint["line-color"] = "#666"
+      geojson.paint["line-width"] = 2
       return geojson
     }
   },

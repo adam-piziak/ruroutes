@@ -4,12 +4,11 @@
     .close_icon
   .logo Scarlet Maps
   .message
-    p Welcome to Scarlet Maps! This is a open source maps service created by Rutgers students to help fellow students navigate to classes, buildings and events around the New Brunswick and Newark Campuses.
+    p Welcome to Scarlet Maps! This is an open source maps service created by Rutgers students to help fellow students navigate to classes, buildings and events around the New Brunswick and Newark Campuses.
     p This site is currently in development, but provides the following features.
     ul
       li route scheules
       li stop schedules
-
   a(href="https://github.com/adam-piziak/scarletbus-web" target="_blank").link.github
     .title
       .content Source Code
@@ -23,7 +22,6 @@
 </template>
 
 <style lang="sass" scoped>
-
 .logo
   display: inline-block
   position: relative
@@ -71,12 +69,16 @@
 a.link
   display: block
   border: 1px solid #EEE
-  padding: 12px 16px
-  border-radius: 12px
+  padding: 14px 18px
+  border-radius: 8px
   background: white
   transition: .15s
   text-decoration: none
   margin-bottom: 20px
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1)
+
+  &:last-child
+    margin-bottom: 50px
 
   .title
     color: #4168dd
@@ -101,11 +103,12 @@ a.link
   .body
     margin-top: 8px
     color: #444
-    line-height: 23px
+    line-height: 24px
+    font-weight: 300
 
   &:hover
     cursor: pointer
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15)
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2)
     transform: translateY(-2px)
 
 #global

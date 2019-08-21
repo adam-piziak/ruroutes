@@ -3,7 +3,7 @@ section#main_block
   header
     TheSearchBar(@search-input="searchInput = $event" @toggle-menu="globalNav = !globalNav" :query="searchInput")
     TheNavigation(@click.native="searchInput = ''")
-  transition(name="element")
+  transition(name="swipe")
     TheActiveElement(v-show="itemOpened")
   TheSearchPage(v-if="searchInput.length > 0" :query="searchInput")
   template(v-else)

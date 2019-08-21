@@ -71,7 +71,7 @@ $close-margin: 14px
   position: relative
   z-index: 1
   flex-shrink: 0
-  padding: 5px 10px
+  //padding: 5px 10px
   overflow: hidden
   border-bottom: 1px solid #DDD
   &.mobile
@@ -88,8 +88,9 @@ $close-margin: 14px
 input
   border: 0
   outline: none
-  line-height: $height - 2
+  line-height: $height
   width: 240px
+  padding: 5px
   text-indent: 10px
   flex-grow: 1
   font-size: 1rem
@@ -102,21 +103,24 @@ input
     color: #888
 
 .menu-button
-  height: $height
-  width: $height
+  height: $height + 10px
+  width: $height + 10px
   background:
     image: url('~icons/menu.svg')
     repeat: no-repeat
-    position: center
-    size: 50%
-  opacity: 0.7
+    position: center center
+    size: 40%
+  opacity: 0.6
+  padding: 5px
   transition: transform .0s
 
   &:hover
+    background-color: #F0F0F0
+    transform: scale(1.02)
     cursor: pointer
 
   &:active
-    transform: scale(1.2)
+    transform: scale(1.1)
 
 
 #filter
