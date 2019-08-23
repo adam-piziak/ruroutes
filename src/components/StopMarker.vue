@@ -1,9 +1,9 @@
 <template lang="pug">
-.stop-marker(@click="goToStop" @mouseover="hover=true" @mouseleave="hover=false" :class="{indicated: showText  }")
+.stop-marker(@click="goToStop" @mouseover="expandText" @mouseleave="collapseText" :class="{indicated: showText  }")
   .ref
-    .base
-      .text(v-if="!showText") {{ order }}
-      .text(v-else) {{ name }}
+    .base(:class="{display: showText}")
+      .number(v-if="order != -1") {{ order }}
+      .text(ref="text") {{ name }}
 </template>
 
 <script>
@@ -13,7 +13,8 @@ export default {
   data() {
     return {
         indicated: false,
-        hover: false
+        hover: false,
+        textWidth: 0,
     }
   },
   props: {
@@ -25,6 +26,18 @@ export default {
     goToStop() {
       this.$parent.$router.push(`/stops/${this.id}`)
       EventBus.$emit('GO_TO_STOP', this.id);
+    },
+    expandText() {
+      const text = this.$refs.text
+      const textWidth = this.textWidth + 20
+      text.style.width = textWidth + 'px'
+    },
+    collapseText() {
+      if (this.order != -1) {
+        const text = this.$refs.text
+        text.style.width = '0px'
+      }
+
     }
   },
   computed: {
@@ -35,11 +48,17 @@ export default {
   mounted() {
     EventBus.$on('INDICATE_STOP', (id) => {
       if (id == this.id) {
+        this.expandText()
         this.indicated = true
       } else {
+        this.collapseText()
         this.indicated = false
       }
     })
+    setTimeout(() => {
+      this.textWidth = this.$refs.text.scrollWidth
+      if (this.order == -1) { this.expandText()}
+    }, 10)
   }
 }
 </script>
@@ -66,8 +85,8 @@ $offset: 5px
     .base
       box-shadow: 0 1px 5px rgba(#000000, 0.3)
       transition: transform 0.05s
-      transform: scale(1.1) translateX(-45%)
-      padding: 0 16px
+
+      .number
 
   &:hover
     cursor: pointer
@@ -87,26 +106,43 @@ $offset: 5px
   height: $size
   position: absolute
   background: #FFF
-  transform: translateX(-50%)
+  display: flex
+  margin-left: - $size/2
   box-shadow: 0 1px 5px rgba(#000000, 0.2)
   border-radius: 50px
+  overflow: hidden
 
   &:hover
     box-shadow: 0 1px 5px rgba(#000000, 0.3)
     transition: transform 0.05s
-    transform: scale(1.3) translateX(-45%)
+
+  &.display
 
 
-.text
+.number
   color: #ed5454
+  background: #FFF
   display: inline-block
+  border-radius: 100px
   text-align: center
   height: $size
   min-width: $size
   opacity: 0.85
   font-weight: 500
-  white-space: nowrap
   line-height: $size
+  float: left
+
+.text
+  display: inline-block
+  line-height: $size
+  text-align: center
+  white-space: nowrap
+  transition: .15s
+  float: left
+  color: #666
+
+
+
 
 
 </style>
