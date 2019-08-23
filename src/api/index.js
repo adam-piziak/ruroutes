@@ -17,7 +17,7 @@ export default {
             active
             areas
             segments
-            stops(active: true) {
+            stops {
               id
               location
               name
