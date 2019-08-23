@@ -109,8 +109,8 @@ export default {
 .name
   transition: margin .15s
   display: inline-block
-  font-weight: 500
-  color: #444
+  font-weight: 300
+  color: #555
   font-size: 1.1rem
 
 .campus
@@ -145,7 +145,7 @@ export default {
 .times
   margin-left: 0px
   margin-top: 6px
-  color: #444
+  color: #666
 
 .time
   font-weight: 500

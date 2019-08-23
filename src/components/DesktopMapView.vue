@@ -7,9 +7,29 @@
 import EventManager from '@/event-bus.js';
 import axios from 'axios';
 import Vue from 'vue';
+import api from '@/api'
 import BusMarker from 'components/BusMarker'
 import StopMarker from 'components/StopMarker'
 let mapboxgl
+
+class Vehicle {
+  constructor(id, marker) {
+    this.id = id
+    this.marker = marker
+  }
+
+  getID() {
+    return this.id
+  }
+
+  remove() {
+    this.marker.remove()
+  }
+
+  updateLocation(newLocation) {
+    this.marker.setLngLat(newLocation)
+  }
+}
 
 export default {
   data() {
@@ -17,10 +37,11 @@ export default {
       map: null,
       counter: 0,
       stopMarker: null,
-      buses: [],
+      vehicles: [],
       layers: [],
       routeStopMarkers: [],
       locationInterval: null,
+      vehicleInterval: null,
       loaded: false
     }
   },
@@ -41,176 +62,7 @@ export default {
 
     //
     EventManager.$on('CLEAR_MAP', () => this.clearView())
-    /*
-    this.initialize()
-    const mapboxgl = require('mapbox-gl')
-    EventBus.$on('GO_TO_STOP', (id) => {
-      clearInterval(this.locationInterval)
-      let StopMarkerClass = Vue.extend(StopMarker)
 
-      if (this.map.getLayer("route-outline")) {
-        this.map.removeLayer("route-outline");
-      }
-
-      if (this.map.getSource('route-outline')) {
-        this.map.removeSource("route-outline");
-      }
-
-      const stop = this.getStop(id)
-      this.map.flyTo({
-        center: stop.location,
-        zoom: 15.5
-      });
-
-      this.markers.forEach((m) => {
-        m.remove()
-      })
-      if (this.currentMarker != null) {
-        this.currentMarker.remove()
-        this.currentMarker = null
-      }
-      let el = new StopMarkerClass({
-        propsData: { name: stop.name, id: stop.id }
-      })
-      el.$mount()
-      this.currentMarker = new mapboxgl.Marker(el.$el).setLngLat(stop.location)
-      this.currentMarker.addTo(this.map);
-    })
-
-    EventBus.$on('GO_TO_ROUTE', (id) => {
-      let ctx = this;
-      let StopMarkerClass = Vue.extend(StopMarker)
-      const route = this.getRoute(id)
-      clearInterval(this.interval);
-      this.buses.forEach((marker) => marker.remove());
-      axios({
-        url: 'https://api.scarletbus.com/graphql',
-        method: 'post',
-        timeout: 3000,
-        data: {
-          query: `
-            {
-              vehicles(id: ${id}) {
-                location
-              }
-            }
-          `
-        }
-      }).then((res) => {
-        let buses = res.data.data.vehicles;
-        ctx.buses.forEach((marker) => marker.remove());
-        let BusMarkerClass = Vue.extend(BusMarker)
-        buses.forEach((bus) => {
-          let icon = new BusMarkerClass;
-          icon.$mount();
-          let marker = new mapboxgl.Marker(icon.$el).setLngLat(bus.location).addTo(ctx.map);
-          ctx.buses.push(marker);
-        })});
-      this.interval = setInterval(function () {
-        axios({
-          url: 'https://api.scarletbus.com/graphql',
-          method: 'post',
-          timeout: 3000,
-          data: {
-            query: `
-              {
-                vehicles(id: ${id}) {
-                  location
-                }
-              }
-            `
-          }
-        }).then((res) => {
-          let buses = res.data.data.vehicles;
-          ctx.buses.forEach((marker) => marker.remove());
-          let BusMarkerClass = Vue.extend(BusMarker)
-          buses.forEach((bus) => {
-            let icon = new BusMarkerClass();
-            icon.$mount();
-            let marker = new mapboxgl.Marker(icon.$el).setLngLat(bus.location).addTo(ctx.map);
-            ctx.buses.push(marker);
-          })
-        });
-      }, 5000);
-      if (this.currentMarker != null) {
-        this.currentMarker.remove()
-        this.currentMarker = null
-      }
-      let bounds = new mapboxgl.LngLatBounds();
-      route.segments.forEach((segment) => {
-        let s = segment.map(x => [x[1], x[0]])
-        s.forEach((seg) => bounds.extend(seg))
-      })
-      this.map.fitBounds(bounds, { padding: 100, linear: true });
-      this.locationInterval = setInterval(function () {
-        axios.get("https")
-      }, 5000);
-
-      this.markers.forEach((m) => {
-        m.remove()
-      })
-      ctx.markers.length = 0;
-      setTimeout(() => {
-        route.stops.forEach((stop) => {
-          if (stop.arrivals) {
-
-            let el = document.createElement('div');
-            el.className = 'stop-marker';
-            el.style.cursor = "pointer";
-            el.addEventListener('click', e => {
-              e.stopPropagation();
-              ctx.$router.push(`/stops/${stop.id}`)
-              EventBus.$emit('GO_TO_STOP', stop.id);
-            }, true);
-            let icon = new StopMarkerClass({
-              parent: ctx,
-              propsData: { name: stop.name, id: stop.id }
-            });
-            icon.$mount();
-
-
-            let marker = new mapboxgl.Marker(icon.$el).setLngLat(stop.location).addTo(ctx.map);
-            ctx.markers.push(marker);
-          } else {
-            let marker = new mapboxgl.Marker({ color: "gray" }).setLngLat(stop.location)
-            ctx.markers.push(marker);
-            marker.addTo(ctx.map);
-          }
-        })
-      }, 200);
-
-      setTimeout(function () {
-
-
-        route.segments.forEach((segment) => {
-          let coordinates = segment.map(x => [x[1], x[0]])
-          let feature = {};
-          feature.type = "Feature";
-          feature.properties = {};
-          feature.geometry = {};
-          feature.geometry.type = "LineString";
-          feature.geometry.coordinates = coordinates;
-
-
-          geojson.source.data.features.push(feature);
-        })
-
-        if (ctx.map.getLayer("route-outline")) {
-          ctx.map.removeLayer("route-outline");
-        }
-
-        if (ctx.map.getSource('route-outline')) {
-          ctx.map.removeSource("route-outline");
-        }
-
-        ctx.map.addLayer(geojson);
-      }, 100);
-    })
-
-
-
-
-    */
   },
   methods: {
     resumeView() {
@@ -259,6 +111,42 @@ export default {
       })
       this.map.fitBounds(bounds, { padding: 100, linear: true });
 
+      // Show route locations
+      let ctx = this
+      this.vehicleInterval = setInterval(() => {
+        api.fetchRouteVehicles(route.id).then((res) => {
+          let lastest_vehicle_list = res.data.data.vehicles
+
+          // Remove markers for vehicles that don't exist anymore
+          ctx.vehicles.filter((vehicle) => {
+            if (!lastest_vehicle_list.find(v => v.id === vehicle.getID())) {
+              vehicle.remove()
+              return false
+            }
+
+            return true
+          })
+
+          // Add or update vehicles
+          lastest_vehicle_list.forEach((vehicle) => {
+            // Update if exists
+            let existing = ctx.vehicles.find(v => v.getID() == vehicle.id)
+
+            if (existing) {
+              existing.updateLocation(vehicle.location)
+            } else {
+              let markerHTML = ctx.createVehicleMarker()
+              let marker = new mapboxgl.Marker(markerHTML).setLngLat(vehicle.location)
+              marker.addTo(ctx.map)
+              ctx.vehicles.push(new Vehicle(vehicle.id, marker))
+            }
+          })
+
+
+
+
+        })
+      }, 2000)
 
 
     },
@@ -300,7 +188,15 @@ export default {
       marker.$mount()
       return marker.$el
     },
+    createVehicleMarker() {
+      let BusMarkerClass = Vue.extend(BusMarker)
+
+      let marker = new BusMarkerClass()
+      marker.$mount()
+      return marker.$el
+    },
     clearView() {
+      console.log('clearing map')
       if (this.map.getLayer("route-outline")) {
         this.map.removeLayer("route-outline");
       }
@@ -317,6 +213,11 @@ export default {
       this.routeStopMarkers.forEach((m) => {
         m.remove()
       })
+      clearInterval(this.vehicleInterval)
+      this.vehicles.forEach((vehicle) => {
+        vehicle.remove()
+      })
+      this.vehicles.length = 0
     },
     getStop(id) {
       return this.$store.getters.stop(id)
@@ -328,9 +229,6 @@ export default {
       mapboxgl.accessToken = 'pk.eyJ1IjoiYWRhbS1waXppYWsiLCJhIjoiY2poa3gxeGw2Mnl2YTNibjNpdmkwM2t6cCJ9.oST8MV_wyXjmfOY4IPH1JA'
       const map = new mapboxgl.Map({
         container: 'map',
-        //style: 'mapbox://styles/adam-piziak/cjhqcs8sx1rfa2rpe0gw3pyjh',
-        //style: 'mapbox://styles/mapbox/streets-v11',
-        //style: 'https://maps.tilehosting.com/styles/basic/style.json?key=K7rAuvC67gIS7xy6bcOa',
         style: 'https://api.maptiler.com/maps/streets/style.json?key=K7rAuvC67gIS7xy6bcOa',
         center: this.stop ? this.stop.location : [-74.447672, 40.502281],
         zoom: 16,

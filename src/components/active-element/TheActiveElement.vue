@@ -76,6 +76,7 @@ export default {
   },
   methods: {
     returnHome() {
+      this.pages_navigated = 0
       this.$router.push('/' + this.basePath)
     },
     goBack() {

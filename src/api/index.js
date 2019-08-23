@@ -103,5 +103,23 @@ export default {
         })
         .catch((err) => reject(err))
     })
-   }
+  },
+
+  fetchRouteVehicles(route_id) {
+    return axios({
+      url: SERVER_URL + '/graphql',
+      method: 'post',
+      timeout: 5000,
+      data: {
+        query: `
+          {
+            vehicles (id: ${route_id}) {
+              id
+              location
+            }
+          }
+        `
+      }
+    })
+  }
 }

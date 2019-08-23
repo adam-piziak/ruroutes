@@ -54,13 +54,13 @@ $height: 50px
 
 .name
   margin-bottom: 4px
-  font-weight: 500
-  color: #444
+  font-size: 1.1rem
+  color: #202020
 
 .area
   display: inline-block
   font-size: 1rem
-  color: #888
+  color: #666
   border-radius: 8px
   margin: 5px 0px
 

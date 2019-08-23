@@ -8,6 +8,8 @@ const StopsPage = () => import('@/pages/StopsPage.vue')
 const DirectionsPage = () => import('@/pages/DirectionsPage.vue')
 const SchedulePage = () => import('@/pages/SchedulePage.vue')
 
+import EventManager from '@/event-bus.js'
+
 Vue.use(Router)
 Vue.use(Meta)
 
@@ -52,6 +54,11 @@ export function createRouter() {
         component: SchedulePage
       },
     ]
+  })
+
+  router.afterEach((to, from) => {
+    if (to == '/routes') {
+    }
   })
 
   return router

@@ -6,8 +6,8 @@
 </template>
 
 <style lang="sass" scoped>
-$size: 30px
-$color: #555
+$size: 40px
+$color: #ed5454
 @mixin centered
   position: absolute
   top: 50%
@@ -15,6 +15,7 @@ $color: #555
   transform: translate(-50%, -50%)
 .bus-marker
   position: absolute
+  pointer-events: none
   width: $size
   height: $size
 
@@ -36,7 +37,7 @@ $color: #555
   border-radius: 50%
 
 .pulse
-  position: relative
+  position: absolute
   width: $size
   height: $size
   z-index: 9
