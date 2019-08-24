@@ -35,14 +35,15 @@ $color: #ed5454
   height: $size*0.3
   background: $color
   border-radius: 50%
+  box-shadow: 0 0 5px rgba(#000, 0.5)
 
 .pulse
   position: absolute
   width: $size
   height: $size
   z-index: 9
-  background: $color
-  opacity: 0.1
+  background: rgba($color, 0.5)
+  border: 1px dotted $color
   border-radius: 50%
   animation:
     name: pulse
