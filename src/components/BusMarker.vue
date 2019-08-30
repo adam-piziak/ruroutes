@@ -35,7 +35,7 @@ $color: #ed5454
   height: $size*0.3
   background: $color
   border-radius: 50%
-  box-shadow: 0 0 5px rgba(#000, 0.5)
+  box-shadow: 0 0 5px rgba($color, 1)
 
 .pulse
   position: absolute
@@ -44,6 +44,7 @@ $color: #ed5454
   z-index: 9
   background: rgba($color, 0.5)
   border: 1px dotted $color
+  box-shadow: 0 0 5px rgba($color, 0.4)
   border-radius: 50%
   animation:
     name: pulse

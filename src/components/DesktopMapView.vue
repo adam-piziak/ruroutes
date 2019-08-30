@@ -63,6 +63,7 @@ export default {
     //
     EventManager.$on('CLEAR_MAP', () => this.clearView())
 
+    this.resumeView()
   },
   methods: {
     resumeView() {
@@ -74,6 +75,10 @@ export default {
           this.map.flyTo({
             center: stop.location
           })
+        } else if (this.basePath == "routes") {
+          if (this.route) {
+            this.displayRoute(this.route.id)
+          }
         }
       }
     },
@@ -246,7 +251,7 @@ export default {
       geojson.source.data.type = "FeatureCollection"
       geojson.source.data.features = []
       geojson.paint = {}
-      geojson.paint["line-color"] = "#616161"
+      geojson.paint["line-color"] = "#ff7961"
       geojson.paint["line-width"] = 2
       return geojson
     }
@@ -263,6 +268,12 @@ export default {
     },
     stop() {
       if (this.basePath === "stops") {
+        return this.$store.getters.stop(this.$route.params.id)
+      }
+      return null
+    },
+    route() {
+      if (this.basePath === "routes") {
         return this.$store.getters.stop(this.$route.params.id)
       }
       return null
