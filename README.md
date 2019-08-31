@@ -16,13 +16,11 @@ Changes to the master branch are automatically deployed to the live site.
 Live site: [scarletbus.com](https://www.scarletbus.com)
 </p>
 
-### Screenshot
-
 <p align="center">
   <img src="/src/assets/screenshot1.png" alt="Screenshot"/>
 </p>
 
-### Tasks
+## Tasks
 
 - Migrate Name
   - [ ] Github Repo
@@ -50,7 +48,7 @@ Live site: [scarletbus.com](https://www.scarletbus.com)
   - [ ] Update starting location (possibly with cookies)
   - [ ] Update resume location
 
-### Development
+## Development
 Install:
 ~~~~
 yarn
@@ -61,5 +59,8 @@ Run in development mode:
 yarn dev
 ~~~~
 
-### API
+## API
 Visit the [ScarletMaps API](https://github.com/adam-piziak/scarletbus) for more details.
+
+## License
+This project is licensed under the terms of the MIT license. View [LICENSE](https://github.com/adam-piziak/scarletbus-web/blob/master/LICENSE).
