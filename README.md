@@ -42,4 +42,4 @@ yarn dev
 Visit the [ScarletMaps API](https://github.com/adam-piziak/scarletbus) for more details.
 
 ## License
-This project is licensed under the terms of the MIT license. View [LICENSE](https://github.com/adam-piziak/scarletbus-web/blob/master/LICENSE).
+This project is licensed under the terms of the MIT license. See [LICENSE](https://github.com/adam-piziak/scarletbus-web/blob/master/LICENSE) for more details.
