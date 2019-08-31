@@ -16,9 +16,9 @@ Changes to the master branch are automatically deployed to the live site.
 Live site: [scarletbus.com](https://www.scarletbus.com)
 </p>
 
-<p align="center">
+<a align="center" href="https://www.scarletbus.com">
   <img src="/src/assets/screenshot1.png" alt="Screenshot"/>
-</p>
+</a>
 
 ## Tasks
 
