@@ -22,6 +22,10 @@ class Vehicle {
     return this.id
   }
 
+  getMarker() {
+    return this.marker
+  }
+
   remove() {
     this.marker.remove()
   }
@@ -121,6 +125,7 @@ export default {
       this.vehicleInterval = setInterval(() => {
         api.fetchRouteVehicles(route.id).then((res) => {
           let lastest_vehicle_list = res.data.data.vehicles
+          if (!lastest_vehicle_list) return
 
           // Remove markers for vehicles that don't exist anymore
           ctx.vehicles.filter((vehicle) => {
@@ -138,7 +143,8 @@ export default {
             let existing = ctx.vehicles.find(v => v.getID() == vehicle.id)
 
             if (existing) {
-              existing.updateLocation(vehicle.location)
+              ctx.moveMarker(existing.getMarker(), [existing.getMarker().getLngLat().lng, existing.getMarker().getLngLat().lat], vehicle.location, 0)
+              //existing.updateLocation(vehicle.location)
             } else {
               let markerHTML = ctx.createVehicleMarker()
               let marker = new mapboxgl.Marker(markerHTML).setLngLat(vehicle.location)
@@ -254,8 +260,27 @@ export default {
       geojson.paint["line-color"] = "#ff7961"
       geojson.paint["line-width"] = 2
       return geojson
-    }
+    },
+    moveMarker(marker, prevLocation, destLocation, progress) {
+      if (progress >= 1) {
+          marker.setLngLat(destLocation)
+          return
+      }
+      let distanceX = destLocation[0] - prevLocation[0]
+      let distanceY = destLocation[1] - prevLocation[1]
+
+      let easeProgress = this.ease(progress)
+      let newLocation = [prevLocation[0] + distanceX *  easeProgress, prevLocation[1] + distanceY * easeProgress]
+      marker.setLngLat(newLocation)
+      requestAnimationFrame((timestamp) => {
+        this.moveMarker(marker, prevLocation, destLocation, progress + 0.02)
+      })
+    },
+    ease(t) {
+      return t*(2-t)
+    },
   },
+
   computed: {
     basePath() {
       if (this.$route.path.indexOf('stops') !== -1) {

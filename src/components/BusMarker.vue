@@ -6,7 +6,7 @@
 </template>
 
 <style lang="sass" scoped>
-$size: 40px
+$size: 42px
 $color: #ed5454
 @mixin centered
   position: absolute
@@ -35,7 +35,7 @@ $color: #ed5454
   height: $size*0.3
   background: $color
   border-radius: 50%
-  box-shadow: 0 0 5px rgba($color, 1)
+  box-shadow: 0 0 2px rgba($color, 1)
 
 .pulse
   position: absolute
@@ -43,21 +43,21 @@ $color: #ed5454
   height: $size
   z-index: 9
   background: rgba($color, 0.5)
-  border: 1px dotted $color
+  border: 1px solid $color
   box-shadow: 0 0 5px rgba($color, 0.4)
   border-radius: 50%
   animation:
     name: pulse
-    duration: 2.5s
+    duration: 2.2s
     timing-function: ease-out
     iteration-count: infinite
 
 @keyframes pulse
   from
-    opacity: .9
-    transform: scale(.2)
+    opacity: 1
+    transform: scale(.1)
   to
     opacity: 0
-    transform: scale(1)
+    transform: scale(1.2)
 
 </style>

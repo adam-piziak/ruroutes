@@ -42,6 +42,7 @@ export default {
   },
 
   UPDATE_STOP: (state, updated_stop) => {
+    if (!updated_stop) return 
     for (let i = 0; i < state.stops.length; i++) {
       if (state.stops[i].id === updated_stop.id) {
         state.stops.splice(i, 1, updated_stop)
