@@ -20,33 +20,12 @@ Live site: [scarletbus.com](https://www.scarletbus.com)
   <img src="/src/assets/screenshot1.png" alt="Screenshot"/>
 </a>
 
-## Tasks
+## Projects
+| Project | URL | Description | 
+| ------- | --- | ----------- |
+| Tasks   | [link](https://github.com/adam-piziak/scarletbus-web/projects/3) | Project board for managing tasks |
+| Bugs    | [link](https://github.com/adam-piziak/scarletbus-web/projects/4) | Project board for managing bugs and issues |
 
-- Migrate Name
-  - [ ] Github Repo
-  - [ ] Domain
-  - [ ] Travis
-- Routes Page
-  - [ ] Routes by campus (needs api support)
-- Stops Page
-  - [ ] Stops by campus (needs api support)
-- Active Route
-  - [ ] Color from api (needs api support)
-  - [ ] Description (needs api support)
-  - [ ] Stops by campus
-  - [ ] Inactive stop
-    - [ ] Toggle to show
-    - [ ] Gray out
-- Active Stop
-  - [ ] Description (needs api support)
-  - [ ] Routes by campus
-- Directions Page
-  - [ ] Create prototype
-- Events Page (future)
-  - [ ] Create prototype
-- Map
-  - [ ] Update starting location (possibly with cookies)
-  - [ ] Update resume location
 
 ## Development
 Install:
