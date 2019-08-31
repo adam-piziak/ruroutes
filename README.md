@@ -11,8 +11,9 @@
 <p>
 Welcome to the live repository for the ScarletMaps web client. This is a student created open source client for the Rutgers University transportation system.
 
-
 Changes to the master branch are automatically deployed to the live site.
+
+Live site: [scarletbus.com](https://www.scarletbus.com)
 </p>
 
 ### Screenshot
