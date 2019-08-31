@@ -18,7 +18,7 @@ const config = merge(base, {
     }),
     new VueSSRClientPlugin(),
     new HtmlWebpackPlugin({
-      favicon: 'dist/favicon.ico'
+      favicon: 'src/assets/favicon.ico'
     })
   ]
 })
