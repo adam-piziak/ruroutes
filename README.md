@@ -1,8 +1,8 @@
 <p>
-  <img src="/src/assets/icons/logo.svg" alt="Your image title" width="140"/>
+  <img src="/src/assets/icons/logo.svg" alt="Your image title" width="160"/>
 </p>
 
-<h3>Scarlet Maps Web Client</h3>
+<h1>Scarlet Maps Web Client</h3>
 <p style="margin-top: -5px; margin-bottom: 20px;">
   <a href="https://travis-ci.org/adam-piziak/scarletbus-web"><img src="https://travis-ci.org/adam-piziak/scarletbus-web.svg?branch=master"></a>
   <a href="/LICENSE"><img src="https://img.shields.io/badge/License-MIT-blue.svg"></a>
