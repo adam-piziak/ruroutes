@@ -1,9 +1,9 @@
-<p>
+<p align="center">
   <img src="/src/assets/icons/logo.svg" alt="Your image title" width="160"/>
 </p>
 
-<h1>Scarlet Maps Web Client</h3>
-<p style="margin-top: -5px; margin-bottom: 20px;">
+<h1 align="center">ScarletMaps Web Client</h3>
+<p align="center" style="margin-top: -5px; margin-bottom: 20px;">
   <a href="https://travis-ci.org/adam-piziak/scarletbus-web"><img src="https://travis-ci.org/adam-piziak/scarletbus-web.svg?branch=master"></a>
   <a href="/LICENSE"><img src="https://img.shields.io/badge/License-MIT-blue.svg"></a>
   <a href="https://www.scarletbus.com"><img src="https://img.shields.io/website/https/www.scarletbus.com.svg?label=Status"></a>
@@ -15,7 +15,8 @@ Welcome to the live repository for the ScarletBus web client. This is a student 
 Changes to the master branch are automatically deployed to the live site.
 </p>
 
-TODO (contributions welcome!)
+### TODO
+
 - Routes Page
   - [ ] Routes by campus (needs api support)
 - Stops Page
@@ -39,7 +40,12 @@ TODO (contributions welcome!)
   - [ ] Update resume location
 
 ### Development
-To run in development mode:
+Install:
+~~~~
+yarn
+~~~~
+
+Run in development mode:
 ~~~~
 yarn dev
 ~~~~
