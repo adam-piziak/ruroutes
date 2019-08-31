@@ -9,7 +9,7 @@
   <a href="https://www.scarletbus.com"><img src="https://img.shields.io/website/https/www.scarletbus.com.svg?label=Status"></a>
 </p>
 <p>
-Welcome to the live repository for the ScarletBus web client. This is a student created open source client for the Rutgers University transportation system.
+Welcome to the live repository for the ScarletMaps web client. This is a student created open source client for the Rutgers University transportation system.
 
 
 Changes to the master branch are automatically deployed to the live site.
@@ -17,6 +17,10 @@ Changes to the master branch are automatically deployed to the live site.
 
 ### TODO
 
+- Migrate Name
+  - [ ] Github Repo
+  - [ ] Domain
+  - [ ] Travis
 - Routes Page
   - [ ] Routes by campus (needs api support)
 - Stops Page
