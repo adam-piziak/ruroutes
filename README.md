@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="/src/assets/icons/logo.svg" alt="Your image title" width="160"/>
+  <img src="/src/assets/icons/logo.svg" alt="Logo" width="160"/>
 </p>
 
 <h1 align="center">ScarletMaps Web Client</h3>
@@ -15,7 +15,13 @@ Welcome to the live repository for the ScarletMaps web client. This is a student
 Changes to the master branch are automatically deployed to the live site.
 </p>
 
-### TODO
+### Screenshot
+
+<p align="center">
+  <img src="/src/assets/screenshot1.png" alt="Screenshot"/>
+</p>
+
+### Tasks
 
 - Migrate Name
   - [ ] Github Repo
