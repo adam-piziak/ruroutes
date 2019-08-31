@@ -60,3 +60,6 @@ Run in development mode:
 ~~~~
 yarn dev
 ~~~~
+
+### API
+Visit the [ScarletMaps API](https://github.com/adam-piziak/scarletbus) for more details.
