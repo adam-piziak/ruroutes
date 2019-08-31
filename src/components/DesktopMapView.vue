@@ -257,7 +257,7 @@ export default {
       geojson.source.data.type = "FeatureCollection"
       geojson.source.data.features = []
       geojson.paint = {}
-      geojson.paint["line-color"] = "#ff7961"
+      geojson.paint["line-color"] = "#888"
       geojson.paint["line-width"] = 2
       return geojson
     },

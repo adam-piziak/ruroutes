@@ -124,7 +124,7 @@ $offset: 5px
 
 
 .number
-  color: #ed5454
+  color: #666
   background: #FFF
   display: inline-block
   border-radius: 100px
