@@ -48,15 +48,15 @@ $color: #ed5454
   border-radius: 50%
   animation:
     name: pulse
-    duration: 2.2s
+    duration: 3s
     timing-function: ease-out
     iteration-count: infinite
 
 @keyframes pulse
-  from
+  0%
     opacity: 1
     transform: scale(.1)
-  to
+  50%, 100%
     opacity: 0
     transform: scale(1.2)
 

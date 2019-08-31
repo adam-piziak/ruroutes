@@ -24,6 +24,9 @@ TODO (contributions welcome!)
   - [ ] Color from api (needs api support)
   - [ ] Description (needs api support)
   - [ ] Stops by campus
+  - [ ] Inactive stop
+    - [ ] Toggle to show
+    - [ ] Gray out
 - Active Stop
   - [ ] Description (needs api support)
   - [ ] Routes by campus
@@ -31,6 +34,9 @@ TODO (contributions welcome!)
   - [ ] Create prototype
 - Events Page (future)
   - [ ] Create prototype
+- Map
+  - [ ] Update starting location (possibly with cookies)
+  - [ ] Update resume location
 
 ### Development
 To run in development mode:

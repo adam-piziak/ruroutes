@@ -2,6 +2,7 @@ const webpack = require('webpack')
 const merge = require('webpack-merge')
 const base = require('./webpack.base.config')
 const VueSSRClientPlugin = require('vue-server-renderer/client-plugin')
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 const config = merge(base, {
   entry: './src/entry-client.js',
@@ -15,7 +16,10 @@ const config = merge(base, {
       'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development'),
       'process.env.VUE_ENV': '"client"'
     }),
-    new VueSSRClientPlugin()
+    new VueSSRClientPlugin(),
+    new HtmlWebpackPlugin({
+      favicon: 'dist/favicon.ico'
+    })
   ]
 })
 
