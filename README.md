@@ -1,14 +1,9 @@
 <p align="center">
   <img src="/src/assets/icons/logo.svg" alt="Logo" width="160"/>
 </p>
+<h1 align="center">Scarlet Maps Site</h1>
 
-
-
-
-
-## Introduction
-
-<p align="left" style="margin-top: -5px; margin-bottom: 20px;">
+<p align="center" style="margin-top: -5px; margin-bottom: 20px;">
   <a href="https://travis-ci.org/adam-piziak/scarletbus-web"><img src="https://travis-ci.org/adam-piziak/scarletbus-web.svg?branch=master"></a>
   <a href="/LICENSE"><img src="https://img.shields.io/badge/License-MIT-blue.svg"></a>
   <a href="https://www.scarletbus.com"><img src="https://img.shields.io/website/https/www.scarletbus.com.svg?label=Status"></a>
