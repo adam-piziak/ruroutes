@@ -23,7 +23,7 @@ Live site: [scarletbus.com](https://www.scarletbus.com)
 ## Projects
 | Project | URL | Description | 
 | ------- | --- | ----------- |
-| Tasks   | [link](https://github.com/adam-piziak/scarletbus-web/projects/3) | Project board for managing tasks |
+| Tasks   | [link](https://github.com/adam-piziak/scarletbus-web/projects/6) | Project board for managing tasks |
 | Bugs    | [link](https://github.com/adam-piziak/scarletbus-web/projects/4) | Project board for managing bugs and issues |
 
 
