@@ -1,7 +1,7 @@
 <p align="center">
   <img src="/src/assets/icons/logo.svg" alt="Logo" width="160"/>
 </p>
-<h1 align="center">Scarlet Maps Site</h1>
+<h1 align="center">ScarletMaps Web Client</h1>
 
 <p align="center" style="margin-top: -5px; margin-bottom: 20px;">
   <a href="https://travis-ci.org/adam-piziak/scarletbus-web"><img src="https://travis-ci.org/adam-piziak/scarletbus-web.svg?branch=master"></a>
