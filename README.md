@@ -8,9 +8,7 @@
   <a href="/LICENSE"><img src="https://img.shields.io/badge/License-MIT-blue.svg"></a>
   <a href="https://www.scarletbus.com"><img src="https://img.shields.io/website/https/www.scarletbus.com.svg?label=Status"></a>
 </p>
-<a align="center" href="https://www.scarletbus.com">
-  <img src="/src/assets/screenshot1.png" alt="Screenshot"/>
-</a>
+
 
 ## Introduction
 Welcome to the live repository for the ScarletMaps web client. This is a student created open source client for the Rutgers University transportation system.
@@ -19,7 +17,9 @@ Changes to the master branch are automatically deployed to the live site.
 
 Live site: [scarletbus.com](https://www.scarletbus.com)
 
-
+<a align="center" href="https://www.scarletbus.com">
+  <img src="/src/assets/screenshot1.png" alt="Screenshot"/>
+</a>
 
 ## Projects
 | Project | URL | Description | 
